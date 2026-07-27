@@ -9,4 +9,4 @@
 - The first reproducible implementation promotes only a regularized global Logistic as a classical anchor. Equal-weight ensemble output is provisional until evidence is reviewed.
 - Pretrained model packages/APIs were not locally verifiable; no external upload or unverified installation was attempted.
 - Locked audit is frozen after code and configuration commit; a post-audit redesign would invalidate the audit.
-
+- A production-only eligibility fix was applied after the v1 audit so the May 2026 row can produce an unscored ledger without requiring a missing t+1 label. It does not alter the v1 audit path or its results; the v1 freeze manifest remains the authoritative audit manifest.

@@ -16,8 +16,8 @@ The Codex orchestrator owns shared interfaces, phase gates, freeze, audit, and i
 | W2-BASELINES | orchestrator | W1 gate | completed | `artifacts/oof_predictions/dev_oof.parquet` |
 | W3-CLASSICAL | orchestrator | W2 gate | completed | global logistic and CatBoost-capable branch |
 | W7-ENSEMBLE | orchestrator | W3 gate | completed | `artifacts/oof_predictions/dev_ensemble.parquet` |
-| W8-FREEZE | orchestrator | review/tests | in_progress | freeze manifest |
-| W8-AUDIT | orchestrator | W8-FREEZE | pending | locked audit ledger |
-| W8-PRODUCTION | orchestrator | W8-AUDIT | pending | June 2026 unscored ledger |
+| W8-FREEZE | orchestrator | review/tests | completed | `artifacts/model_registry/freeze_manifest_v1.json` |
+| W8-AUDIT | orchestrator | W8-FREEZE | completed | `artifacts/oof_predictions/locked_audit_v1.parquet` |
+| W8-PRODUCTION | orchestrator | W8-AUDIT | completed | `artifacts/forecast_ledgers/june_2026_unscored.csv` |
 
 Parallelism is used only for read-only planning and independent checks. Shared schemas and the locked audit remain serial.

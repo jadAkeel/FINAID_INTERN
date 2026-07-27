@@ -187,7 +187,9 @@ def _git_commit(root: Path) -> str:
 def make_monthly_forecast(root: Path = ROOT) -> Path:
     frame, _, panel, layout, config = prepare(root)
     origin = layout.production_origin
-    test = panel[(panel["origin_position"] == origin) & panel["eligible"]].copy()
+    # Production has no t+1 label yet. Keep research eligibility strict, but
+    # allow an unscored ledger row when the as-of feature history is available.
+    test = panel[(panel["origin_position"] == origin) & panel["observed"].eq(1) & panel["origin_position"].gt(int(config["minimum_history_months"]))].copy()
     train = panel[(panel["origin_position"] < origin) & panel["eligible"]].copy()
     if test.empty:
         raise RuntimeError("No eligible indicators at production origin")
