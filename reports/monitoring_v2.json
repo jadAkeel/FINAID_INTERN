@@ -1,0 +1,12 @@
+{
+  "accepted_cap_ok": true,
+  "accepted_count": 6,
+  "final_model_exists": true,
+  "locked_audit_v1_exists": true,
+  "monitoring_claim": "artifact_integrity_only_no_live_production_claim",
+  "production_ledger_exists": true,
+  "production_status": [
+    "UNSCORED_JUNE_2026"
+  ],
+  "target_unscored": true
+}

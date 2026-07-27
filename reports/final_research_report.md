@@ -26,7 +26,6 @@ Level-C v2 fits Platt calibration, a correctness model, a six-month date-block b
 - Level-C bootstrap LCB p10: `0.546492`
 
 Generated metric artifacts:
-- `reports\tables\all_metrics.csv`
 - `reports\tables\catboost_full_v2_metrics.csv`
 - `reports\tables\dev_ensemble_metrics.csv`
 - `reports\tables\dev_ensemble_v2_metrics.csv`

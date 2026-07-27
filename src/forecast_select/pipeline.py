@@ -5,19 +5,21 @@ import platform
 import shutil
 import time
 from pathlib import Path
-from typing import Iterable
+from typing import Any, Iterable
 
 import numpy as np
 import pandas as pd
 import yaml
 
 from .features import build_feature_panel
-from .io import atomic_write_json, load_workbook, sha256_file
+from .io import atomic_write_json, atomic_write_parquet, load_workbook, sha256_file
 from .calibration import evaluate_level_c, score_level_c
 from .metrics import classification_metrics, monthly_block_bootstrap, selective_metrics
 from .models import baseline_probability, fit_catboost, fit_global_logistic, predict_fitted
 from .targets import build_targets
 from .validation import ValidationLayout, assert_no_same_month_training, assert_target_alignment, make_layout
+from .pretrained import local_pretrained_preflight
+from .schemas import validate_oof_columns
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -96,7 +98,8 @@ def run_backtest(root: Path = ROOT, models: Iterable[str] | None = None, origins
             all_rows.append(_prediction_rows(origin, train, test, model_id, probs, config["run_id"], data_hash, config_hash, config["feature_version"], time.perf_counter() - started, error))
     result = pd.concat(all_rows, ignore_index=True) if all_rows else pd.DataFrame()
     output.parent.mkdir(parents=True, exist_ok=True)
-    result.to_parquet(output, index=False)
+    validate_oof_columns(result.columns.tolist())
+    atomic_write_parquet(result, output)
     return output
 
 
@@ -242,7 +245,8 @@ def run_ensemble(root: Path = ROOT, output_name: str = "dev_ensemble_v2.parquet"
     output = root / "artifacts/oof_predictions" / output_name
     if output.exists():
         raise FileExistsError(f"Immutable artifact already exists: {output}")
-    result.to_parquet(output, index=False)
+    validate_oof_columns(result.columns.tolist())
+    atomic_write_parquet(result, output)
     evaluate_artifact(root, output, "dev_ensemble_v2", read_config(root)["reliability_floor"])
     return output
 
@@ -257,7 +261,8 @@ def run_level_c(root: Path = ROOT, input_name: str = "dev_ensemble_v2.parquet", 
     config = read_config(root)
     level_b = pd.read_parquet(source)
     level_c = score_level_c(level_b, level_b, floor=float(config["reliability_floor"]), cap=int(config["max_accept_per_month"]), min_history_months=12, block_months=int(config["bootstrap_blocks"]), bootstrap_replicates=200, seed=int(config["seed"]))
-    level_c.to_parquet(output, index=False)
+    validate_oof_columns(level_c.columns.tolist())
+    atomic_write_parquet(level_c, output)
     summary = evaluate_level_c(level_c, float(config["reliability_floor"]), block_months=int(config["bootstrap_blocks"]), bootstrap_replicates=int(config["bootstrap_replicates"]), seed=int(config["seed"]))
     summary["artifact"] = str(output.relative_to(root))
     atomic_write_json(summary, root / "reports/experiments/level_c_dev_summary.json")
@@ -266,6 +271,69 @@ def run_level_c(root: Path = ROOT, input_name: str = "dev_ensemble_v2.parquet", 
     report.extend(f"- {key}: `{value}`" for key, value in summary.items())
     (root / "reports/level_c_report.md").write_text("\n".join(report) + "\n", encoding="utf-8")
     return output
+
+
+def write_features(root: Path = ROOT, output_name: str = "feature_panel_v2.parquet") -> Path:
+    _, _, panel, _, _ = prepare(root)
+    output = root / "data/processed" / output_name
+    if output.exists():
+        raise FileExistsError(f"Immutable feature artifact already exists: {output}")
+    atomic_write_parquet(panel, output)
+    return output
+
+
+def train_final(root: Path = ROOT) -> Path:
+    frame, _, panel, layout, config = prepare(root)
+    train = panel[(panel["origin_position"] < layout.production_origin) & panel["eligible"]].copy()
+    fitted = fit_global_logistic(train, int(config["seed"]))
+    model_path = root / "artifacts/model_registry/global_logistic_final_v2.joblib"
+    summary_path = root / "artifacts/model_registry/final_training_v2.json"
+    if model_path.exists() or summary_path.exists():
+        raise FileExistsError("Final training v2 artifacts already exist")
+    import joblib
+    temporary = model_path.with_name(f".{model_path.name}.tmp")
+    joblib.dump(fitted, temporary)
+    temporary.replace(model_path)
+    summary = {
+        "model_id": "global_logistic",
+        "model_version": "final_v2",
+        "artifact": str(model_path.relative_to(root)),
+        "training_rows": int(len(train)),
+        "training_origin_max": int(train["origin_position"].max()),
+        "production_origin": int(layout.production_origin),
+        "data_hash": sha256_file(root / config["data_path"]),
+        "config_hash": sha256_file(root / "configs/config.yaml"),
+        "seed": int(config["seed"]),
+        "locked_audit_used_for_selection": False,
+        "study_label": "revised_data_pseudo_out_of_sample",
+    }
+    atomic_write_json(summary, summary_path)
+    return summary_path
+
+
+def pretrained_preflight(root: Path = ROOT) -> Path:
+    return local_pretrained_preflight(root)
+
+
+def run_monitor(root: Path = ROOT) -> Path:
+    config = read_config(root)
+    checks: dict[str, Any] = {}
+    locked = root / "artifacts/oof_predictions/locked_audit_v1.parquet"
+    final_model = root / "artifacts/model_registry/global_logistic_final_v2.joblib"
+    ledger = root / "artifacts/forecast_ledgers/june_2026_unscored_v3.csv"
+    checks["locked_audit_v1_exists"] = locked.exists()
+    checks["final_model_exists"] = final_model.exists()
+    checks["production_ledger_exists"] = ledger.exists()
+    if ledger.exists():
+        production = pd.read_csv(ledger)
+        checks["production_status"] = production["forecast_status"].dropna().unique().tolist()
+        checks["accepted_count"] = int(production["accepted"].sum())
+        checks["accepted_cap_ok"] = checks["accepted_count"] <= int(config["max_accept_per_month"])
+        checks["target_unscored"] = bool(production["target_date"].isna().all())
+    checks["monitoring_claim"] = "artifact_integrity_only_no_live_production_claim"
+    path = root / "reports/monitoring_v2.json"
+    atomic_write_json(checks, path)
+    return path
 
 
 def run_audit(root: Path = ROOT) -> Path:
@@ -315,7 +383,12 @@ def make_monthly_forecast(root: Path = ROOT) -> Path:
     train = panel[(panel["origin_position"] < origin) & panel["eligible"]].copy()
     if test.empty:
         raise RuntimeError("No eligible indicators at production origin")
-    model = fit_global_logistic(train, config["seed"])
+    final_model_path = root / "artifacts/model_registry/global_logistic_final_v2.joblib"
+    if final_model_path.exists():
+        import joblib
+        model = joblib.load(final_model_path)
+    else:
+        model = fit_global_logistic(train, config["seed"])
     test["p_up"] = predict_fitted(model, test)
     test["predicted_direction"] = np.where(test["p_up"] >= 0.5, "Up", "Down")
     level_b_path = root / "artifacts/oof_predictions/dev_ensemble_v2.parquet"
@@ -331,8 +404,12 @@ def make_monthly_forecast(root: Path = ROOT) -> Path:
     else:
         test = score_level_c(history, test, floor=float(config["reliability_floor"]), cap=int(config["max_accept_per_month"]), min_history_months=12, block_months=int(config["bootstrap_blocks"]), bootstrap_replicates=200, seed=int(config["seed"]))
     test["forecast_status"] = "UNSCORED_JUNE_2026"
-    cols = ["origin_position", "origin_date", "target_date", "indicator_id", "p_up", "p_up_calibrated", "predicted_direction", "correctness_probability", "correctness_lcb", "accepted", "selection_rank", "rejection_reason", "forecast_status"]
-    output = root / "artifacts/forecast_ledgers/june_2026_unscored_v2.csv"
+    test["final_model_version"] = "global_logistic_final_v2"
+    test["level_b_history_artifact"] = str(level_b_path.relative_to(root)) if level_b_path.exists() else "none"
+    test["locked_audit_used_for_selection"] = False
+    test["data_hash"] = sha256_file(root / config["data_path"])
+    cols = ["origin_position", "origin_date", "target_date", "indicator_id", "p_up", "p_up_calibrated", "predicted_direction", "correctness_probability", "correctness_lcb", "accepted", "selection_rank", "rejection_reason", "final_model_version", "level_b_history_artifact", "locked_audit_used_for_selection", "data_hash", "forecast_status"]
+    output = root / "artifacts/forecast_ledgers/june_2026_unscored_v3.csv"
     if output.exists():
         raise FileExistsError(f"Forecast ledger already exists: {output}")
     test[cols].to_csv(output, index=False)

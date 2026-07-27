@@ -32,6 +32,14 @@ def atomic_write_json(payload: Any, path: str | Path) -> None:
             os.unlink(tmp)
 
 
+def atomic_write_parquet(frame: pd.DataFrame, path: str | Path) -> None:
+    target = Path(path)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    temporary = target.with_name(f".{target.name}.tmp")
+    frame.to_parquet(temporary, index=False, engine="pyarrow")
+    os.replace(temporary, target)
+
+
 def load_workbook(path: str | Path) -> pd.DataFrame:
     frame = pd.read_excel(path, sheet_name="Sheet1", engine="openpyxl")
     if frame.empty or frame.columns[0] != "Dates":

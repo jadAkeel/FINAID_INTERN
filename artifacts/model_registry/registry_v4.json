@@ -1,0 +1,29 @@
+{
+  "registry_version": "v4",
+  "locked_audit_v1_immutable": true,
+  "locked_audit_v1_used_for_selection": false,
+  "components": {
+    "global_logistic_final_v2": {
+      "status": "final_unscored_ledger_model",
+      "artifact": "artifacts/model_registry/global_logistic_final_v2.joblib"
+    },
+    "catboost_global_full_v2": {
+      "status": "rejected_challenger",
+      "artifact": "artifacts/oof_predictions/catboost_full_v2.parquet",
+      "metrics": "reports/tables/catboost_full_v2_metrics.csv"
+    },
+    "level_c_v2": {
+      "status": "development_selective_policy",
+      "artifact": "artifacts/oof_predictions/dev_level_c_v2.parquet"
+    }
+  },
+  "pretrained": {
+    "status": "blocked_local_preflight",
+    "report": "reports/experiments/pretrained_local_check_v2.json"
+  },
+  "claims": {
+    "pdf_65_percent": "NOT_YET_EVALUABLE",
+    "real_time_vintage_backtest": false,
+    "production_readiness": false
+  }
+}

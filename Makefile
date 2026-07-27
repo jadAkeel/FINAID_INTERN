@@ -2,6 +2,12 @@ PYTHON ?= python
 
 audit:
 	$(PYTHON) -m forecast_select audit
+features:
+	$(PYTHON) -m forecast_select features
+pretrained-backtest:
+	$(PYTHON) -m forecast_select pretrained-backtest
+monitor:
+	$(PYTHON) -m forecast_select monitor
 test:
 	$(PYTHON) -m pytest
 test-leakage:

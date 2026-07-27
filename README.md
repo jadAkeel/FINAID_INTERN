@@ -7,6 +7,11 @@ Reproducible, leakage-safe monthly directional forecasting for anonymous indicat
 ```powershell
 python -m pip install -e .
 python -m forecast_select audit
+python -m forecast_select features
+python -m forecast_select pretrained-backtest
+python -m forecast_select train-final
+python -m forecast_select predict-month
+python -m forecast_select monitor
 python -m pytest
 python -m forecast_select backtest --models classical
 python -m forecast_select catboost-full --chunk-size 8 --chunk-index 0

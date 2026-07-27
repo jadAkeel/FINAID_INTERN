@@ -1,0 +1,42 @@
+{
+  "candidates": {
+    "chronos_2": {
+      "compatible_local_checkpoint": false,
+      "installed_candidates": [],
+      "official_api_verified": false,
+      "package_candidates": [
+        "chronos",
+        "chronos2"
+      ],
+      "reason": "No verified local package/API and compatible checkpoint; no download or external API access attempted.",
+      "smoke_test": "not_run",
+      "status": "blocked"
+    },
+    "timesfm": {
+      "compatible_local_checkpoint": false,
+      "installed_candidates": [],
+      "official_api_verified": false,
+      "package_candidates": [
+        "timesfm"
+      ],
+      "reason": "No verified local package/API and compatible checkpoint; no download or external API access attempted.",
+      "smoke_test": "not_run",
+      "status": "blocked"
+    },
+    "tirex_2": {
+      "compatible_local_checkpoint": false,
+      "installed_candidates": [],
+      "official_api_verified": false,
+      "package_candidates": [
+        "tirex",
+        "tirex2"
+      ],
+      "reason": "No verified local package/API and compatible checkpoint; no download or external API access attempted.",
+      "smoke_test": "not_run",
+      "status": "blocked"
+    }
+  },
+  "checkpoint_files_in_cache": [],
+  "claims_allowed": false,
+  "mode": "local_only_no_external_data"
+}

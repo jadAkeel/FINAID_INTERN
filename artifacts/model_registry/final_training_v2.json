@@ -1,0 +1,13 @@
+{
+  "artifact": "artifacts\\model_registry\\global_logistic_final_v2.joblib",
+  "config_hash": "099a8ddd4379c6ea0090ee11c2de0265ab92ddc14e109c228941ac51db826a2a",
+  "data_hash": "8f9fc27ae0a33f4a25d1241b7d896b56ba7515d4ad7e984999f0c5fe42b20d29",
+  "locked_audit_used_for_selection": false,
+  "model_id": "global_logistic",
+  "model_version": "final_v2",
+  "production_origin": 316,
+  "seed": 20260727,
+  "study_label": "revised_data_pseudo_out_of_sample",
+  "training_origin_max": 315,
+  "training_rows": 11421
+}

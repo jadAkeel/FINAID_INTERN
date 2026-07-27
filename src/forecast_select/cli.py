@@ -5,13 +5,16 @@ import json
 from pathlib import Path
 
 from .io import immutable_inventory
-from .pipeline import ROOT, assemble_catboost_full_v2, evaluate_artifact, make_freeze_manifest, make_monthly_forecast, prepare, read_config, run_audit, run_backtest, run_catboost_chunk, run_catboost_full_v2, run_ensemble, run_level_c
+from .pipeline import ROOT, evaluate_artifact, make_freeze_manifest, make_monthly_forecast, prepare, pretrained_preflight, read_config, run_audit, run_backtest, run_catboost_full_v2, run_ensemble, run_level_c, run_monitor, train_final, write_features
 
 
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="forecast-select")
     sub = parser.add_subparsers(dest="command", required=True)
     sub.add_parser("audit")
+    sub.add_parser("features")
+    sub.add_parser("pretrained-backtest")
+    sub.add_parser("monitor")
     backtest = sub.add_parser("backtest")
     backtest.add_argument("--models", choices=["baselines", "classical", "catboost", "all"], default="classical")
     sub.add_parser("ensemble")
@@ -35,6 +38,12 @@ def main(argv: list[str] | None = None) -> int:
         inventory = immutable_inventory(root.parent.parent / "Downloads", root / "reports/source_inventory.json")
         path = run_audit(root)
         print(json.dumps({"inventory": inventory, "data_profile": str(path)}, indent=2))
+    elif args.command == "features":
+        print(write_features(root))
+    elif args.command == "pretrained-backtest":
+        print(pretrained_preflight(root))
+    elif args.command == "monitor":
+        print(run_monitor(root))
     elif args.command == "backtest":
         baseline = ["majority", "persistence", "reversal", "momentum_3", "momentum_6", "momentum_12", "mean_reversion", "ar1", "ar2"]
         models = baseline if args.models == "baselines" else baseline + ["global_logistic"] if args.models == "classical" else ["catboost_global"] if args.models == "catboost" else read_config(root)["models"]
@@ -59,7 +68,7 @@ def main(argv: list[str] | None = None) -> int:
         evaluate_artifact(root, path, "locked_audit_v1", config["reliability_floor"])
         print(path)
     elif args.command == "train-final":
-        print("Final training is represented by the frozen global_logistic method; no new audit evaluation is performed.")
+        print(train_final(root))
     elif args.command == "predict-month":
         print(make_monthly_forecast(root))
     elif args.command == "report":

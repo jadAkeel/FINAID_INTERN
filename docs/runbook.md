@@ -13,4 +13,11 @@ Run from the repository root with the same Python environment used for the tests
 9. `python -m forecast_select predict-month` creates the v2 June 2026 ledger with calibrated correctness fields and marks it `UNSCORED_JUNE_2026`.
 10. `python -m forecast_select report` writes the final report from actual artifacts.
 
+Additional local checks:
+
+- `python -m forecast_select features` writes an immutable processed feature artifact.
+- `python -m forecast_select pretrained-backtest` performs package/checkpoint preflight only and records blocked candidates when local prerequisites are absent.
+- `python -m forecast_select train-final` writes the final Logistic artifact and provenance; it does not redesign or rerun the locked audit.
+- `python -m forecast_select monitor` performs artifact-integrity monitoring only.
+
 Artifacts are immutable by design: a rerun with changed code/configuration uses a new output name and audit version. Do not overwrite the source files or redesign after inspecting the locked audit.
