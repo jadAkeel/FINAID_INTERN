@@ -1,0 +1,31 @@
+{
+  "models": [
+    {
+      "evidence": "reports/tables/dev_metrics.csv",
+      "model_id": "global_logistic",
+      "status": "promoted_to_classical_gate",
+      "version": "v1"
+    },
+    {
+      "evidence": "reports/tables/dev_ensemble_metrics.csv",
+      "model_id": "ensemble_equal_weight",
+      "status": "provisional",
+      "version": "v1"
+    },
+    {
+      "model_id": "chronos_2",
+      "reason": "chronos package unavailable; official interface not verified",
+      "status": "blocked"
+    },
+    {
+      "model_id": "tirex_2",
+      "reason": "package/interface unavailable",
+      "status": "blocked"
+    },
+    {
+      "model_id": "timesfm",
+      "reason": "package/interface unavailable",
+      "status": "blocked"
+    }
+  ]
+}
