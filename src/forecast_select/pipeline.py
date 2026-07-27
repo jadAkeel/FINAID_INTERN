@@ -12,6 +12,7 @@ import yaml
 
 from .features import build_feature_panel
 from .io import atomic_write_json, load_workbook, sha256_file
+from .calibration import evaluate_level_c, score_level_c
 from .metrics import classification_metrics, monthly_block_bootstrap, selective_metrics
 from .models import baseline_probability, fit_catboost, fit_global_logistic, predict_fitted
 from .targets import build_targets
@@ -113,13 +114,15 @@ def evaluate_artifact(root: Path, artifact: Path, label: str, floor: float) -> p
     return table
 
 
-def run_ensemble(root: Path = ROOT) -> Path:
-    source = root / "artifacts/oof_predictions/dev_classical_oof.parquet"
-    if not source.exists():
-        source = root / "artifacts/oof_predictions/dev_oof.parquet"
-    if not source.exists():
+def run_ensemble(root: Path = ROOT, output_name: str = "dev_ensemble_v2.parquet") -> Path:
+    sources = [root / "artifacts/oof_predictions/dev_classical_oof.parquet", root / "artifacts/oof_predictions/dev_catboost_oof.parquet"]
+    sources = [path for path in sources if path.exists()]
+    if not sources:
+        sources = [root / "artifacts/oof_predictions/dev_oof.parquet"]
+    if not sources[0].exists():
         run_backtest(root, output_name="dev_oof.parquet")
-    predictions = pd.read_parquet(source)
+        sources = [root / "artifacts/oof_predictions/dev_oof.parquet"]
+    predictions = pd.concat([pd.read_parquet(path) for path in sources], ignore_index=True)
     usable = predictions[predictions["p_up"].notna()].copy()
     priority = ["global_logistic", "catboost_global", "persistence", "majority"]
     available = [m for m in priority if m in set(usable["model_id"])]
@@ -131,18 +134,39 @@ def run_ensemble(root: Path = ROOT) -> Path:
         # Constrained equal-weight ensemble is pre-registered and does not tune on audit data.
         row = chosen.iloc[0].copy()
         row["model_id"] = "ensemble_equal_weight"
-        row["model_version"] = "v1"
+        row["model_version"] = "v2"
         row["p_up_raw"] = float(chosen["p_up_raw"].mean())
         row["p_up"] = row["p_up_raw"]
         row["predicted_direction"] = "Up" if row["p_up"] >= 0.5 else "Down"
         row["error_flag"] = bool(chosen["error_flag"].any())
         pieces.append(row)
     result = pd.DataFrame(pieces)
-    output = root / "artifacts/oof_predictions/dev_ensemble.parquet"
+    output = root / "artifacts/oof_predictions" / output_name
     if output.exists():
         raise FileExistsError(f"Immutable artifact already exists: {output}")
     result.to_parquet(output, index=False)
-    evaluate_artifact(root, output, "dev_ensemble", read_config(root)["reliability_floor"])
+    evaluate_artifact(root, output, "dev_ensemble_v2", read_config(root)["reliability_floor"])
+    return output
+
+
+def run_level_c(root: Path = ROOT, input_name: str = "dev_ensemble_v2.parquet", output_name: str = "dev_level_c_v2.parquet") -> Path:
+    source = root / "artifacts/oof_predictions" / input_name
+    if not source.exists():
+        raise FileNotFoundError(f"Level-B artifact is required: {source}")
+    output = root / "artifacts/oof_predictions" / output_name
+    if output.exists():
+        raise FileExistsError(f"Immutable artifact already exists: {output}")
+    config = read_config(root)
+    level_b = pd.read_parquet(source)
+    level_c = score_level_c(level_b, level_b, floor=float(config["reliability_floor"]), cap=int(config["max_accept_per_month"]), min_history_months=12, block_months=int(config["bootstrap_blocks"]), bootstrap_replicates=200, seed=int(config["seed"]))
+    level_c.to_parquet(output, index=False)
+    summary = evaluate_level_c(level_c, float(config["reliability_floor"]), block_months=int(config["bootstrap_blocks"]), bootstrap_replicates=int(config["bootstrap_replicates"]), seed=int(config["seed"]))
+    summary["artifact"] = str(output.relative_to(root))
+    atomic_write_json(summary, root / "reports/experiments/level_c_dev_summary.json")
+    pd.DataFrame([summary]).to_csv(root / "reports/tables/level_c_dev_metrics.csv", index=False)
+    report = ["# Level-C calibration and reliability", "", "All calibration, correctness, date-block bootstrap, and selection decisions are fit at each origin from strictly earlier Level-B rows. The locked `locked_audit_v1` artifact is not read or used.", "", f"- Reliability floor: {config['reliability_floor']}", f"- Monthly cap: {config['max_accept_per_month']}", f"- Bootstrap block: {config['bootstrap_blocks']} months", "", "## Development summary", ""]
+    report.extend(f"- {key}: `{value}`" for key, value in summary.items())
+    (root / "reports/level_c_report.md").write_text("\n".join(report) + "\n", encoding="utf-8")
     return output
 
 
@@ -196,14 +220,21 @@ def make_monthly_forecast(root: Path = ROOT) -> Path:
     model = fit_global_logistic(train, config["seed"])
     test["p_up"] = predict_fitted(model, test)
     test["predicted_direction"] = np.where(test["p_up"] >= 0.5, "Up", "Down")
-    test["correctness_probability"] = np.maximum(test["p_up"], 1 - test["p_up"])
-    test["correctness_lcb"] = test["correctness_probability"]
-    test["accepted"] = False
-    test["rejection_reason"] = "unscored_production_forecast_policy_requires_future_calibration"
-    test = test.sort_values("correctness_lcb", ascending=False).head(config["max_accept_per_month"])
+    level_b_path = root / "artifacts/oof_predictions/dev_ensemble_v2.parquet"
+    if not level_b_path.exists():
+        level_b_path = root / "artifacts/oof_predictions/dev_ensemble.parquet"
+    history = pd.read_parquet(level_b_path) if level_b_path.exists() else pd.DataFrame()
+    if history.empty:
+        test["correctness_probability"] = np.maximum(test["p_up"], 1 - test["p_up"])
+        test["correctness_lcb"] = test["correctness_probability"]
+        test["accepted"] = False
+        test["selection_rank"] = np.nan
+        test["rejection_reason"] = "missing_level_b_history"
+    else:
+        test = score_level_c(history, test, floor=float(config["reliability_floor"]), cap=int(config["max_accept_per_month"]), min_history_months=12, block_months=int(config["bootstrap_blocks"]), bootstrap_replicates=200, seed=int(config["seed"]))
     test["forecast_status"] = "UNSCORED_JUNE_2026"
-    cols = ["origin_position", "origin_date", "target_date", "indicator_id", "p_up", "predicted_direction", "correctness_probability", "correctness_lcb", "accepted", "rejection_reason", "forecast_status"]
-    output = root / "artifacts/forecast_ledgers/june_2026_unscored.csv"
+    cols = ["origin_position", "origin_date", "target_date", "indicator_id", "p_up", "p_up_calibrated", "predicted_direction", "correctness_probability", "correctness_lcb", "accepted", "selection_rank", "rejection_reason", "forecast_status"]
+    output = root / "artifacts/forecast_ledgers/june_2026_unscored_v2.csv"
     if output.exists():
         raise FileExistsError(f"Forecast ledger already exists: {output}")
     test[cols].to_csv(output, index=False)

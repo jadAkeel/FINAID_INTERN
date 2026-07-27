@@ -14,10 +14,11 @@ The Codex orchestrator owns shared interfaces, phase gates, freeze, audit, and i
 | W1-VALIDATION | orchestrator | W0-SKELETON | completed | `src/forecast_select/validation.py`, leakage tests |
 | W1-FEATURES | orchestrator | W1-TARGET | completed | `src/forecast_select/features.py` |
 | W2-BASELINES | orchestrator | W1 gate | completed | `artifacts/oof_predictions/dev_oof.parquet` |
-| W3-CLASSICAL | orchestrator | W2 gate | completed | global logistic and CatBoost-capable branch |
-| W7-ENSEMBLE | orchestrator | W3 gate | completed | `artifacts/oof_predictions/dev_ensemble.parquet` |
+| W3-CLASSICAL | orchestrator | W2 gate | partial/timeout | Logistic completed; full CatBoost timed out at bounded limit |
+| W7-ENSEMBLE | orchestrator | W3 gate | completed | `artifacts/oof_predictions/dev_ensemble_v2.parquet` |
+| W7-LEVEL-C | orchestrator | W7-ENSEMBLE | completed | `artifacts/oof_predictions/dev_level_c_v2.parquet` |
 | W8-FREEZE | orchestrator | review/tests | completed | `artifacts/model_registry/freeze_manifest_v1.json` |
 | W8-AUDIT | orchestrator | W8-FREEZE | completed | `artifacts/oof_predictions/locked_audit_v1.parquet` |
-| W8-PRODUCTION | orchestrator | W8-AUDIT | completed | `artifacts/forecast_ledgers/june_2026_unscored.csv` |
+| W8-PRODUCTION | orchestrator | W8-AUDIT | completed | `artifacts/forecast_ledgers/june_2026_unscored_v2.csv` |
 
 Parallelism is used only for read-only planning and independent checks. Shared schemas and the locked audit remain serial.

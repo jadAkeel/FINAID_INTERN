@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 
 from .io import immutable_inventory
-from .pipeline import ROOT, evaluate_artifact, make_freeze_manifest, make_monthly_forecast, prepare, read_config, run_audit, run_backtest, run_ensemble
+from .pipeline import ROOT, evaluate_artifact, make_freeze_manifest, make_monthly_forecast, prepare, read_config, run_audit, run_backtest, run_ensemble, run_level_c
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -13,8 +13,9 @@ def _parser() -> argparse.ArgumentParser:
     sub = parser.add_subparsers(dest="command", required=True)
     sub.add_parser("audit")
     backtest = sub.add_parser("backtest")
-    backtest.add_argument("--models", choices=["baselines", "classical", "all"], default="classical")
+    backtest.add_argument("--models", choices=["baselines", "classical", "catboost", "all"], default="classical")
     sub.add_parser("ensemble")
+    sub.add_parser("level-c")
     sub.add_parser("freeze")
     sub.add_parser("locked-audit")
     sub.add_parser("train-final")
@@ -32,13 +33,15 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps({"inventory": inventory, "data_profile": str(path)}, indent=2))
     elif args.command == "backtest":
         baseline = ["majority", "persistence", "reversal", "momentum_3", "momentum_6", "momentum_12", "mean_reversion", "ar1", "ar2"]
-        models = baseline if args.models == "baselines" else baseline + ["global_logistic"] if args.models == "classical" else read_config(root)["models"]
-        output_name = {"baselines": "dev_oof.parquet", "classical": "dev_classical_oof.parquet", "all": "dev_all_oof.parquet"}[args.models]
+        models = baseline if args.models == "baselines" else baseline + ["global_logistic"] if args.models == "classical" else ["catboost_global"] if args.models == "catboost" else read_config(root)["models"]
+        output_name = {"baselines": "dev_oof.parquet", "classical": "dev_classical_oof.parquet", "catboost": "dev_catboost_oof.parquet", "all": "dev_all_oof.parquet"}[args.models]
         path = run_backtest(root, models=models, output_name=output_name)
-        evaluate_artifact(root, path, "dev", read_config(root)["reliability_floor"])
+        evaluate_artifact(root, path, f"dev_{args.models}", read_config(root)["reliability_floor"])
         print(path)
     elif args.command == "ensemble":
         print(run_ensemble(root))
+    elif args.command == "level-c":
+        print(run_level_c(root))
     elif args.command == "freeze":
         print(make_freeze_manifest(root))
     elif args.command == "locked-audit":

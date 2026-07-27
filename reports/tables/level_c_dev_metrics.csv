@@ -1,0 +1,2 @@
+ready_rows,ready_months,full_accuracy,calibrated_brier,correctness_brier,accepted,coverage,accepted_accuracy,lcb_p10,lcb_p90,artifact
+5946,136,0.5541540531449715,0.2485071530438236,0.24857841985520457,1414,0.23780692902791792,0.5643564356435643,0.5464918598625425,0.618530223075804,artifacts\oof_predictions\dev_level_c_v2.parquet

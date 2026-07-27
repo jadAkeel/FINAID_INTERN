@@ -6,5 +6,4 @@ The feature builder applies a conservative one-month as-of lag because release l
 
 Development origins are positions 120–267. The locked audit is positions 268–315, whose targets end at the final supplied row. Position 316 (May 2026) is the production origin for an unscored June 2026 ledger.
 
-The bounded execution completed baselines, the global Logistic anchor, and a pre-registered equal-weight Level-B artifact. It intentionally did not run full CatBoost walk-forward, pretrained models, hyperparameter search, or a Level-C calibrated correctness meta-model.
-
+The v2 execution completed baselines, the global Logistic anchor, a pre-registered equal-weight Level-B artifact, and a per-origin Level-C calibration/reliability layer. Full CatBoost walk-forward was attempted with a 300-second bound but timed out; only its one-origin smoke test remains available. Pretrained models and broad hyperparameter search remain blocked/not run.
