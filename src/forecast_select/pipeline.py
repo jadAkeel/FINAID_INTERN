@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import platform
+import shutil
 import time
 from pathlib import Path
 from typing import Iterable
@@ -97,6 +98,103 @@ def run_backtest(root: Path = ROOT, models: Iterable[str] | None = None, origins
     output.parent.mkdir(parents=True, exist_ok=True)
     result.to_parquet(output, index=False)
     return output
+
+
+def catboost_chunk_origins(layout: ValidationLayout, chunk_size: int = 8) -> list[tuple[int, ...]]:
+    if chunk_size < 1:
+        raise ValueError("chunk_size must be positive")
+    origins = list(layout.development_origins)
+    return [tuple(origins[start:start + chunk_size]) for start in range(0, len(origins), chunk_size)]
+
+
+def _catboost_checkpoint_dir(root: Path) -> Path:
+    return root / "artifacts/oof_predictions/.checkpoints/catboost_full_v2"
+
+
+def _catboost_manifest(root: Path, layout: ValidationLayout, config: dict, chunk_size: int) -> dict:
+    source_hash = sha256_file(root / config["data_path"])
+    return {"version": "catboost_full_v2", "model_id": "catboost_global", "origin_set": list(layout.development_origins), "chunk_size": chunk_size, "seed": int(config["seed"]), "data_hash": source_hash, "feature_version": config["feature_version"], "status": "in_progress", "chunks": {}}
+
+
+def run_catboost_chunk(root: Path = ROOT, chunk_index: int = 0, chunk_size: int = 8) -> Path:
+    _, _, _, layout, config = prepare(root)
+    chunks = catboost_chunk_origins(layout, chunk_size)
+    if chunk_index < 0 or chunk_index >= len(chunks):
+        raise IndexError(f"chunk_index must be in [0, {len(chunks) - 1}]")
+    checkpoint_dir = _catboost_checkpoint_dir(root)
+    checkpoint_dir.mkdir(parents=True, exist_ok=True)
+    manifest_path = checkpoint_dir / "manifest.json"
+    expected = _catboost_manifest(root, layout, config, chunk_size)
+    if manifest_path.exists():
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        for key in ("version", "origin_set", "chunk_size", "seed", "data_hash", "feature_version"):
+            if manifest.get(key) != expected[key]:
+                raise ValueError(f"Checkpoint manifest mismatch for {key}; use a new version or remove only the temporary checkpoint directory")
+    else:
+        manifest = expected
+        atomic_write_json(manifest, manifest_path)
+    output = checkpoint_dir / f"chunk_{chunk_index:03d}.parquet"
+    if output.exists():
+        existing = pd.read_parquet(output)
+        if set(existing["origin_position"].unique()) != set(chunks[chunk_index]):
+            raise ValueError(f"Existing checkpoint has wrong origins: {output}")
+        return output
+    started = time.perf_counter()
+    run_backtest(root, models=["catboost_global"], origins=chunks[chunk_index], output_name=str(output.relative_to(root / "artifacts/oof_predictions")))
+    result = pd.read_parquet(output)
+    if set(result["origin_position"].unique()) != set(chunks[chunk_index]):
+        raise RuntimeError(f"Chunk did not cover its assigned origins: {output}")
+    manifest["chunks"][str(chunk_index)] = {"status": "complete", "origins": list(chunks[chunk_index]), "rows": int(len(result)), "runtime_seconds": time.perf_counter() - started, "path": str(output.relative_to(root))}
+    atomic_write_json(manifest, manifest_path)
+    return output
+
+
+def assemble_catboost_full_v2(root: Path = ROOT, chunk_size: int = 8) -> Path:
+    _, _, panel, layout, config = prepare(root)
+    chunks = catboost_chunk_origins(layout, chunk_size)
+    checkpoint_dir = _catboost_checkpoint_dir(root)
+    manifest_path = checkpoint_dir / "manifest.json"
+    if not manifest_path.exists():
+        raise FileNotFoundError("CatBoost checkpoint manifest is missing")
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    paths = [checkpoint_dir / f"chunk_{index:03d}.parquet" for index in range(len(chunks))]
+    missing = [str(path) for path in paths if not path.exists()]
+    if missing:
+        raise RuntimeError(f"Cannot assemble incomplete CatBoost run; missing chunks: {missing}")
+    result = pd.concat([pd.read_parquet(path) for path in paths], ignore_index=True)
+    expected = panel[panel["origin_position"].isin(layout.development_origins) & panel["eligible"]].groupby("origin_position").size().sort_index()
+    actual = result.groupby("origin_position").size().sort_index()
+    if set(result["origin_position"].unique()) != set(layout.development_origins) or not expected.equals(actual) or result.duplicated(["origin_position", "indicator_id", "model_id"]).any():
+        raise RuntimeError("CatBoost assembly failed origin/eligibility/duplicate validation")
+    if result["error_flag"].any() or result["p_up"].isna().any():
+        raise RuntimeError("CatBoost assembly contains failed rows; final artifact is not accepted")
+    result["model_version"] = "v2"
+    result = result.sort_values(["origin_position", "indicator_id"]).reset_index(drop=True)
+    final_path = root / "artifacts/oof_predictions/catboost_full_v2.parquet"
+    if final_path.exists():
+        raise FileExistsError(f"Immutable artifact already exists: {final_path}")
+    temporary = final_path.with_suffix(".parquet.tmp")
+    result.to_parquet(temporary, index=False, engine="pyarrow")
+    temporary.replace(final_path)
+    manifest["status"] = "complete"
+    manifest["final_artifact"] = str(final_path.relative_to(root))
+    manifest["final_rows"] = int(len(result))
+    manifest["final_origins"] = len(layout.development_origins)
+    manifest["assembled_at_utc"] = pd.Timestamp.utcnow().isoformat()
+    atomic_write_json(manifest, root / "reports/experiments/catboost_full_v2_provenance.json")
+    shutil.rmtree(checkpoint_dir)
+    return final_path
+
+
+def run_catboost_full_v2(root: Path = ROOT, chunk_size: int = 8, chunk_index: int | None = None, assemble: bool = False) -> Path:
+    if assemble:
+        return assemble_catboost_full_v2(root, chunk_size)
+    if chunk_index is not None:
+        return run_catboost_chunk(root, chunk_index, chunk_size)
+    _, _, _, layout, _ = prepare(root)
+    for index in range(len(catboost_chunk_origins(layout, chunk_size))):
+        run_catboost_chunk(root, index, chunk_size)
+    return assemble_catboost_full_v2(root, chunk_size)
 
 
 def evaluate_artifact(root: Path, artifact: Path, label: str, floor: float) -> pd.DataFrame:

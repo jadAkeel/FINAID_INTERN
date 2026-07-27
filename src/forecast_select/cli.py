@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 
 from .io import immutable_inventory
-from .pipeline import ROOT, evaluate_artifact, make_freeze_manifest, make_monthly_forecast, prepare, read_config, run_audit, run_backtest, run_ensemble, run_level_c
+from .pipeline import ROOT, assemble_catboost_full_v2, evaluate_artifact, make_freeze_manifest, make_monthly_forecast, prepare, read_config, run_audit, run_backtest, run_catboost_chunk, run_catboost_full_v2, run_ensemble, run_level_c
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -16,6 +16,10 @@ def _parser() -> argparse.ArgumentParser:
     backtest.add_argument("--models", choices=["baselines", "classical", "catboost", "all"], default="classical")
     sub.add_parser("ensemble")
     sub.add_parser("level-c")
+    catboost_full = sub.add_parser("catboost-full")
+    catboost_full.add_argument("--chunk-size", type=int, default=8)
+    catboost_full.add_argument("--chunk-index", type=int)
+    catboost_full.add_argument("--assemble", action="store_true")
     sub.add_parser("freeze")
     sub.add_parser("locked-audit")
     sub.add_parser("train-final")
@@ -42,6 +46,11 @@ def main(argv: list[str] | None = None) -> int:
         print(run_ensemble(root))
     elif args.command == "level-c":
         print(run_level_c(root))
+    elif args.command == "catboost-full":
+        path = run_catboost_full_v2(root, chunk_size=args.chunk_size, chunk_index=args.chunk_index, assemble=args.assemble)
+        if args.assemble or args.chunk_index is None:
+            evaluate_artifact(root, path, "catboost_full_v2", read_config(root)["reliability_floor"])
+        print(path)
     elif args.command == "freeze":
         print(make_freeze_manifest(root))
     elif args.command == "locked-audit":

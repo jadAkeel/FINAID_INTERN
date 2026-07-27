@@ -1,0 +1,33 @@
+{
+  "registry_version": "v3",
+  "audit_protection": {
+    "locked_audit_v1_immutable": true,
+    "locked_audit_v1_used_for_selection": false,
+    "catboost_full_v2_evaluated_on_development_only": true
+  },
+  "models": [
+    {
+      "model_id": "global_logistic",
+      "version": "v1",
+      "status": "classical_anchor",
+      "evidence": "reports/tables/dev_metrics.csv"
+    },
+    {
+      "model_id": "catboost_global",
+      "version": "full_v2",
+      "status": "rejected_challenger",
+      "evidence": "reports/tables/catboost_full_v2_metrics.csv",
+      "artifact": "artifacts/oof_predictions/catboost_full_v2.parquet",
+      "accuracy": 0.5233703298421135,
+      "brier": 0.2584846435777995,
+      "log_loss": 0.7120884612465926,
+      "reason": "No improvement over existing anchors; not used for Level-C or production selection"
+    },
+    {
+      "model_id": "level_c_calibration_reliability",
+      "version": "v2",
+      "status": "development_selective_policy",
+      "evidence": "artifacts/oof_predictions/dev_level_c_v2.parquet"
+    }
+  ]
+}

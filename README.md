@@ -9,7 +9,9 @@ python -m pip install -e .
 python -m forecast_select audit
 python -m pytest
 python -m forecast_select backtest --models classical
-python -m forecast_select backtest --models catboost
+python -m forecast_select catboost-full --chunk-size 8 --chunk-index 0
+# repeat chunks, then assemble:
+python -m forecast_select catboost-full --chunk-size 8 --assemble
 python -m forecast_select ensemble
 python -m forecast_select level-c
 python -m forecast_select freeze

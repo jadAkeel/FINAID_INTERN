@@ -24,3 +24,5 @@ opencode run --pure --agent reviewer --format json --dir C:\Users\10User\Documen
 ```
 
 It exceeded the 60-second limit and returned exit code `124` without changing files. No OpenCode review verdict is claimed.
+
+For the CatBoost v2 rerun, the local CLI was rechecked with `opencode --version` and returned `1.15.7`. The model execution itself remained local Python/CatBoost; no external API or data source was used.

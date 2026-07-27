@@ -12,6 +12,8 @@ classical-backtest:
 	$(PYTHON) -m forecast_select backtest --models classical
 catboost-backtest:
 	$(PYTHON) -m forecast_select backtest --models catboost
+catboost-full:
+	$(PYTHON) -m forecast_select catboost-full --chunk-size 8
 ensemble-backtest:
 	$(PYTHON) -m forecast_select ensemble
 level-c:
