@@ -1,0 +1,53 @@
+{
+  "registry_version": "v2",
+  "audit_protection": {
+    "locked_audit_v1_immutable": true,
+    "locked_audit_v1_used_for_selection": false,
+    "new_locked_audit_required_for_future_final_claims": true
+  },
+  "models": [
+    {
+      "model_id": "global_logistic",
+      "version": "v1",
+      "status": "classical_anchor",
+      "evidence": "reports/tables/dev_classical_metrics.csv"
+    },
+    {
+      "model_id": "catboost_global",
+      "version": "v1",
+      "status": "rejected_timeout",
+      "evidence": "EXPERIMENTS.csv",
+      "reason": "300-second bounded full walk-forward exceeded; one-origin smoke passed"
+    },
+    {
+      "model_id": "ensemble_equal_weight",
+      "version": "v2",
+      "status": "development_level_b",
+      "evidence": "artifacts/oof_predictions/dev_ensemble_v2.parquet"
+    },
+    {
+      "model_id": "level_c_calibration_reliability",
+      "version": "v2",
+      "status": "development_selective_policy",
+      "evidence": "artifacts/oof_predictions/dev_level_c_v2.parquet",
+      "method": "per-origin Platt + correctness Logistic + 6-month block bootstrap p10 LCB",
+      "floor": 0.55,
+      "max_accept_per_month": 20
+    },
+    {
+      "model_id": "chronos_2",
+      "status": "blocked",
+      "reason": "package/API not verified"
+    },
+    {
+      "model_id": "tirex_2",
+      "status": "blocked",
+      "reason": "package/API not verified"
+    },
+    {
+      "model_id": "timesfm",
+      "status": "blocked",
+      "reason": "package/API not verified"
+    }
+  ]
+}
