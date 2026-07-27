@@ -1,0 +1,8 @@
+run_id,task_id,model_id,status,signature,artifact,metrics,reason
+research_20260727_v1,W0-PRETRAINED,chronos_2,blocked,chronos_2|unknown_revision|316_rows|compact_causal_v1|seed_20260727,,,chronos package unavailable; official API/revision not verified
+research_20260727_v1,W0-PRETRAINED,tirex_2,blocked,tirex_2|unknown_revision|316_rows|compact_causal_v1|seed_20260727,,,package/interface unavailable; no fabricated run
+research_20260727_v1,W0-PRETRAINED,timesfm,blocked,timesfm|unknown_revision|316_rows|compact_causal_v1|seed_20260727,,,package/interface unavailable; no fabricated run
+research_20260727_v1,W2-BASELINES,baselines,completed,baselines|workbook_hash|dev_origins|compact_causal_v1|seed_20260727,artifacts/oof_predictions/dev_oof.parquet,reports/tables/dev_metrics.csv,development OOF completed
+research_20260727_v1,W3-CLASSICAL,global_logistic,completed,global_logistic|workbook_hash|dev_origins|compact_causal_v1|C0.25|seed_20260727,artifacts/oof_predictions/dev_classical_oof.parquet,reports/tables/dev_metrics.csv,development OOF completed
+research_20260727_v1,W3-CLASSICAL,catboost_global,smoke_only,catboost_global|workbook_hash|one_origin|compact_causal_v1|depth4|seed_20260727,, ,one-origin API smoke passed; full walk-forward intentionally not run due bounded execution request
+research_20260727_v1,W7-ENSEMBLE,ensemble_equal_weight,completed,ensemble_equal_weight|dev_oof|pre_registered|seed_20260727,artifacts/oof_predictions/dev_ensemble.parquet,reports/tables/dev_ensemble_metrics.csv,development Level-B artifact completed; no Level-C calibration claim

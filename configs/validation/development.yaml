@@ -1,0 +1,10 @@
+feature_warmup_positions: 12
+initial_estimation_end_position: 119
+development_origin_start_position: 120
+development_origin_end_position: 267
+locked_audit_origin_start_position: 268
+locked_audit_origin_end_position: 315
+production_origin_position: 316
+locked_audit_size: 48
+bootstrap_block_months: [6, 12]
+
