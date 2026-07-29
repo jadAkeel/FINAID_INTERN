@@ -1,24 +1,7 @@
-data_path: data/raw/FinalList_Extended.xlsx
+data_path: data/monthly_indicators.xlsx
 seed: 20260727
-run_id: research_20260727_v1
-availability_lag_months: 1
-feature_version: compact_causal_v1
+feature_version: structured_causal_features
 minimum_history_months: 24
-max_accept_per_month: 20
-reliability_floor: 0.55
 bootstrap_blocks: 6
 bootstrap_replicates: 500
 audit_origins: 48
-models:
-  - majority
-  - persistence
-  - reversal
-  - momentum_3
-  - momentum_6
-  - momentum_12
-  - mean_reversion
-  - ar1
-  - ar2
-  - global_logistic
-  - catboost_global
-

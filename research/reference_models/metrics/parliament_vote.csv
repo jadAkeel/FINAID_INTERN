@@ -1,0 +1,2 @@
+model,evaluation_rows,accuracy,selected_rows,selected_accuracy,coverage,up_calls,down_calls
+parliament_vote,4145,0.5437876960193003,1500,0.5673333333333334,0.3618817852834741,3084,1061

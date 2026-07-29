@@ -1,8 +1,0 @@
-minimum_history_months: 24
-feature_warmup_months: 12
-target_requires_current_and_next_value: true
-late_starting_policy: return_insufficient_history_or_abstain
-allow_leading_imputation: false
-allow_backward_fill: false
-allow_interpolation: false
-

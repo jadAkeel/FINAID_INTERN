@@ -1,31 +1,87 @@
 # Forecast Select
 
-Reproducible, leakage-safe monthly directional forecasting for anonymous indicator series. The repository treats the supplied workbook as immutable source material, keeps full-coverage research evaluation separate from selective production selection, and records a locked final audit.
+Forecast Select is a leakage-safe research pipeline for predicting the next
+monthly direction of 50 anonymous indicators.
+
+The project has one active model with a descriptive name:
+
+## Uptrend Selector
+
+The model:
+
+1. builds features using observations available through the previous month;
+2. trains one regularized Logistic model across all indicators;
+3. adds rolling PCA, peer-correlation, breadth, dispersion, and momentum features;
+4. propagates probabilities through a frozen signed correlation graph;
+5. selects the 15 indicators with the strongest estimated Up probability.
+
+Registered Selection result:
+
+- 100 months
+- 15 indicators per month
+- 926 correct calls out of 1,500
+- 61.73% accuracy
+- 1,500 Up calls and 0 Down calls
+
+The final point is important: this is an Uptrend selector, not a balanced
+Up/Down forecasting system. The repository does not claim 65% accuracy,
+real-time vintage validity, or production readiness.
 
 ## Quick start
 
 ```powershell
-python -m pip install -e .
-python -m forecast_select audit
-python -m forecast_select features
-python -m forecast_select pretrained-backtest
-python -m forecast_select train-final
-python -m forecast_select predict-month
-python -m forecast_select monitor
+python -m pip install -e ".[dev]"
+python -m forecast_select audit-data
+python -m forecast_select build-model
+python -m forecast_select show-results
+python -m forecast_select check-project
 python -m pytest
-python -m forecast_select backtest --models classical
-python -m forecast_select catboost-full --chunk-size 8 --chunk-index 0
-# repeat chunks, then assemble:
-python -m forecast_select catboost-full --chunk-size 8 --assemble
-python -m forecast_select ensemble
-python -m forecast_select level-c
-python -m forecast_select freeze
-python -m forecast_select locked-audit
-python -m forecast_select train-final
-python -m forecast_select predict-month
-python -m forecast_select report
 ```
 
-The default data path is `data/raw/FinalList_Extended.xlsx`. The original files in `Downloads` are never modified. See `docs/runbook.md` for the stage gates and `reports/` for generated evidence.
+## Project structure
 
-This is a revised-data pseudo-out-of-sample study: indicator release lags and historical vintages were not supplied. The June 2026 ledger is deliberately unscored because its outcome is absent.
+```text
+configs/
+  config.yaml                 Shared data and validation settings
+  uptrend_model.yaml          Active model settings and registered result
+
+data/
+  monthly_indicators.xlsx     Immutable monthly input workbook
+
+src/forecast_select/
+  features.py                 Causal feature construction
+  uptrend_model.py            Structured Logistic model
+  indicator_selection.py      Correlation propagation and top-indicator selection
+  uptrend_pipeline.py         End-to-end active model pipeline
+  project.py                  Data audit and project-integrity checks
+  validation.py               Walk-forward timing rules
+
+artifacts/
+  active/                     Registered Uptrend Selector predictions
+  audit/                      Preserved locked evaluation
+
+research/reference_models/
+  artifacts/                  One evidence artifact per comparison model
+  metrics/                    Matching metrics
+
+reports/                      Current data, model, and integrity reports
+tests/                        Unit, integration, regression, and leakage tests
+```
+
+## Validation boundary
+
+At forecast origin `t`:
+
+- feature values use observations through `t-1`;
+- model labels and indicator history stop at `t-2`;
+- Selection covers origins 120 through 219;
+- the preserved locked evaluation is not used to choose or tune the model.
+
+## Documentation
+
+- [Arabic project overview](docs/overview-ar.md)
+- [Data contract](docs/data.md)
+- [Model methodology](docs/methodology.md)
+- [Reproduction runbook](docs/runbook.md)
+- [Verification rules](docs/verification.md)
+- [Reference model portfolio](research/reference_models/README.md)

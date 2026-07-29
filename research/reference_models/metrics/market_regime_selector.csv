@@ -1,0 +1,2 @@
+model,evaluation_rows,accuracy,selected_rows,selected_accuracy,coverage,up_calls,down_calls
+market_regime_selector,4145,0.544270205066345,1500,0.6013333333333334,0.3618817852834741,3400,745

@@ -22,7 +22,7 @@ def test_asof_lag_does_not_use_current_row_value():
     assert row["level"] == frame.loc[frame["position"].eq(9), "X1"].iloc[0]
 
 
-def test_locked_audit_hash_is_stable_and_present():
-    path = Path("artifacts/oof_predictions/locked_audit_v1.parquet")
+def test_locked_evaluation_hash_is_stable_and_present():
+    path = Path("artifacts/audit/locked_evaluation.parquet")
     assert path.exists()
     assert hashlib.sha256(path.read_bytes()).hexdigest() == "04ebedf9455051b189486f61deba949299a499915aa33f11b7126efa5a035b39"

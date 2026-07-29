@@ -65,18 +65,3 @@ def load_workbook(path: str | Path) -> pd.DataFrame:
     frame["period"] = periods.astype(str)
     frame["position"] = range(1, len(frame) + 1)
     return frame
-
-
-def immutable_inventory(download_dir: str | Path, output_path: str | Path) -> dict[str, Any]:
-    base = Path(download_dir)
-    names = [
-        "Internship Opportunity Forecasting Global macro indicators.pdf",
-        "plan_work (1).md",
-        "FinalList_Extended.xlsx",
-    ]
-    inventory = []
-    for name in names:
-        path = base / name
-        inventory.append({"name": name, "path": str(path), "exists": path.exists(), "sha256": sha256_file(path) if path.exists() else None, "bytes": path.stat().st_size if path.exists() else None})
-    atomic_write_json({"files": inventory}, output_path)
-    return {"files": inventory}

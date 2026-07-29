@@ -1,0 +1,2 @@
+model,evaluation_rows,accuracy,selected_rows,selected_accuracy,coverage,up_calls,down_calls
+weighted_ensemble,4145,0.5609167671893848,1500,0.614,0.3618817852834741,3191,954

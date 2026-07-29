@@ -40,9 +40,30 @@ def origin_rows(frame: pd.DataFrame, origins: tuple[int, ...]) -> pd.DataFrame:
     return frame[frame["origin_position"].isin(origins)].copy()
 
 
+def latest_available_target_origin(forecast_origin: int, availability_lag: int = 1) -> int:
+    """Return the newest origin whose t-to-t+1 label is known at forecast time."""
+    if forecast_origin < 1:
+        raise ValueError("forecast_origin must be positive")
+    if availability_lag < 0:
+        raise ValueError("availability_lag must be non-negative")
+    return forecast_origin - availability_lag - 1
+
+
+def causal_training_rows(frame: pd.DataFrame, forecast_origin: int, availability_lag: int = 1) -> pd.DataFrame:
+    """Select rows whose targets were available at the forecast origin."""
+    latest = latest_available_target_origin(forecast_origin, availability_lag)
+    return frame[frame["origin_position"].le(latest)].copy()
+
+
 def assert_no_same_month_training(train: pd.DataFrame, origin: int) -> None:
     if not train.empty and int(train["origin_position"].max()) >= origin:
         raise AssertionError("Training rows include the forecast origin or future")
+
+
+def assert_target_history_available(train: pd.DataFrame, forecast_origin: int, availability_lag: int = 1) -> None:
+    latest = latest_available_target_origin(forecast_origin, availability_lag)
+    if not train.empty and int(train["origin_position"].max()) > latest:
+        raise AssertionError("Training targets are not available at the forecast origin")
 
 
 def assert_target_alignment(targets: pd.DataFrame, frame: pd.DataFrame) -> None:

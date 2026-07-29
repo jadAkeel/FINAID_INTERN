@@ -1,0 +1,2 @@
+model,evaluation_rows,accuracy,selected_rows,selected_accuracy,coverage,up_calls,down_calls
+structured_catboost,4145,0.5428226779252111,0,,0.0,3566,579

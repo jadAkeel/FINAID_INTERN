@@ -1,0 +1,30 @@
+model_id: uptrend_selector
+model_name: Uptrend Selector
+model_release: initial_release
+availability_lag_months: 1
+
+selection_origins: [120, 219]
+
+model:
+  logistic_c: 0.25
+  logistic_max_iter: 120
+
+graph:
+  estimation_end: 119
+  minimum_pairs: 24
+  alpha: 0.35
+
+selection:
+  monthly_selection_count: 15
+  trailing_target_window: 48
+  indicator_prior_weight: 0.5
+  minimum_history_months: 12
+  minimum_indicator_history: 24
+
+registered_result:
+  months: 100
+  calls: 1500
+  hits: 926
+  accuracy: 0.6173333333333333
+  up_calls: 1500
+  down_calls: 0

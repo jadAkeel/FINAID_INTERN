@@ -1,0 +1,10 @@
+{
+  "active_model": "uptrend_selector",
+  "active_model_artifact_exists": true,
+  "active_model_ready": true,
+  "claim": "artifact_integrity_only",
+  "locked_evaluation_preserved": true,
+  "locked_evaluation_sha256": "04ebedf9455051b189486f61deba949299a499915aa33f11b7126efa5a035b39",
+  "locked_evaluation_used_by_active_model": false,
+  "registered_result_matches": true
+}

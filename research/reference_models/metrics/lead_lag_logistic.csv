@@ -1,0 +1,2 @@
+model,evaluation_rows,accuracy,selected_rows,selected_accuracy,coverage,up_calls,down_calls
+lead_lag_logistic,4145,0.5486127864897467,1500,0.6093333333333333,0.3618817852834741,3054,1091
