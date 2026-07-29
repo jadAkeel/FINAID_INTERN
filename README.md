@@ -85,3 +85,4 @@ At forecast origin `t`:
 - [Reproduction runbook](docs/runbook.md)
 - [Verification rules](docs/verification.md)
 - [Reference model portfolio](research/reference_models/README.md)
+- [65% accuracy feasibility study](research/accuracy_feasibility/README.md)

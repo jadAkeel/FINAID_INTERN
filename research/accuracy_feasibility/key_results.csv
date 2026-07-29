@@ -1,0 +1,15 @@
+experiment,period,calls,accuracy,coverage_note,status
+Uptrend Selector,Discovery,1500,0.617333,15 per month,registered benchmark
+Rolling 60-month Up-rate,Discovery,1500,0.624000,15 per month,best stable discovery candidate
+Rolling 60-month Up-rate,Confirmation,720,0.606944,15 per month,frozen candidate evaluated once
+Weighted Ensemble,Discovery,1500,0.614000,15 per month,reference
+Lead-Lag Logistic,Discovery,1500,0.609333,15 per month,reference
+Market Regime Selector,Discovery,1500,0.601333,15 per month,reference
+Prequential meta-selector,Discovery,1500,0.608667,15 per month,failed improvement
+Bidirectional meta-selector,Discovery,1500,0.586000,15 per month,failed improvement
+Rolling 60-month Up-rate Top-1,Discovery,100,0.660000,1 per month,post-hoc coverage diagnostic
+Rolling 60-month Up-rate Top-1,Confirmation,48,0.750000,1 per month,post-evaluation diagnostic
+Rolling 60-month Up-rate Top-2,Discovery,200,0.645000,2 per month,post-hoc coverage diagnostic
+Rolling 60-month Up-rate Top-2,Confirmation,96,0.677083,2 per month,post-evaluation diagnostic
+Rolling 60-month threshold 0.68,Discovery,232,0.650862,2.32 per month,post-hoc threshold diagnostic
+Rolling 60-month threshold 0.68,Confirmation,102,0.598039,2.13 per month,failed to generalize
