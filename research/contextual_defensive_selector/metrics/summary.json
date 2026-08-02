@@ -1,0 +1,61 @@
+{
+  "active_model_changed": false,
+  "config_hash": "34335ddd009c3adcbd5efea94ee9b9ac7faa77dea6d747482fde634ad79d48ef",
+  "confirmation_accuracy_delta": 0.0,
+  "confirmation_base": {
+    "accuracy": 0.6184397163120567,
+    "calls": 705,
+    "down_calls": 0,
+    "hits": 436,
+    "months": 47,
+    "up_calls": 705
+  },
+  "confirmation_contextual": {
+    "accuracy": 0.6184397163120567,
+    "calls": 705,
+    "changed_calls": 16,
+    "down_calls": 0,
+    "forced_direction_rows": 0,
+    "hits": 436,
+    "months": 47,
+    "up_calls": 705
+  },
+  "confirmation_read": true,
+  "data_hash": "8f9fc27ae0a33f4a25d1241b7d896b56ba7515d4ad7e984999f0c5fe42b20d29",
+  "delta_bootstrap_median": 5.905441620346577e-19,
+  "delta_bootstrap_p10": -0.005673758865248226,
+  "delta_bootstrap_p90": 0.004255319148936169,
+  "discovery_base": {
+    "accuracy": 0.6173333333333333,
+    "calls": 1500,
+    "down_calls": 0,
+    "hits": 926,
+    "months": 100,
+    "up_calls": 1500
+  },
+  "discovery_contextual": {
+    "accuracy": 0.6226666666666667,
+    "calls": 1500,
+    "changed_calls": 45,
+    "down_calls": 0,
+    "forced_direction_rows": 35,
+    "hits": 934,
+    "months": 100,
+    "up_calls": 1500
+  },
+  "experiment_id": "contextual_defensive_selector",
+  "experiment_name": "Contextual Defensive Selector",
+  "experiment_release": "initial_experiment",
+  "locked_evaluation_read": false,
+  "locked_origins": [
+    268,
+    315
+  ],
+  "promotion_eligible": false,
+  "selected_on": "internal_tuning_120_179_then_validation_180_219",
+  "selected_role_indicators": [
+    "X44",
+    "X49"
+  ],
+  "selected_stress_threshold": 0.45
+}

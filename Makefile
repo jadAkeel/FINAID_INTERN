@@ -9,6 +9,18 @@ build-model:
 show-results:
 	$(PYTHON) -m forecast_select show-results
 
+build-risk-gate:
+	$(PYTHON) -m forecast_select build-risk-gate
+
+show-risk-gate:
+	$(PYTHON) -m forecast_select show-risk-gate
+
+build-context-selector:
+	$(PYTHON) -m forecast_select build-context-selector
+
+show-context-selector:
+	$(PYTHON) -m forecast_select show-context-selector
+
 check-project:
 	$(PYTHON) -m forecast_select check-project
 

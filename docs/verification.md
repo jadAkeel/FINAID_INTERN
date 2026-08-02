@@ -6,6 +6,10 @@
 - it reproduces the registered 926/1500 result;
 - the historical locked evaluation remains preserved;
 - the active model does not claim to use the locked evaluation.
+- when present, the Downside Risk Gate artifacts exist and its summary records
+  that locked evidence was not read and the experiment was not promoted.
+- when present, the Contextual Defensive Selector artifact exists, preserves
+  15 unique monthly selections, and records that locked evidence was not read.
 
 This is artifact-integrity verification only. There is no live
 production-performance claim.

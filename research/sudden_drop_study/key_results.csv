@@ -1,0 +1,19 @@
+section,metric,value,notes
+sample,design_end_position,267,Locked positions 268-315 not evaluated
+sample,valid_indicator_months,6689,X16 excluded
+definition,shock_events,332,Causal rolling tail definition
+definition,shock_rate,0.049634,Across valid design rows
+systemic,systemic_months,15,At least 25% of active indicators shocked
+systemic,shock_events_in_systemic_months,221,66.57% of all shock events
+clustering,next_shock_rate_after_nonshock,0.042160,Conditional on next return being available
+clustering,next_shock_rate_after_shock,0.204473,4.85x higher
+official_all_shocks,logistic_auc,0.646376,Confirmation positions 220-266
+official_all_shocks,catboost_auc,0.605315,Confirmation positions 220-266
+official_all_shocks,blend_average_precision,0.116071,Prevalence 7.10%
+official_all_shocks,blend_top15_precision,0.092199,65 of 140 events caught
+official_new_onset,logistic_auc,0.595767,Weak first-shock timing skill
+official_new_onset,auc_block_bootstrap_p05,0.521,6-month date blocks
+official_new_onset,auc_block_bootstrap_p95,0.670,6-month date blocks
+market_close_new_onset,blend_auc,0.671553,Upper-bound availability scenario
+market_close_new_onset,auc_block_bootstrap_p05,0.552,Logistic 6-month date blocks
+market_close_new_onset,auc_block_bootstrap_p95,0.734,Logistic 6-month date blocks

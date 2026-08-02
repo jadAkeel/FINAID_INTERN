@@ -1,0 +1,62 @@
+{
+  "active_model_changed": false,
+  "config_hash": "4c02a28dfe2ef92ee907ea43bce8e82a44b0ea095c056c6d84288955e53d8b98",
+  "confirmation_accuracy_delta": 0.0014184397163120588,
+  "confirmation_base": {
+    "accuracy": 0.6184397163120567,
+    "calls": 705,
+    "down_calls": 0,
+    "hits": 436,
+    "months": 47,
+    "up_calls": 705
+  },
+  "confirmation_gated": {
+    "accuracy": 0.6198581560283688,
+    "calls": 705,
+    "changed_calls": 1,
+    "down_calls": 0,
+    "hits": 437,
+    "months": 47,
+    "up_calls": 705
+  },
+  "confirmation_read": true,
+  "confirmation_shock_metrics": {
+    "average_precision": 0.08834205588330839,
+    "brier": 0.167057469517087,
+    "events": 140,
+    "prevalence": 0.07095793208312215,
+    "roc_auc": 0.5639856597303406,
+    "rows": 1973
+  },
+  "data_hash": "8f9fc27ae0a33f4a25d1241b7d896b56ba7515d4ad7e984999f0c5fe42b20d29",
+  "delta_bootstrap_median": 0.0014184397163120564,
+  "delta_bootstrap_p10": 0.0,
+  "delta_bootstrap_p90": 0.002836879432624113,
+  "discovery_base": {
+    "accuracy": 0.6173333333333333,
+    "calls": 1500,
+    "down_calls": 0,
+    "hits": 926,
+    "months": 100,
+    "up_calls": 1500
+  },
+  "discovery_gated": {
+    "accuracy": 0.6173333333333333,
+    "calls": 1500,
+    "changed_calls": 5,
+    "down_calls": 0,
+    "hits": 926,
+    "months": 100,
+    "up_calls": 1500
+  },
+  "experiment_id": "downside_risk_gate",
+  "experiment_name": "Downside Risk Gate",
+  "experiment_release": "initial_experiment",
+  "locked_evaluation_read": false,
+  "locked_origins": [
+    268,
+    315
+  ],
+  "penalty_selected_on": "discovery_120_219",
+  "selected_penalty": 0.0
+}

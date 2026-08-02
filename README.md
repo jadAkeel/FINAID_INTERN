@@ -34,9 +34,39 @@ python -m pip install -e ".[dev]"
 python -m forecast_select audit-data
 python -m forecast_select build-model
 python -m forecast_select show-results
+python -m forecast_select build-risk-gate
+python -m forecast_select show-risk-gate
+python -m forecast_select build-context-selector
+python -m forecast_select show-context-selector
 python -m forecast_select check-project
 python -m pytest
 ```
+
+## Experimental Downside Risk Gate
+
+`build-risk-gate` trains a causal Logistic shock-risk specialist and tests
+whether subtracting downside risk improves the Uptrend Selector's top-15
+ranking. The penalty is selected on Discovery origins 120-219 and evaluated
+once on Confirmation origins 220-266. Historical locked evidence 268-315 is
+not read.
+
+The current experiment selected a risk penalty of `0.0`. Confirmation changed
+one call because the gate excludes the poor-quality `X16` series, improving
+the point estimate from 436/705 (`61.84%`) to 437/705 (`61.99%`). The shock
+ranker's Confirmation ROC AUC was only `0.564`, so the gate is not promoted to
+the active model.
+
+## Experimental Contextual Defensive Selector
+
+`build-context-selector` tests whether neutral role indicators should replace
+the weakest selected Up candidate when a past-only three-month breadth signal
+indicates market stress. Candidate thresholds and role sets are selected
+inside Discovery only, before one Confirmation evaluation.
+
+The selected Discovery rule used breadth at or below `0.45` and roles `X44`
+and `X49`. It improved Discovery from 926/1500 (`61.73%`) to 934/1500
+(`62.27%`), but Confirmation remained exactly 436/705 (`61.84%`). The rule is
+therefore retained as negative experimental evidence and is not promoted.
 
 ## Project structure
 
@@ -86,3 +116,6 @@ At forecast origin `t`:
 - [Verification rules](docs/verification.md)
 - [Reference model portfolio](research/reference_models/README.md)
 - [65% accuracy feasibility study](research/accuracy_feasibility/README.md)
+- [Sudden-drop study](research/sudden_drop_study/README.md)
+- [Downside Risk Gate experiment](research/downside_risk_gate/README.md)
+- [Contextual Defensive Selector experiment](research/contextual_defensive_selector/README.md)

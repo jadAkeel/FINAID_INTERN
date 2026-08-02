@@ -35,7 +35,30 @@ When the artifact already exists, it validates its structure and registered
 python -m forecast_select show-results
 ```
 
-## 5. Verify the project
+## 5. Run the experimental downside gate
+
+```powershell
+python -m forecast_select build-risk-gate
+python -m forecast_select show-risk-gate
+```
+
+This writes the experimental risk and gated prediction artifacts under
+`research/downside_risk_gate/`. It evaluates Confirmation through origin 266
+and does not read the historical locked evidence beginning at 268.
+
+## 6. Run the contextual defensive experiment
+
+```powershell
+python -m forecast_select build-context-selector
+python -m forecast_select show-context-selector
+```
+
+This writes a past-only market-breadth regime experiment under
+`research/contextual_defensive_selector/`. Candidate roles are selected inside
+Discovery, then evaluated on Confirmation through origin 266. It does not read
+historical locked evidence.
+
+## 7. Verify the project
 
 ```powershell
 python -m pytest

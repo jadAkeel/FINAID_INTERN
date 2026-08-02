@@ -1,0 +1,81 @@
+experiment_id: downside_risk_gate
+experiment_name: Downside Risk Gate
+experiment_release: initial_experiment
+availability_lag_months: 1
+
+discovery_origins: [120, 219]
+confirmation_origins: [220, 266]
+
+shock_definition:
+  trailing_window: 60
+  minimum_history: 24
+  lower_quantile: 0.05
+  robust_z: 2.0
+
+model:
+  logistic_c: 0.05
+  logistic_max_iter: 1000
+
+gate:
+  monthly_selection_count: 15
+  penalty_grid: [0.0, 0.025, 0.05, 0.075, 0.1, 0.15]
+
+excluded_indicators:
+  - X16
+
+indicator_groups:
+  thematic_equity:
+    - X1
+    - X2
+    - X3
+    - X4
+    - X5
+    - X6
+    - X7
+    - X8
+    - X9
+    - X10
+    - X11
+    - X12
+    - X13
+    - X14
+    - X15
+  commodity:
+    - X17
+    - X18
+    - X19
+    - X20
+  us_sector:
+    - X21
+    - X22
+    - X23
+    - X24
+    - X25
+    - X26
+    - X27
+    - X28
+    - X29
+    - X30
+    - X31
+  global_equity:
+    - X32
+    - X33
+    - X34
+    - X35
+    - X36
+    - X37
+  fixed_income:
+    - X38
+    - X39
+    - X40
+    - X41
+    - X42
+    - X43
+  currency:
+    - X44
+    - X45
+    - X46
+    - X47
+    - X48
+    - X49
+    - X50

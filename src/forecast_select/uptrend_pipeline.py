@@ -109,10 +109,17 @@ def _prediction_rows(
     return rows
 
 
-def build_uptrend_predictions(root: Path = ROOT) -> pd.DataFrame:
-    """Build the registered Uptrend Selector with causal walk-forward training."""
+def build_uptrend_predictions(
+    root: Path = ROOT,
+    origin_range: tuple[int, int] | None = None,
+) -> pd.DataFrame:
+    """Build causal walk-forward predictions for the configured or requested origins."""
     frame, targets, panel, config, model_settings = _prepare(root)
-    start, end = model_settings["selection_origins"]
+    start, end = (
+        origin_range
+        if origin_range is not None
+        else model_settings["selection_origins"]
+    )
     lag = int(model_settings["availability_lag_months"])
     data_hash = sha256_file(root / config["data_path"])
     config_hash = _configuration_hash(root)

@@ -6,6 +6,15 @@ from typing import Any
 import pandas as pd
 import yaml
 
+from .contextual_pipeline import (
+    contextual_defensive_status,
+    contextual_predictions_artifact,
+)
+from .downside_pipeline import (
+    downside_risk_artifact,
+    downside_risk_gate_status,
+    gated_predictions_artifact,
+)
 from .uptrend_pipeline import active_model_artifact, active_model_status
 from .io import atomic_write_json, load_workbook, sha256_file
 from .targets import build_targets
@@ -93,6 +102,34 @@ def check_project(root: Path = ROOT) -> Path:
         "locked_evaluation_used_by_active_model": False,
         "claim": "artifact_integrity_only",
     }
+    risk_status = downside_risk_gate_status(root)
+    checks.update({
+        "downside_risk_gate_ready": bool(risk_status.get("ready")),
+        "downside_risk_artifact_exists": downside_risk_artifact(root).exists(),
+        "gated_predictions_artifact_exists": gated_predictions_artifact(
+            root
+        ).exists(),
+        "downside_risk_gate_promoted": False,
+        "downside_risk_gate_locked_evaluation_read": bool(
+            risk_status.get("locked_evaluation_read", False)
+        ),
+    })
+    context_status = contextual_defensive_status(root)
+    checks.update({
+        "contextual_defensive_selector_ready": bool(
+            context_status.get("ready")
+        ),
+        "contextual_predictions_artifact_exists": (
+            contextual_predictions_artifact(root).exists()
+        ),
+        "contextual_defensive_selector_promotion_eligible": bool(
+            context_status.get("promotion_eligible", False)
+        ),
+        "contextual_defensive_selector_promoted": False,
+        "contextual_defensive_selector_locked_evaluation_read": bool(
+            context_status.get("locked_evaluation_read", False)
+        ),
+    })
     output = root / "reports/project_status.json"
     atomic_write_json(checks, output)
     return output

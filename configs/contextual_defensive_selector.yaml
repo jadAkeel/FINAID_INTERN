@@ -1,0 +1,26 @@
+experiment_id: contextual_defensive_selector
+experiment_name: Contextual Defensive Selector
+experiment_release: initial_experiment
+availability_lag_months: 1
+
+internal_tuning_origins: [120, 179]
+internal_validation_origins: [180, 219]
+discovery_origins: [120, 219]
+confirmation_origins: [220, 266]
+
+regime:
+  signal: breadth_mean_3
+  stress_threshold_grid: [0.35, 0.40, 0.45, 0.50]
+
+role_sets:
+  - [X44]
+  - [X44, X42]
+  - [X44, X49]
+  - [X44, X42, X49]
+
+selection:
+  monthly_selection_count: 15
+  forced_direction: Up
+  replacement_rule: lowest_selected_score
+
+locked_evaluation_read_allowed: false
