@@ -8,6 +8,8 @@
 - the active model does not claim to use the locked evaluation.
 - when present, the Downside Risk Gate artifacts exist and its summary records
   that locked evidence was not read and the experiment was not promoted.
+- when present, the Directional Downside Selector artifact exists, preserves
+  15 unique monthly selections, and records that locked evidence was not read.
 - when present, the Contextual Defensive Selector artifact exists, preserves
   15 unique monthly selections, and records that locked evidence was not read.
 

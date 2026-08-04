@@ -1,0 +1,43 @@
+experiment_id: directional_downside_selector
+experiment_name: Directional Downside Selector
+experiment_release: initial_experiment
+availability_lag_months: 1
+
+tuning_origins: [120, 179]
+validation_origins: [180, 219]
+confirmation_origins: [220, 266]
+locked_origins: [268, 315]
+
+features:
+  lead_correlation_window: 60
+  lead_minimum_pairs: 24
+  lead_top_k: 3
+
+model:
+  global_logistic_c: 0.1
+  local_logistic_c: 0.05
+  logistic_max_iter: 500
+  minimum_local_rows: 48
+  minimum_local_class_rows: 8
+  trailing_prior_window: 48
+  minimum_pattern_rows: 8
+  blend_grid:
+    - {local_weight: 0.0, pattern_weight: 0.0}
+    - {local_weight: 0.25, pattern_weight: 0.0}
+    - {local_weight: 0.5, pattern_weight: 0.0}
+    - {local_weight: 0.25, pattern_weight: 0.25}
+    - {local_weight: 0.5, pattern_weight: 0.25}
+    - {local_weight: 0.25, pattern_weight: 0.5}
+
+selection:
+  monthly_selection_count: 15
+  down_threshold_grid: [0.5, 0.55, 0.6, 0.65]
+  down_margin_grid: [0.0, 0.05, 0.1]
+  minimum_tuning_down_calls: 30
+
+promotion:
+  minimum_down_accuracy: 0.55
+  require_positive_validation_delta: true
+  require_positive_confirmation_delta: true
+  require_positive_bootstrap_p10: true
+

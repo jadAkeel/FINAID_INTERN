@@ -67,6 +67,24 @@ then frozen for Confirmation 220-266. The initial experiment selected zero
 penalty and is retained only as negative evidence; it is not part of the
 active model.
 
+## Experimental Directional Downside Selector
+
+Unlike the risk gate, this model directly targets `Down = 1 - y_true`. It uses
+global and per-indicator regularized Logistic models, a causal empirical prior
+for rise-then-stall exhaustion, and rolling lead-lag correlations learned from
+anonymous peers. No economic meaning or hard-coded indicator group is assumed.
+
+At each origin, the newest observation is `t-1` and the newest training label
+is `t-2`. Global, local, and pattern probabilities are blended with parameters
+selected only on Tuning 120-179. A Down call must beat both a probability
+threshold and the competing Up score before all indicators are ranked and the
+strongest 15 are selected.
+
+The initial experiment improved Validation by five hits but produced no net
+improvement on Confirmation. Its Confirmation Down precision was `6/12 = 50%`,
+so it is retained as unpromoted evidence rather than replacing the active
+model.
+
 ## Experimental Contextual Defensive Selector
 
 This experiment uses market breadth calculated from observations through

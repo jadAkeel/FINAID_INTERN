@@ -36,11 +36,19 @@ python -m forecast_select build-model
 python -m forecast_select show-results
 python -m forecast_select build-risk-gate
 python -m forecast_select show-risk-gate
+python -m forecast_select build-directional-downside
+python -m forecast_select show-directional-downside
 python -m forecast_select build-context-selector
 python -m forecast_select show-context-selector
+python -m forecast_select forecast-next-three
 python -m forecast_select check-project
 python -m pytest
 ```
+
+`forecast-next-three` writes `reports/next_three_month_forecast.json`. The first
+month uses the registered one-step Uptrend Selector scope. Months two and three
+are experimental direct-horizon extensions trained on horizon-specific past
+labels; they do not synthesize missing future indicator values.
 
 ## Experimental Downside Risk Gate
 
@@ -55,6 +63,20 @@ one call because the gate excludes the poor-quality `X16` series, improving
 the point estimate from 436/705 (`61.84%`) to 437/705 (`61.99%`). The shock
 ranker's Confirmation ROC AUC was only `0.564`, so the gate is not promoted to
 the active model.
+
+## Experimental Directional Downside Selector
+
+`build-directional-downside` learns actual `Down` directions rather than only
+penalizing risky `Up` calls. It combines a global Logistic model, local models
+for indicators with enough history, an indicator-specific rise-then-stall
+prior, and rolling learned lead-lag peer features. The resulting selector can
+place both `Up` and `Down` calls inside the monthly top 15.
+
+Parameters were selected on Tuning origins 120-179. Accuracy moved from
+`64.33%` to `64.44%` on Tuning and from `57.83%` to `58.67%` on Validation.
+Confirmation remained exactly `61.84%`; its 12 Down calls were correct 6 times.
+The experiment is therefore not promoted and did not read locked origins
+268-315.
 
 ## Experimental Contextual Defensive Selector
 
@@ -118,4 +140,5 @@ At forecast origin `t`:
 - [65% accuracy feasibility study](research/accuracy_feasibility/README.md)
 - [Sudden-drop study](research/sudden_drop_study/README.md)
 - [Downside Risk Gate experiment](research/downside_risk_gate/README.md)
+- [Directional Downside Selector experiment](research/directional_downside_selector/README.md)
 - [Contextual Defensive Selector experiment](research/contextual_defensive_selector/README.md)

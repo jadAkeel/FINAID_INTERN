@@ -46,7 +46,19 @@ This writes the experimental risk and gated prediction artifacts under
 `research/downside_risk_gate/`. It evaluates Confirmation through origin 266
 and does not read the historical locked evidence beginning at 268.
 
-## 6. Run the contextual defensive experiment
+## 6. Run the directional downside experiment
+
+```powershell
+python -m forecast_select build-directional-downside
+python -m forecast_select show-directional-downside
+```
+
+This writes walk-forward Down probabilities and bidirectional top-15
+predictions under `research/directional_downside_selector/`. Model blending and
+direction thresholds are selected on origins 120-179, then reported separately
+on Validation 180-219 and Confirmation 220-266. Locked evidence is not read.
+
+## 7. Run the contextual defensive experiment
 
 ```powershell
 python -m forecast_select build-context-selector
@@ -58,7 +70,18 @@ This writes a past-only market-breadth regime experiment under
 Discovery, then evaluated on Confirmation through origin 266. It does not read
 historical locked evidence.
 
-## 7. Verify the project
+## 8. Forecast the next three hidden months
+
+```powershell
+python -m forecast_select forecast-next-three
+```
+
+This writes `reports/next_three_month_forecast.json`. The first month is the
+registered one-step scope. The second and third months use experimental direct
+horizon-specific targets so the command never invents intermediate future
+indicator values. The configured one-month availability lag remains in force.
+
+## 9. Verify the project
 
 ```powershell
 python -m pytest

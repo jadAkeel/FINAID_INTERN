@@ -1,0 +1,111 @@
+{
+  "active_model_changed": false,
+  "config_hash": "f15db1f361ae923e5c85b3d88d7f457a523eb67aaaafdc13c727d37b44091781",
+  "confirmation_accuracy_delta": 0.0,
+  "confirmation_base": {
+    "accuracy": 0.6184397163120567,
+    "calls": 705,
+    "down_accuracy": NaN,
+    "down_calls": 0,
+    "down_hits": 0,
+    "hits": 436,
+    "months": 47,
+    "up_calls": 705
+  },
+  "confirmation_candidate": {
+    "accuracy": 0.6184397163120567,
+    "calls": 705,
+    "down_accuracy": 0.5,
+    "down_calls": 12,
+    "down_hits": 6,
+    "hits": 436,
+    "months": 47,
+    "up_calls": 693
+  },
+  "confirmation_probability_metrics": {
+    "average_precision": 0.43615898322634106,
+    "brier": 0.25027266512610624,
+    "down_events": 940,
+    "prevalence": 0.426497277676951,
+    "roc_auc": 0.519104329383248,
+    "rows": 2204
+  },
+  "confirmation_read": true,
+  "data_hash": "8f9fc27ae0a33f4a25d1241b7d896b56ba7515d4ad7e984999f0c5fe42b20d29",
+  "delta_bootstrap_median": 1.1810883240693154e-18,
+  "delta_bootstrap_p10": -0.007092198581560282,
+  "delta_bootstrap_p90": 0.005673758865248228,
+  "experiment_id": "directional_downside_selector",
+  "experiment_name": "Directional Downside Selector",
+  "experiment_release": "initial_experiment",
+  "locked_evaluation_read": false,
+  "locked_origins": [
+    268,
+    315
+  ],
+  "parameters_selected_on": "tuning_120_179",
+  "promotion_eligible": false,
+  "selected_parameters": {
+    "down_margin": 0.1,
+    "down_threshold": 0.65,
+    "local_weight": 0.5,
+    "pattern_weight": 0.25
+  },
+  "tuning_base": {
+    "accuracy": 0.6433333333333333,
+    "calls": 900,
+    "down_accuracy": NaN,
+    "down_calls": 0,
+    "down_hits": 0,
+    "hits": 579,
+    "months": 60,
+    "up_calls": 900
+  },
+  "tuning_candidate": {
+    "accuracy": 0.6444444444444445,
+    "calls": 900,
+    "down_accuracy": 0.7333333333333333,
+    "down_calls": 30,
+    "down_hits": 22,
+    "hits": 580,
+    "months": 60,
+    "up_calls": 870
+  },
+  "tuning_probability_metrics": {
+    "average_precision": 0.4698833998512302,
+    "brier": 0.24927560308440286,
+    "down_events": 1029,
+    "prevalence": 0.42964509394572026,
+    "roc_auc": 0.5233236151603499,
+    "rows": 2395
+  },
+  "validation_accuracy_delta": 0.008333333333333304,
+  "validation_base": {
+    "accuracy": 0.5783333333333334,
+    "calls": 600,
+    "down_accuracy": NaN,
+    "down_calls": 0,
+    "down_hits": 0,
+    "hits": 347,
+    "months": 40,
+    "up_calls": 600
+  },
+  "validation_candidate": {
+    "accuracy": 0.5866666666666667,
+    "calls": 600,
+    "down_accuracy": 0.5,
+    "down_calls": 60,
+    "down_hits": 30,
+    "hits": 352,
+    "months": 40,
+    "up_calls": 540
+  },
+  "validation_probability_metrics": {
+    "average_precision": 0.477228071514535,
+    "brier": 0.2552018713705315,
+    "down_events": 809,
+    "prevalence": 0.4622857142857143,
+    "roc_auc": 0.5109100725236414,
+    "rows": 1750
+  }
+}

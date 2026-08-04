@@ -15,6 +15,10 @@ from .downside_pipeline import (
     downside_risk_gate_status,
     gated_predictions_artifact,
 )
+from .directional_downside_pipeline import (
+    directional_downside_predictions_artifact,
+    directional_downside_status,
+)
 from .uptrend_pipeline import active_model_artifact, active_model_status
 from .io import atomic_write_json, load_workbook, sha256_file
 from .targets import build_targets
@@ -112,6 +116,22 @@ def check_project(root: Path = ROOT) -> Path:
         "downside_risk_gate_promoted": False,
         "downside_risk_gate_locked_evaluation_read": bool(
             risk_status.get("locked_evaluation_read", False)
+        ),
+    })
+    directional_status = directional_downside_status(root)
+    checks.update({
+        "directional_downside_selector_ready": bool(
+            directional_status.get("ready")
+        ),
+        "directional_downside_predictions_exist": (
+            directional_downside_predictions_artifact(root).exists()
+        ),
+        "directional_downside_promotion_eligible": bool(
+            directional_status.get("promotion_eligible", False)
+        ),
+        "directional_downside_promoted": False,
+        "directional_downside_locked_evaluation_read": bool(
+            directional_status.get("locked_evaluation_read", False)
         ),
     })
     context_status = contextual_defensive_status(root)

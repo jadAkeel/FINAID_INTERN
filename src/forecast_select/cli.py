@@ -12,6 +12,11 @@ from .downside_pipeline import (
     build_downside_risk_gate,
     downside_risk_gate_status,
 )
+from .directional_downside_pipeline import (
+    build_directional_downside_selector,
+    directional_downside_status,
+)
+from .future_forecast import write_next_three_forecast
 from .project import audit_data, check_project
 from .uptrend_pipeline import ROOT, active_model_status, build_active_model
 
@@ -34,12 +39,24 @@ def _parser() -> argparse.ArgumentParser:
         help="Show the experimental Downside Risk Gate result",
     )
     sub.add_parser(
+        "build-directional-downside",
+        help="Build the experimental bidirectional top-15 selector",
+    )
+    sub.add_parser(
+        "show-directional-downside",
+        help="Show the Directional Downside Selector result",
+    )
+    sub.add_parser(
         "build-context-selector",
         help="Build the experimental Contextual Defensive Selector",
     )
     sub.add_parser(
         "show-context-selector",
         help="Show the Contextual Defensive Selector result",
+    )
+    sub.add_parser(
+        "forecast-next-three",
+        help="Forecast the next three monthly directions without future values",
     )
     sub.add_parser("check-project", help="Check active artifact integrity")
     return parser
@@ -62,6 +79,14 @@ def main(argv: list[str] | None = None) -> int:
             indent=2,
             sort_keys=True,
         ))
+    elif args.command == "build-directional-downside":
+        print(build_directional_downside_selector(root))
+    elif args.command == "show-directional-downside":
+        print(json.dumps(
+            directional_downside_status(root),
+            indent=2,
+            sort_keys=True,
+        ))
     elif args.command == "build-context-selector":
         print(build_contextual_defensive_selector(root))
     elif args.command == "show-context-selector":
@@ -70,6 +95,8 @@ def main(argv: list[str] | None = None) -> int:
             indent=2,
             sort_keys=True,
         ))
+    elif args.command == "forecast-next-three":
+        print(write_next_three_forecast(root))
     elif args.command == "check-project":
         print(check_project(root))
     return 0
