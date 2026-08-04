@@ -3,7 +3,7 @@
 ## Unreleased
 
 - added a non-promoting Unified Forecast Controller over the defensive experiments;
-- added an Arabic submission handoff with current results, limitations, and the
+- added an English submission handoff with current results, limitations, and the
   data required for the next phase;
 - removed local caches and temporary folders from the delivery workspace;
 - added a leakage-conscious feasibility study explaining why the existing

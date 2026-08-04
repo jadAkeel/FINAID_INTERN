@@ -153,4 +153,4 @@ At forecast origin `t`:
 - [Directional Downside Selector experiment](research/directional_downside_selector/README.md)
 - [Contextual Defensive Selector experiment](research/contextual_defensive_selector/README.md)
 - [Unified Forecast Controller experiment](research/unified_forecast_controller/README.md)
-- [Arabic submission status and data request](docs/submission_status_ar.md)
+- [Submission status and data request](docs/submission_status.md)
