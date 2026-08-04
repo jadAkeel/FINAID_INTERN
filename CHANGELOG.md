@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- added a non-promoting Unified Forecast Controller over the defensive experiments;
+- added an Arabic submission handoff with current results, limitations, and the
+  data required for the next phase;
+- removed local caches and temporary folders from the delivery workspace;
 - added a leakage-conscious feasibility study explaining why the existing
   models do not support a 65% accuracy claim at 15 selections per month;
 - recorded the one-time confirmation result for the frozen Rolling 60-month
