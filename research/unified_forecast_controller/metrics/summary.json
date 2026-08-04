@@ -1,0 +1,89 @@
+{
+  "active_model_changed": false,
+  "confirmation_accuracy_delta": 0.0,
+  "confirmation_base": {
+    "accuracy": 0.6184397163120567,
+    "calls": 705,
+    "down_accuracy": 0.5,
+    "down_calls": 12,
+    "down_hits": 6,
+    "hits": 436,
+    "months": 47,
+    "up_calls": 693
+  },
+  "confirmation_candidate": {
+    "accuracy": 0.6184397163120567,
+    "calls": 705,
+    "changed_calls": 6,
+    "down_accuracy": 0.42857142857142855,
+    "down_calls": 7,
+    "down_hits": 3,
+    "hits": 436,
+    "months": 47,
+    "up_calls": 698
+  },
+  "confirmation_delta_bootstrap_median": 0.0,
+  "confirmation_delta_bootstrap_p10": 0.0,
+  "confirmation_delta_bootstrap_p90": 0.0,
+  "confirmation_delta_observed": 0.0,
+  "confirmation_read": true,
+  "data_hash": "8f9fc27ae0a33f4a25d1241b7d896b56ba7515d4ad7e984999f0c5fe42b20d29",
+  "experiment_id": "unified_forecast_controller",
+  "experiment_name": "Unified Forecast Controller",
+  "experiment_release": "initial_experiment",
+  "locked_evaluation_read": false,
+  "locked_origins": [
+    268,
+    315
+  ],
+  "parameters_selected_on": "tuning_120_179",
+  "promotion_eligible": false,
+  "selected_parameters": {
+    "context_role_bonus": 0.0,
+    "down_risk_bonus": 0.0,
+    "risk_penalty": 0.0
+  },
+  "tuning_base": {
+    "accuracy": 0.6444444444444445,
+    "calls": 900,
+    "down_accuracy": 0.7333333333333333,
+    "down_calls": 30,
+    "down_hits": 22,
+    "hits": 580,
+    "months": 60,
+    "up_calls": 870
+  },
+  "tuning_candidate": {
+    "accuracy": 0.6422222222222222,
+    "calls": 900,
+    "changed_calls": 19,
+    "down_accuracy": 0.7142857142857143,
+    "down_calls": 14,
+    "down_hits": 10,
+    "hits": 578,
+    "months": 60,
+    "up_calls": 886
+  },
+  "validation_accuracy_delta": 0.0016666666666667052,
+  "validation_base": {
+    "accuracy": 0.5866666666666667,
+    "calls": 600,
+    "down_accuracy": 0.5,
+    "down_calls": 60,
+    "down_hits": 30,
+    "hits": 352,
+    "months": 40,
+    "up_calls": 540
+  },
+  "validation_candidate": {
+    "accuracy": 0.5883333333333334,
+    "calls": 600,
+    "changed_calls": 6,
+    "down_accuracy": 0.5,
+    "down_calls": 56,
+    "down_hits": 28,
+    "hits": 353,
+    "months": 40,
+    "up_calls": 544
+  }
+}

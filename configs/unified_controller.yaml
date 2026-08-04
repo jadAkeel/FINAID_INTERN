@@ -1,0 +1,21 @@
+experiment_id: unified_forecast_controller
+experiment_name: Unified Forecast Controller
+experiment_release: initial_experiment
+
+tuning_origins: [120, 179]
+validation_origins: [180, 219]
+confirmation_origins: [220, 266]
+locked_origins: [268, 315]
+
+controller:
+  monthly_selection_count: 15
+  risk_penalty_grid: [0.0, 0.025, 0.05, 0.075, 0.1]
+  down_risk_bonus_grid: [0.0, 0.025, 0.05, 0.075, 0.1]
+  context_role_bonus_grid: [0.0, 0.025, 0.05, 0.075, 0.1]
+  require_risk_data: true
+  minimum_tuning_down_calls: 10
+
+promotion:
+  require_positive_validation_delta: true
+  require_positive_confirmation_delta: true
+  require_positive_bootstrap_p10: true

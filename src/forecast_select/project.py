@@ -20,6 +20,10 @@ from .directional_downside_pipeline import (
     directional_downside_status,
 )
 from .uptrend_pipeline import active_model_artifact, active_model_status
+from .unified_pipeline import (
+    unified_controller_status,
+    unified_predictions_artifact,
+)
 from .io import atomic_write_json, load_workbook, sha256_file
 from .targets import build_targets
 from .validation import make_layout
@@ -148,6 +152,18 @@ def check_project(root: Path = ROOT) -> Path:
         "contextual_defensive_selector_promoted": False,
         "contextual_defensive_selector_locked_evaluation_read": bool(
             context_status.get("locked_evaluation_read", False)
+        ),
+    })
+    unified_status = unified_controller_status(root)
+    checks.update({
+        "unified_controller_ready": bool(unified_status.get("ready")),
+        "unified_controller_artifact_exists": unified_predictions_artifact(root).exists(),
+        "unified_controller_promotion_eligible": bool(
+            unified_status.get("promotion_eligible", False)
+        ),
+        "unified_controller_promoted": False,
+        "unified_controller_locked_evaluation_read": bool(
+            unified_status.get("locked_evaluation_read", False)
         ),
     })
     output = root / "reports/project_status.json"

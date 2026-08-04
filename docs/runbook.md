@@ -70,7 +70,19 @@ This writes a past-only market-breadth regime experiment under
 Discovery, then evaluated on Confirmation through origin 266. It does not read
 historical locked evidence.
 
-## 8. Forecast the next three hidden months
+## 8. Run the unified controller challenger
+
+```powershell
+python -m forecast_select build-unified-controller
+python -m forecast_select show-unified-controller
+```
+
+This combines the frozen outputs of the three defensive experiments. Overlay
+weights are selected on Tuning origins 120-179, with Validation and
+Confirmation reported separately. It does not change the active model or read
+locked origins 268-315.
+
+## 9. Forecast the next three hidden months
 
 ```powershell
 python -m forecast_select forecast-next-three
@@ -81,7 +93,7 @@ registered one-step scope. The second and third months use experimental direct
 horizon-specific targets so the command never invents intermediate future
 indicator values. The configured one-month availability lag remains in force.
 
-## 9. Verify the project
+## 10. Verify the project
 
 ```powershell
 python -m pytest

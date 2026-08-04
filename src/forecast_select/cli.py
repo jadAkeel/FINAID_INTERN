@@ -18,6 +18,10 @@ from .directional_downside_pipeline import (
 )
 from .future_forecast import write_next_three_forecast
 from .project import audit_data, check_project
+from .unified_pipeline import (
+    build_unified_controller,
+    unified_controller_status,
+)
 from .uptrend_pipeline import ROOT, active_model_status, build_active_model
 
 
@@ -53,6 +57,14 @@ def _parser() -> argparse.ArgumentParser:
     sub.add_parser(
         "show-context-selector",
         help="Show the Contextual Defensive Selector result",
+    )
+    sub.add_parser(
+        "build-unified-controller",
+        help="Build the non-promoting unified forecast controller",
+    )
+    sub.add_parser(
+        "show-unified-controller",
+        help="Show the unified forecast controller result",
     )
     sub.add_parser(
         "forecast-next-three",
@@ -92,6 +104,14 @@ def main(argv: list[str] | None = None) -> int:
     elif args.command == "show-context-selector":
         print(json.dumps(
             contextual_defensive_status(root),
+            indent=2,
+            sort_keys=True,
+        ))
+    elif args.command == "build-unified-controller":
+        print(build_unified_controller(root))
+    elif args.command == "show-unified-controller":
+        print(json.dumps(
+            unified_controller_status(root),
             indent=2,
             sort_keys=True,
         ))

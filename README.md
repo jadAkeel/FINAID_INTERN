@@ -40,6 +40,8 @@ python -m forecast_select build-directional-downside
 python -m forecast_select show-directional-downside
 python -m forecast_select build-context-selector
 python -m forecast_select show-context-selector
+python -m forecast_select build-unified-controller
+python -m forecast_select show-unified-controller
 python -m forecast_select forecast-next-three
 python -m forecast_select check-project
 python -m pytest
@@ -89,6 +91,14 @@ The selected Discovery rule used breadth at or below `0.45` and roles `X44`
 and `X49`. It improved Discovery from 926/1500 (`61.73%`) to 934/1500
 (`62.27%`), but Confirmation remained exactly 436/705 (`61.84%`). The rule is
 therefore retained as negative experimental evidence and is not promoted.
+
+## Experimental Unified Forecast Controller
+
+`build-unified-controller` evaluates a non-promoting meta-controller over the
+frozen Directional Downside, Downside Risk Gate, and Contextual Defensive
+artifacts. It selects overlay weights on Tuning origins 120-179, reports
+Validation and Confirmation separately, and never reads locked origins 268-315.
+The active model is not changed automatically.
 
 ## Project structure
 
@@ -142,3 +152,4 @@ At forecast origin `t`:
 - [Downside Risk Gate experiment](research/downside_risk_gate/README.md)
 - [Directional Downside Selector experiment](research/directional_downside_selector/README.md)
 - [Contextual Defensive Selector experiment](research/contextual_defensive_selector/README.md)
+- [Unified Forecast Controller experiment](research/unified_forecast_controller/README.md)

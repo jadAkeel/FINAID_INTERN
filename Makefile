@@ -24,6 +24,12 @@ build-context-selector:
 show-context-selector:
 	$(PYTHON) -m forecast_select show-context-selector
 
+build-unified-controller:
+	$(PYTHON) -m forecast_select build-unified-controller
+
+show-unified-controller:
+	$(PYTHON) -m forecast_select show-unified-controller
+
 forecast-next-three:
 	$(PYTHON) -m forecast_select forecast-next-three
 
