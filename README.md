@@ -1,156 +1,134 @@
-# Forecast Select
+# Forecast Select — Regime Adaptive Bidirectional Selector
 
-Forecast Select is a leakage-safe research pipeline for predicting the next
-monthly direction of 50 anonymous indicators.
+Leakage-safe research pipeline للتنبؤ باتجاه 50 مؤشر شهري مجهول (X1..X50). الموديل الفعّال الحالي هو **Regime Adaptive Bidirectional Selector** بسياسة `forward_breadth_graduated_15_to_20` — يختار **15-20** مؤشر شهرياً (Up/Down) باستخدام `t-2` labels و `t-1` features فقط.
 
-The project has one active model with a descriptive name:
+> **الخلاصة العملية (2026-08-29):** بعد 164 محاولة cap-matched (13 فكرة + 120 تركيبة خطية + 30 recent_miss + 1 غير خطية) لم يتجاوز أي Challenger `SelAUC>0.50` مع `Acc` لا تنخفض. أفضل نتيجة كانت `Sel 0.4689 (+0.067)` لكن بقي `<0.50`. **السقف الخطي مع البيانات الحالية هو ~0.47** — لذلك الموديل الفعّال بقي `forward_breadth_dynamic_cap_v3` بدون تغيير. كل الفشل موثق في `docs/SELECTION_GROUP_FAILED_REGISTRY.md`.
 
-## Uptrend Selector
+## النتائج المثبتة (Baseline)
 
-The model:
+من `research/regime_adaptive_selector/artifacts/predictions.parquet` (6349 صف 120-266):
 
-1. builds features using observations available through the previous month;
-2. trains one regularized Logistic model across all indicators;
-3. adds rolling PCA, peer-correlation, breadth, dispersion, and momentum features;
-4. propagates probabilities through a frozen signed correlation graph;
-5. selects the 15 indicators with the strongest estimated Up probability.
+| Period | Directional AUC | Selection AUC | Accuracy | Correct/Total | Cap |
+|---|---:|---:|---:|---:|---:|
+| Tuning 120-179 | 0.5795 | 0.5413 | 64.05% | 686/1071 | 15-20 |
+| Validation 180-219 | 0.5094 | 0.4015 | 58.52% | 395/675 | 15-20 |
+| Development 120-219 | 0.5533 | 0.5092 | 61.91% | 1081/1746 | 17.46 avg |
+| Confirmation 220-266 | 0.5380 | 0.4411 | 63.58% | 508/799 | 17.0 |
 
-Registered Selection result:
+- `Up 675 / Down 0` في Validation — تحيز Up شديد
+- `corr(p_up,p_up_selection)=0.946` — تكرار
 
-- 100 months
-- 15 indicators per month
-- 926 correct calls out of 1,500
-- 61.73% accuracy
-- 1,500 Up calls and 0 Down calls
+## البنية
 
-The final point is important: this is an Uptrend selector, not a balanced
-Up/Down forecasting system. The repository does not claim 65% accuracy,
-real-time vintage validity, or production readiness.
+```
+configs/
+  active_model.yaml               # الفعّال: forward_breadth_dynamic_cap_v3
+  regime_adaptive_selector.yaml   # graduated 0.52->15 / 0.68->20, group weight 0.25
+  config.yaml                     # data_path: data/monthly_indicators.xlsx (316 pos حتى 2026-05-29)
+src/forecast_select/
+  regime_adaptive.py              # risk_adjusted = p_up*(1-0.25*stress)-0.15*p_down
+  regime_adaptive_pipeline.py     # group 12m lag2 + graph 48m
+research/
+  regime_adaptive_selector/       # Baseline المرجع
+  february_holdout_experiment/    # مارس-مايو Terminal (مو Blind الآن)
+  regime_adaptive_selection_group_v2/ # آخر بحث (9 ملفات نظيفة)
+docs/
+  SELECTION_GROUP_FAILED_REGISTRY.md # سجل 13 فكرة فاشلة + 150 تركيبة
+reports/
+  regime_adaptive_next_three_forecast.json # توقع يونيو-أغسطس
+```
 
-## Quick start
+## التشغيل السريع (CLI)
 
 ```powershell
+# 1. تثبيت
 python -m pip install -e ".[dev]"
-python -m forecast_select audit-data
-python -m forecast_select build-model
-python -m forecast_select show-results
-python -m forecast_select build-risk-gate
-python -m forecast_select show-risk-gate
-python -m forecast_select build-directional-downside
-python -m forecast_select show-directional-downside
-python -m forecast_select build-context-selector
-python -m forecast_select show-context-selector
-python -m forecast_select build-unified-controller
-python -m forecast_select show-unified-controller
-python -m forecast_select forecast-next-three
-python -m forecast_select check-project
-python -m pytest
+
+# 2. فحص البيانات
+python -m forecast_select.cli audit-data
+
+# 3. بناء الموديل الفعّال (حتى مايو 316)
+python -m forecast_select.cli build-regime-adaptive
+
+# 4. عرض النتائج
+python -m forecast_select.cli show-regime-adaptive
+
+# 5. توقع يونيو (H1) + يوليو (H2) + أغسطس (H3) - كل أفق يتدرب حتى t-2-(h-1)
+python -m forecast_select.cli forecast-regime-next-three
+# alias:
+python -m forecast_select.cli forecast-next-three
+
+# 6. التحقق
+python -m forecast_select.cli check-project
+python -m pytest tests/unit/test_regime_adaptive.py -q
 ```
 
-`forecast-next-three` writes `reports/next_three_month_forecast.json`. The first
-month uses the registered one-step Uptrend Selector scope. Months two and three
-are experimental direct-horizon extensions trained on horizon-specific past
-labels; they do not synthesize missing future indicator values.
+`forecast-regime-next-three` يكتب `reports/regime_adaptive_next_three_forecast.json` — كل أفق يختار 15-20 مؤشر مع `p_up`, `p_down`, `selection_score`, `group`, `rank`, `regime`.
 
-## Experimental Downside Risk Gate
+## نتيجة التشغيل الحالية (2026-06 / 07 / 08)
 
-`build-risk-gate` trains a causal Logistic shock-risk specialist and tests
-whether subtracting downside risk improves the Uptrend Selector's top-15
-ranking. The penalty is selected on Discovery origins 120-219 and evaluated
-once on Confirmation origins 220-266. Historical locked evidence 268-315 is
-not read.
+شُغلت الآن على `2026-05-29` Origin 316:
 
-The current experiment selected a risk penalty of `0.0`. Confirmation changed
-one call because the gate excludes the poor-quality `X16` series, improving
-the point estimate from 436/705 (`61.84%`) to 437/705 (`61.99%`). The shock
-ranker's Confirmation ROC AUC was only `0.564`, so the gate is not promoted to
-the active model.
+```
+Generated from: 2026-05-29 | Origin: 316 | Through: 2026-04-30
+Method: direct_multi_horizon_frozen_regime_adaptive | Cap mode: guarded_bidirectional_fallback
 
-## Experimental Directional Downside Selector
+=== 2026-06 | Horizon 1m | mixed stress 0.487 cap 15 breadth 0.531 ===
+   1. X41 Up score 0.715 p_up 0.748 p_down 0.367 group fixed_income
+   2. X39 Up score 0.600 p_up 0.649 p_down 0.506 group fixed_income
+   3. X40 Up score 0.590 p_up 0.627 p_down 0.438 group fixed_income
+   4. X24 Up score 0.552 p_up 0.625 p_down 0.404 group us_sector
+   5. X9  Up score 0.546 p_up 0.621 p_down 0.523 group thematic_equity
+   6. X11 Up score 0.547 p_up 0.614 p_down 0.470 group thematic_equity
+   7. X10 Up score 0.546 p_up 0.610 p_down 0.456 group thematic_equity
+   8. X43 Up score 0.560 p_up 0.601 p_down 0.468 group fixed_income
+   9. X38 Up score 0.539 p_up 0.593 p_down 0.554 group fixed_income
+  10. X30 Up score 0.497 p_up 0.591 p_down 0.539 group us_sector
+  11. X3  Up score 0.512 p_up 0.576 p_down 0.455 group thematic_equity
+  12. X32 Up score 0.515 p_up 0.574 p_down 0.532 group global_equity
+  13. X33 Up score 0.510 p_up 0.567 p_down 0.514 group global_equity
+  14. X37 Up score 0.493 p_up 0.557 p_down 0.560 group global_equity
+  15. X34 Up score 0.487 p_up 0.544 p_down 0.516 group global_equity
 
-`build-directional-downside` learns actual `Down` directions rather than only
-penalizing risky `Up` calls. It combines a global Logistic model, local models
-for indicators with enough history, an indicator-specific rise-then-stall
-prior, and rolling learned lead-lag peer features. The resulting selector can
-place both `Up` and `Down` calls inside the monthly top 15.
+=== 2026-07 | Horizon 2m | mixed stress 0.487 cap 15 breadth 0.531 ===
+   1. X41 Up score 0.708 p_up 0.734 p_down 0.329 group fixed_income
+   2. X39 Up score 0.631 p_up 0.659 p_down 0.368
+   3. X24 Up score 0.577 p_up 0.641 p_down 0.344
+  ... (15 كل شهر)
 
-Parameters were selected on Tuning origins 120-179. Accuracy moved from
-`64.33%` to `64.44%` on Tuning and from `57.83%` to `58.67%` on Validation.
-Confirmation remained exactly `61.84%`; its 12 Down calls were correct 6 times.
-The experiment is therefore not promoted and did not read locked origins
-268-315.
-
-## Experimental Contextual Defensive Selector
-
-`build-context-selector` tests whether neutral role indicators should replace
-the weakest selected Up candidate when a past-only three-month breadth signal
-indicates market stress. Candidate thresholds and role sets are selected
-inside Discovery only, before one Confirmation evaluation.
-
-The selected Discovery rule used breadth at or below `0.45` and roles `X44`
-and `X49`. It improved Discovery from 926/1500 (`61.73%`) to 934/1500
-(`62.27%`), but Confirmation remained exactly 436/705 (`61.84%`). The rule is
-therefore retained as negative experimental evidence and is not promoted.
-
-## Experimental Unified Forecast Controller
-
-`build-unified-controller` evaluates a non-promoting meta-controller over the
-frozen Directional Downside, Downside Risk Gate, and Contextual Defensive
-artifacts. It selects overlay weights on Tuning origins 120-179, reports
-Validation and Confirmation separately, and never reads locked origins 268-315.
-The active model is not changed automatically.
-
-## Project structure
-
-```text
-configs/
-  config.yaml                 Shared data and validation settings
-  uptrend_model.yaml          Active model settings and registered result
-
-data/
-  monthly_indicators.xlsx     Immutable monthly input workbook
-
-src/forecast_select/
-  features.py                 Causal feature construction
-  uptrend_model.py            Structured Logistic model
-  indicator_selection.py      Correlation propagation and top-indicator selection
-  uptrend_pipeline.py         End-to-end active model pipeline
-  project.py                  Data audit and project-integrity checks
-  validation.py               Walk-forward timing rules
-
-artifacts/
-  active/                     Registered Uptrend Selector predictions
-  audit/                      Preserved locked evaluation
-
-research/reference_models/
-  artifacts/                  One evidence artifact per comparison model
-  metrics/                    Matching metrics
-
-reports/                      Current data, model, and integrity reports
-tests/                        Unit, integration, regression, and leakage tests
+=== 2026-08 | Horizon 3m | mixed stress 0.493 cap 15 breadth 0.531 ===
+   1. X41 Up score 0.698 p_up 0.743 p_down 0.446
+  ... (15 كل شهر)
 ```
 
-## Validation boundary
+الملف الكامل: `reports/regime_adaptive_next_three_forecast.json` (15 اختيار لكل شهر 6/7/8 مع `forecast_market_breadth 0.530562` و `regime_stress 0.487`).
 
-At forecast origin `t`:
+## التحقق
 
-- feature values use observations through `t-1`;
-- model labels and indicator history stop at `t-2`;
-- Selection covers origins 120 through 219;
-- the preserved locked evaluation is not used to choose or tune the model.
+```powershell
+python -m pytest tests/unit/test_regime_adaptive.py -q
+# 19 passed
 
-## Documentation
+ruff check src/forecast_select --quiet
+# (no output)
+```
 
-- [Arabic project overview](docs/overview-ar.md)
-- [Data contract](docs/data.md)
-- [Model methodology](docs/methodology.md)
-- [Reproduction runbook](docs/runbook.md)
-- [Verification rules](docs/verification.md)
-- [Reference model portfolio](research/reference_models/README.md)
-- [65% accuracy feasibility study](research/accuracy_feasibility/README.md)
-- [Sudden-drop study](research/sudden_drop_study/README.md)
-- [Downside Risk Gate experiment](research/downside_risk_gate/README.md)
-- [Directional Downside Selector experiment](research/directional_downside_selector/README.md)
-- [Contextual Defensive Selector experiment](research/contextual_defensive_selector/README.md)
-- [Unified Forecast Controller experiment](research/unified_forecast_controller/README.md)
-- [Submission status and data request](docs/submission_status.md)
+كل المقاييس cap-matched 15-20، `fit_through <= origin-2`، `locked 268-315` لم تُقرأ. مارس-مايو 314-316 شوهدت سابقاً في `february_holdout` لذلك ليست Blind الآن - موثق في `research_plan.md`.
+
+## السجل المرجعي للفشل
+
+قبل أي تجربة جديدة اقرأ:
+- `docs/SELECTION_GROUP_FAILED_REGISTRY.md` — 13 فكرة فاشلة + 150 تركيبة exhaustive (الحد الأقصى Val Sel 0.4689 <0.50، Acc +0.29pp فقط، 0/120 تجاوزت البوابات)
+
+الفرضية الوحيدة المقترحة المتبقية: `Regime-conditioned Lead` فقط عند `breadth<0` و `uncertainty>0.6` مع shrinkage هرمي.
+
+## تسليم المراجع
+
+```
+research/regime_adaptive_selector/artifacts/predictions.parquet
+research/regime_adaptive_selection_group_v2/ (9 ملفات نظيفة)
+research/february_holdout_experiment/ (6 ملفات)
+docs/SELECTION_GROUP_FAILED_REGISTRY.md
+configs/active_model.yaml
+reports/regime_adaptive_next_three_forecast.json
+```

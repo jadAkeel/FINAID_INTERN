@@ -1,0 +1,36 @@
+{
+  "finding": "Baseline Selection AUC (0.4015) is driven by per-month noise (mean per-month AUC=0.498, std=0.207). The model is Up-heavy and the per-month rank ordering carries no signal beyond the base rate. p_up-selection_score has 0.946 correlation with p_up, leaving the 0.4*stress - 0.15*p_down adjustment as a near-zero perturbation.",
+  "consequence": "Any challenger that swaps at most 5-7% of the cohort with slightly better-conditioned indicators should improve both Selection AUC and Accuracy simultaneously without changing cap or direction policy.",
+  "experiment": "Family F: recent-miss + group-stability overlay. Penalise indicators with miss rate > dynamic threshold (0.45) over 6 months fit-through-origin=t-2, and reward groups whose up-rate is above 0.5 with low variance.",
+  "parameters": {
+    "window_months": 6,
+    "base_threshold": 0.45,
+    "stability_bonus": 0.3
+  },
+  "delta_metrics": {
+    "tuning_120_179": {
+      "selection_auc_delta": 0.01651622186560775,
+      "directional_auc_delta": 0.029816963260595686,
+      "accuracy_delta": 0.017740429505135435,
+      "brier_delta": -0.007428993893392077
+    },
+    "validation_180_219": {
+      "selection_auc_delta": 0.09638976286978784,
+      "directional_auc_delta": 0.04465740777611127,
+      "accuracy_delta": 0.001481481481481528,
+      "brier_delta": -0.004505345371385361
+    },
+    "development_120_219": {
+      "selection_auc_delta": 0.04387339069647478,
+      "directional_auc_delta": 0.03513604284979022,
+      "accuracy_delta": 0.01145475372279492,
+      "brier_delta": -0.006177732919724982
+    },
+    "confirmation_220_266": {
+      "selection_auc_delta": 0.05870698017084769,
+      "directional_auc_delta": 0.03369717324377286,
+      "accuracy_delta": 0.007509386733416723,
+      "brier_delta": -0.004037031684250125
+    }
+  }
+}
