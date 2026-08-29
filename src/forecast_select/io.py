@@ -40,8 +40,18 @@ def atomic_write_parquet(frame: pd.DataFrame, path: str | Path) -> None:
     os.replace(temporary, target)
 
 
-def load_workbook(path: str | Path) -> pd.DataFrame:
-    frame = pd.read_excel(path, sheet_name="Sheet1", engine="openpyxl")
+def load_workbook(
+    path: str | Path,
+    maximum_position: int | None = None,
+) -> pd.DataFrame:
+    if maximum_position is not None and maximum_position < 1:
+        raise ValueError("maximum_position must be positive")
+    frame = pd.read_excel(
+        path,
+        sheet_name="Sheet1",
+        engine="openpyxl",
+        nrows=maximum_position,
+    )
     if frame.empty or frame.columns[0] != "Dates":
         raise ValueError("Expected a non-empty Sheet1 whose first column is Dates")
     frame["Dates"] = pd.to_datetime(frame["Dates"], errors="raise")

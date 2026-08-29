@@ -1,12 +1,11 @@
-# Uptrend Selector performance
+# Regime Adaptive Bidirectional Selector performance
 
-This is the single active model pipeline.
+This is the owner-promoted active model. The research promotion gate did not pass; activation is an explicit product decision to support both Up and Down directions.
 
-- Selection hits / calls: `926 / 1500`
-- Top-15 accuracy: `61.7333%`
-- Up / Down calls: `1500 / 0`
-- Registered result reproduced: `True`
-- Confirmation read: `False`
+- Non-locked hits / calls: `1589 / 2545`
+- Non-locked accuracy: `62.4361%`
+- Up / Down calls: `2534 / 11`
+- Research promotion eligible: `False`
 - Locked evaluation read: `False`
 
-The pipeline is Structured Logistic with corrected cross-sectional rank, followed by a frozen signed correlation graph and a causal top-indicator selector.
+The Uptrend Selector remains the reproducible baseline used by the research pipeline.

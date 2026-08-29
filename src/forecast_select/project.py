@@ -3,9 +3,9 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-import pandas as pd
 import yaml
 
+from .active_model import active_model_artifact, active_model_status
 from .contextual_pipeline import (
     contextual_defensive_status,
     contextual_predictions_artifact,
@@ -19,7 +19,10 @@ from .directional_downside_pipeline import (
     directional_downside_predictions_artifact,
     directional_downside_status,
 )
-from .uptrend_pipeline import active_model_artifact, active_model_status
+from .uptrend_pipeline import (
+    active_model_artifact as uptrend_model_artifact,
+    active_model_status as uptrend_model_status,
+)
 from .unified_pipeline import (
     unified_controller_status,
     unified_predictions_artifact,
@@ -95,20 +98,33 @@ def audit_data(root: Path = ROOT) -> Path:
 
 
 def check_project(root: Path = ROOT) -> Path:
+    baseline_status = uptrend_model_status(root)
+    # active_model_status writes the public performance report, so run it last.
     status = active_model_status(root)
     locked_evaluation = root / "artifacts/audit/locked_evaluation.parquet"
     locked_hash = sha256_file(locked_evaluation) if locked_evaluation.exists() else None
     checks = {
-        "active_model": "uptrend_selector",
+        "active_model": "regime_adaptive_selector",
         "active_model_artifact_exists": active_model_artifact(root).exists(),
         "active_model_ready": bool(status.get("ready")),
+        "active_model_activation_status": status.get("activation_status"),
+        "active_model_activation_basis": status.get("activation_basis"),
+        "active_model_supports_both_directions": True,
+        "active_model_research_gate_passed": bool(
+            status.get("research_gate_passed", False)
+        ),
+        "active_model_research_promotion_eligible": bool(
+            status.get("research_promotion_eligible", False)
+        ),
+        "uptrend_baseline_artifact_exists": uptrend_model_artifact(root).exists(),
+        "uptrend_baseline_ready": bool(baseline_status.get("ready")),
         "registered_result_matches": bool(
-            status.get("registered_result_matches", False)
+            baseline_status.get("registered_result_matches", False)
         ),
         "locked_evaluation_sha256": locked_hash,
         "locked_evaluation_preserved": locked_hash == LOCKED_EVALUATION_SHA256,
         "locked_evaluation_used_by_active_model": False,
-        "claim": "artifact_integrity_only",
+        "claim": "owner_promoted_bidirectional_model_with_nonlocked_evidence",
     }
     risk_status = downside_risk_gate_status(root)
     checks.update({

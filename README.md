@@ -2,7 +2,7 @@
 
 Predict the next-month direction of 50 indicators. The active model selects **15–20 indicators per month**.
 
-**Active Model:** Regime Adaptive Bidirectional Selector (`forward_breadth_graduated_15_to_20`)
+**Active Model:** Regime Adaptive Bidirectional Selector (`forward_breadth_dynamic_cap_v3`)
 
 ## Results
 

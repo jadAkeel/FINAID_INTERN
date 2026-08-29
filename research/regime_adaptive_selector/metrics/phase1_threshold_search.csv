@@ -1,0 +1,7 @@
+policy,lower_threshold,upper_threshold,early_tuning_calls,early_tuning_hits,early_tuning_accuracy,early_tuning_hit_delta,late_tuning_calls,late_tuning_hits,late_tuning_accuracy,late_tuning_hit_delta,tuning_calls,tuning_hits,tuning_accuracy,tuning_hit_delta,stable_tuning_gate,coverage_delta,selected
+graduated,0.55,0.7,520,325,0.625,-25,494,325,0.6578947368421053,-11,1014,650,0.6410256410256411,-36,False,57,True
+graduated,0.6,0.7,512,318,0.62109375,-32,486,319,0.6563786008230452,-17,998,637,0.6382765531062125,-49,False,73,False
+graduated,0.6,0.75,503,315,0.6262425447316103,-35,480,315,0.65625,-21,983,630,0.6408952187182095,-56,False,88,False
+quality_gate,0.55,0.6,551,345,0.6261343012704175,-5,517,340,0.6576402321083172,4,1068,685,0.6413857677902621,-1,False,3,True
+quality_gate,0.575,0.625,542,342,0.6309963099630996,-8,509,335,0.6581532416502947,-1,1051,677,0.6441484300666033,-9,False,20,False
+quality_gate,0.6,0.65,530,334,0.630188679245283,-16,489,320,0.65439672801636,-16,1019,654,0.6418056918547596,-32,False,52,False

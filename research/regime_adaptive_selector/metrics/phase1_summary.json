@@ -1,0 +1,379 @@
+{
+  "active_model_changed": false,
+  "confirmation_used_for_selection": false,
+  "experiment_phase": "direct_expansion_quality_gate",
+  "locked_evaluation_read": false,
+  "locked_origins": [
+    268,
+    315
+  ],
+  "quality_feature_contract": "expansion_quality_v1",
+  "quality_fit_through_max": 264,
+  "results": {
+    "current_binary": {
+      "accepted": true,
+      "baseline_windows": {
+        "confirmation_descriptive": {
+          "accuracy": 0.6357947434292867,
+          "calls": 799,
+          "hits": 508
+        },
+        "early_tuning": {
+          "accuracy": 0.6340579710144928,
+          "calls": 552,
+          "hits": 350
+        },
+        "late_tuning": {
+          "accuracy": 0.6473988439306358,
+          "calls": 519,
+          "hits": 336
+        },
+        "tuning": {
+          "accuracy": 0.6405228758169934,
+          "calls": 1071,
+          "hits": 686
+        },
+        "validation": {
+          "accuracy": 0.5851851851851851,
+          "calls": 675,
+          "hits": 395
+        }
+      },
+      "bootstrap": {
+        "accuracy": 0.5851851851851851,
+        "bootstrap_p10": 0.5196869517543861,
+        "bootstrap_p90": 0.6361833827829377,
+        "calls": 675,
+        "down_calls": 0,
+        "hits": 395,
+        "months": 40,
+        "up_calls": 675
+      },
+      "bootstrap_ok": true,
+      "cap_distribution": {
+        "15": 33,
+        "16": 23,
+        "17": 20,
+        "18": 27,
+        "19": 24,
+        "20": 20
+      },
+      "marginal_non_destructive": false,
+      "marginal_validation": {
+        "accuracy": 0.49333333333333335,
+        "calls": 75,
+        "hits": 37
+      },
+      "paired_monthly_hit_delta": {
+        "confirmation_descriptive": {
+          "bootstrap_p10": 0.0,
+          "bootstrap_p90": 0.0,
+          "mean_monthly_hit_delta": 0.0,
+          "months": 47,
+          "total_hit_delta": 0
+        },
+        "early_tuning": {
+          "bootstrap_p10": 0.0,
+          "bootstrap_p90": 0.0,
+          "mean_monthly_hit_delta": 0.0,
+          "months": 30,
+          "total_hit_delta": 0
+        },
+        "late_tuning": {
+          "bootstrap_p10": 0.0,
+          "bootstrap_p90": 0.0,
+          "mean_monthly_hit_delta": 0.0,
+          "months": 30,
+          "total_hit_delta": 0
+        },
+        "tuning": {
+          "bootstrap_p10": 0.0,
+          "bootstrap_p90": 0.0,
+          "mean_monthly_hit_delta": 0.0,
+          "months": 60,
+          "total_hit_delta": 0
+        },
+        "validation": {
+          "bootstrap_p10": 0.0,
+          "bootstrap_p90": 0.0,
+          "mean_monthly_hit_delta": 0.0,
+          "months": 40,
+          "total_hit_delta": 0
+        }
+      },
+      "stable_tuning_gate": true,
+      "validation_nonnegative": true,
+      "windows": {
+        "confirmation_descriptive": {
+          "accuracy": 0.6357947434292867,
+          "calls": 799,
+          "hits": 508
+        },
+        "early_tuning": {
+          "accuracy": 0.6340579710144928,
+          "calls": 552,
+          "hits": 350
+        },
+        "late_tuning": {
+          "accuracy": 0.6473988439306358,
+          "calls": 519,
+          "hits": 336
+        },
+        "tuning": {
+          "accuracy": 0.6405228758169934,
+          "calls": 1071,
+          "hits": 686
+        },
+        "validation": {
+          "accuracy": 0.5851851851851851,
+          "calls": 675,
+          "hits": 395
+        }
+      }
+    },
+    "graduated": {
+      "accepted": false,
+      "baseline_windows": {
+        "confirmation_descriptive": {
+          "accuracy": 0.6357947434292867,
+          "calls": 799,
+          "hits": 508
+        },
+        "early_tuning": {
+          "accuracy": 0.6340579710144928,
+          "calls": 552,
+          "hits": 350
+        },
+        "late_tuning": {
+          "accuracy": 0.6473988439306358,
+          "calls": 519,
+          "hits": 336
+        },
+        "tuning": {
+          "accuracy": 0.6405228758169934,
+          "calls": 1071,
+          "hits": 686
+        },
+        "validation": {
+          "accuracy": 0.5851851851851851,
+          "calls": 675,
+          "hits": 395
+        }
+      },
+      "bootstrap": {
+        "accuracy": 0.583076923076923,
+        "bootstrap_p10": 0.5226372549019609,
+        "bootstrap_p90": 0.6375588235294117,
+        "calls": 650,
+        "down_calls": 0,
+        "hits": 379,
+        "months": 40,
+        "up_calls": 650
+      },
+      "bootstrap_ok": false,
+      "cap_distribution": {
+        "15": 42,
+        "17": 99,
+        "20": 6
+      },
+      "marginal_non_destructive": false,
+      "marginal_validation": {
+        "accuracy": 0.42,
+        "calls": 50,
+        "hits": 21
+      },
+      "paired_monthly_hit_delta": {
+        "confirmation_descriptive": {
+          "bootstrap_p10": -0.574468085106383,
+          "bootstrap_p90": -0.19148936170212766,
+          "mean_monthly_hit_delta": -0.3617021276595745,
+          "months": 47,
+          "total_hit_delta": -17
+        },
+        "early_tuning": {
+          "bootstrap_p10": -1.2,
+          "bootstrap_p90": -0.5333333333333333,
+          "mean_monthly_hit_delta": -0.8333333333333334,
+          "months": 30,
+          "total_hit_delta": -25
+        },
+        "late_tuning": {
+          "bootstrap_p10": -0.5,
+          "bootstrap_p90": -0.2,
+          "mean_monthly_hit_delta": -0.36666666666666664,
+          "months": 30,
+          "total_hit_delta": -11
+        },
+        "tuning": {
+          "bootstrap_p10": -0.7666666666666667,
+          "bootstrap_p90": -0.4,
+          "mean_monthly_hit_delta": -0.6,
+          "months": 60,
+          "total_hit_delta": -36
+        },
+        "validation": {
+          "bootstrap_p10": -0.55,
+          "bootstrap_p90": -0.15,
+          "mean_monthly_hit_delta": -0.4,
+          "months": 40,
+          "total_hit_delta": -16
+        }
+      },
+      "selected_thresholds": [
+        0.55,
+        0.7
+      ],
+      "stable_tuning_gate": false,
+      "validation_nonnegative": false,
+      "windows": {
+        "confirmation_descriptive": {
+          "accuracy": 0.6384915474642393,
+          "calls": 769,
+          "hits": 491
+        },
+        "early_tuning": {
+          "accuracy": 0.625,
+          "calls": 520,
+          "hits": 325
+        },
+        "late_tuning": {
+          "accuracy": 0.6578947368421053,
+          "calls": 494,
+          "hits": 325
+        },
+        "tuning": {
+          "accuracy": 0.6410256410256411,
+          "calls": 1014,
+          "hits": 650
+        },
+        "validation": {
+          "accuracy": 0.583076923076923,
+          "calls": 650,
+          "hits": 379
+        }
+      }
+    },
+    "quality_gate": {
+      "accepted": false,
+      "baseline_windows": {
+        "confirmation_descriptive": {
+          "accuracy": 0.6357947434292867,
+          "calls": 799,
+          "hits": 508
+        },
+        "early_tuning": {
+          "accuracy": 0.6340579710144928,
+          "calls": 552,
+          "hits": 350
+        },
+        "late_tuning": {
+          "accuracy": 0.6473988439306358,
+          "calls": 519,
+          "hits": 336
+        },
+        "tuning": {
+          "accuracy": 0.6405228758169934,
+          "calls": 1071,
+          "hits": 686
+        },
+        "validation": {
+          "accuracy": 0.5851851851851851,
+          "calls": 675,
+          "hits": 395
+        }
+      },
+      "bootstrap": {
+        "accuracy": 0.5901116427432217,
+        "bootstrap_p10": 0.5289436274509803,
+        "bootstrap_p90": 0.6491568627450981,
+        "calls": 627,
+        "down_calls": 0,
+        "hits": 370,
+        "months": 40,
+        "up_calls": 627
+      },
+      "bootstrap_ok": false,
+      "cap_distribution": {
+        "15": 75,
+        "17": 33,
+        "20": 39
+      },
+      "marginal_non_destructive": false,
+      "marginal_validation": {
+        "accuracy": 0.4444444444444444,
+        "calls": 27,
+        "hits": 12
+      },
+      "paired_monthly_hit_delta": {
+        "confirmation_descriptive": {
+          "bootstrap_p10": -0.9787234042553191,
+          "bootstrap_p90": -0.1702127659574468,
+          "mean_monthly_hit_delta": -0.5531914893617021,
+          "months": 47,
+          "total_hit_delta": -26
+        },
+        "early_tuning": {
+          "bootstrap_p10": -0.43333333333333335,
+          "bootstrap_p90": 0.1,
+          "mean_monthly_hit_delta": -0.16666666666666666,
+          "months": 30,
+          "total_hit_delta": -5
+        },
+        "late_tuning": {
+          "bootstrap_p10": -0.43333333333333335,
+          "bootstrap_p90": 1.1666666666666667,
+          "mean_monthly_hit_delta": 0.13333333333333333,
+          "months": 30,
+          "total_hit_delta": 4
+        },
+        "tuning": {
+          "bootstrap_p10": -0.4,
+          "bootstrap_p90": 0.43333333333333335,
+          "mean_monthly_hit_delta": -0.016666666666666666,
+          "months": 60,
+          "total_hit_delta": -1
+        },
+        "validation": {
+          "bootstrap_p10": -0.975,
+          "bootstrap_p90": -0.225,
+          "mean_monthly_hit_delta": -0.625,
+          "months": 40,
+          "total_hit_delta": -25
+        }
+      },
+      "selected_thresholds": [
+        0.55,
+        0.6
+      ],
+      "stable_tuning_gate": false,
+      "validation_nonnegative": false,
+      "windows": {
+        "confirmation_descriptive": {
+          "accuracy": 0.6251621271076524,
+          "calls": 771,
+          "hits": 482
+        },
+        "early_tuning": {
+          "accuracy": 0.6261343012704175,
+          "calls": 551,
+          "hits": 345
+        },
+        "late_tuning": {
+          "accuracy": 0.6576402321083172,
+          "calls": 517,
+          "hits": 340
+        },
+        "tuning": {
+          "accuracy": 0.6413857677902621,
+          "calls": 1068,
+          "hits": 685
+        },
+        "validation": {
+          "accuracy": 0.5901116427432217,
+          "calls": 627,
+          "hits": 370
+        }
+      }
+    }
+  }
+}

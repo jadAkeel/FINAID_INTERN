@@ -33,6 +33,28 @@ def propagate_correlation_graph(
     return np.clip(1.0 / (1.0 + np.exp(-blended_logit)), 1e-6, 1.0 - 1e-6)
 
 
+def reliability_weighted_correlation(
+    changes: pd.DataFrame,
+    minimum_pairs: int,
+) -> pd.DataFrame:
+    """Estimate a signed graph and shrink pairs with limited joint history."""
+    if minimum_pairs < 2:
+        raise ValueError("minimum_pairs must be at least two")
+    if len(changes) < minimum_pairs:
+        raise ValueError("Correlation history is shorter than minimum_pairs")
+    numeric = changes.apply(pd.to_numeric, errors="coerce")
+    correlation = numeric.corr(min_periods=minimum_pairs).fillna(0.0)
+    valid = numeric.notna().astype(float)
+    pair_counts = valid.T @ valid
+    denominator = max(1, len(numeric) - minimum_pairs + 1)
+    reliability = (
+        (pair_counts - minimum_pairs + 1) / denominator
+    ).clip(0.0, 1.0)
+    result = correlation * reliability
+    np.fill_diagonal(result.values, 0.0)
+    return result
+
+
 def select_top_indicators(
     target_history: pd.DataFrame,
     predictions: pd.DataFrame,
@@ -51,6 +73,7 @@ def select_top_indicators(
     defaults = {
         "p_up_calibrated": np.nan,
         "directional_confidence": np.nan,
+        "directional_score": np.nan,
         "correctness_probability": np.nan,
         "correctness_lcb": np.nan,
         "indicator_prior": np.nan,
@@ -87,8 +110,9 @@ def select_top_indicators(
         current["p_up"] = blended.where(valid, current["p_up"])
         current["p_up_calibrated"] = blended
         current["predicted_direction"] = np.where(blended >= 0.5, "Up", "Down")
-        current["directional_confidence"] = np.maximum(blended, 1.0 - blended)
-        current["correctness_probability"] = current["directional_confidence"]
+        current["directional_score"] = np.maximum(blended, 1.0 - blended)
+        current["directional_confidence"] = current["directional_score"]
+        current["correctness_probability"] = np.nan
         current["indicator_prior"] = prior
         current["indicator_history_rows"] = counts
         current["selection_score"] = blended

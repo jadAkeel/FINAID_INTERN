@@ -73,12 +73,14 @@ def build_direct_monthly_forecasts(
     root: Path = ROOT,
     forecast_origin: int | None = None,
     horizons: tuple[int, ...] = (1, 2, 3),
+    include_rejected: bool = False,
 ) -> pd.DataFrame:
     """Select monthly directions for several direct forecast horizons.
 
     The registered Uptrend Selector is a one-step model. Horizons above one
     are explicit direct extensions that reuse its features, estimator, graph,
     and selection policy while training on horizon-specific historical labels.
+    Set ``include_rejected`` to return the full ranked indicator panel.
     """
     if not horizons or any(horizon < 1 for horizon in horizons):
         raise ValueError("horizons must contain positive integers")
@@ -175,7 +177,7 @@ def build_direct_monthly_forecasts(
             targets["target_available"] & targets["y_true"].notna(),
             ["origin_position", "indicator_id", "y_true"],
         ]
-        selected = select_top_indicators(
+        ranked = select_top_indicators(
             target_history,
             predictions,
             cap=int(selection_settings["monthly_selection_count"]),
@@ -189,7 +191,7 @@ def build_direct_monthly_forecasts(
             ),
             availability_lag=effective_lag,
         )
-        selected = selected[selected["accepted"]].copy()
+        selected = ranked[ranked["accepted"]].copy()
         expected = int(selection_settings["monthly_selection_count"])
         if (
             len(selected) != expected
@@ -198,15 +200,17 @@ def build_direct_monthly_forecasts(
             raise AssertionError(
                 f"Forecast horizon {horizon} must select {expected} unique indicators"
             )
-        selected["forecast_horizon_months"] = horizon
-        selected["forecast_month"] = _forecast_month(frame, origin, horizon)
-        selected["model_scope"] = (
+        ranked["forecast_horizon_months"] = horizon
+        ranked["forecast_month"] = _forecast_month(frame, origin, horizon)
+        ranked["model_scope"] = (
             "registered_one_step"
             if horizon == 1
             else "experimental_direct_horizon"
         )
-        selected["training_fit_through_origin"] = origin - effective_lag - 1
-        forecast_parts.append(selected)
+        ranked["training_fit_through_origin"] = origin - effective_lag - 1
+        forecast_parts.append(
+            ranked if include_rejected else ranked[ranked["accepted"]].copy()
+        )
 
     return pd.concat(forecast_parts, ignore_index=True).sort_values(
         ["forecast_horizon_months", "selection_rank"]

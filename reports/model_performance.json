@@ -1,17 +1,63 @@
 {
-  "accuracy": 0.6173333333333333,
-  "artifact": "artifacts/active/uptrend_predictions.parquet",
-  "bootstrap_p10": 0.586,
-  "bootstrap_p90": 0.6480666666666668,
-  "calls": 1500,
-  "confirmation_read": false,
-  "down_calls": 0,
-  "hits": 926,
+  "activation_basis": "owner_directed_bidirectional_requirement",
+  "activation_status": "owner_promoted",
+  "active_model_changed": true,
+  "artifact": "artifacts/active/regime_adaptive_predictions.parquet",
+  "baseline_model_id": "uptrend_selector",
   "locked_evaluation_read": false,
-  "model_id": "uptrend_selector",
-  "model_name": "Uptrend Selector",
-  "model_release": "initial_release",
-  "months": 100,
-  "registered_result_matches": true,
-  "up_calls": 1500
+  "locked_origins": [
+    268,
+    315
+  ],
+  "model_id": "regime_adaptive_selector",
+  "model_name": "Regime Adaptive Bidirectional Selector",
+  "model_release": "forward_breadth_dynamic_cap_v3",
+  "overall_nonlocked": {
+    "accuracy": 0.6243614931237721,
+    "calls": 2545,
+    "down_calls": 11,
+    "down_hits": 7,
+    "down_precision": 0.6363636363636364,
+    "hits": 1589,
+    "months": 147,
+    "up_calls": 2534
+  },
+  "owner_promoted": true,
+  "ready": true,
+  "research_gate_passed": false,
+  "research_promotion_eligible": false,
+  "source_artifact": "research/regime_adaptive_selector/artifacts/predictions.parquet",
+  "source_config_hash": "bbcbcb114f8f98f821490965842bf87ba32313da723d597fe66a4cf82a61953f",
+  "windows": {
+    "confirmation": {
+      "accuracy": 0.6357947434292867,
+      "calls": 799,
+      "down_calls": 7,
+      "down_hits": 5,
+      "down_precision": 0.7142857142857143,
+      "hits": 508,
+      "months": 47,
+      "up_calls": 792
+    },
+    "tuning": {
+      "accuracy": 0.6405228758169934,
+      "calls": 1071,
+      "down_calls": 4,
+      "down_hits": 2,
+      "down_precision": 0.5,
+      "hits": 686,
+      "months": 60,
+      "up_calls": 1067
+    },
+    "validation": {
+      "accuracy": 0.5851851851851851,
+      "calls": 675,
+      "down_calls": 0,
+      "down_hits": 0,
+      "down_precision": null,
+      "hits": 395,
+      "months": 40,
+      "up_calls": 675
+    }
+  }
 }
