@@ -64,3 +64,9 @@ python -m pytest tests/unit/test_regime_adaptive.py -q  # 19 passed
 ```
 
 Causal: features `<= t-1`, labels `<= t-2`. Locked 268–315 never used for tuning.
+
+## Rejected Selection Experiments
+
+No tested selection-group challenger produced a stable improvement over the active model. Family F (`recent-miss + group-stability`) initially appeared stronger, but its first implementation leaked future labels. After correcting the causal alignment and rerunning it, Validation gained only two hits while Tuning, Development, and Confirmation declined. Family F was removed from production.
+
+See [`docs/SELECTION_GROUP_FAILED_REGISTRY.md`](docs/SELECTION_GROUP_FAILED_REGISTRY.md) for the full evidence and the list of experiments that should not be repeated as-is.
