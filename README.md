@@ -12,8 +12,6 @@ Predict the next-month direction of 50 indicators. The active model selects **15
 | Validation (180–219) | 58.52% (395/675) | 0.4015 | 0.5094 |
 | Confirmation (220–266) | 63.58% (508/799) | 0.4411 | 0.5380 |
 
-We tested 164 challengers. Best improved SelAUC to 0.4689 (+0.067) but stayed below 0.50, so **no promotion** — active model unchanged.
-
 ## How to Run
 
 ```powershell
@@ -66,10 +64,3 @@ python -m pytest tests/unit/test_regime_adaptive.py -q  # 19 passed
 ```
 
 Causal: features `<= t-1`, labels `<= t-2`. Locked 268–315 never used for tuning.
-
-## Limitations
-
-- Strong Up bias (675 Up / 0 Down in Validation)
-- High monthly noise (SelAUC std 0.207)
-- Linear group overlay ceiling ~0.47 — needs new causal feature for >0.50
-- March 2026 reversal (10% Up) was missed
