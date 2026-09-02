@@ -1,0 +1,17 @@
+{
+  "active_model_changed": false,
+  "confirmation_used_for_selection": false,
+  "experiment_ledger_rows": 16,
+  "locked_evaluation_read": false,
+  "milestones": {
+    "validation_65_percent_reached": false
+  },
+  "reference": {
+    "validation": {
+      "accuracy": 0.5851851851851851,
+      "calls": 675,
+      "hits": 395
+    }
+  },
+  "selected_experiment_id": "phase3_current_guarded_up_first"
+}

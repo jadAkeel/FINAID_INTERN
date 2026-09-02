@@ -1,0 +1,488 @@
+{
+  "availability_lag_months": 1,
+  "data_hash": "8f9fc27ae0a33f4a25d1241b7d896b56ba7515d4ad7e984999f0c5fe42b20d29",
+  "feature_information_through": "2026-04-30",
+  "forecast_origin_position": 316,
+  "forecasts": [
+    {
+      "forecast_market_breadth": 0.530562,
+      "forecast_month": "2026-06",
+      "forward_regime_fit_through_origin": 314,
+      "generalized_graph_fit_through_origin": 315,
+      "horizon_months": 1,
+      "model_scope": "frozen_regime_adaptive_one_step",
+      "regime_label": "mixed",
+      "regime_stress": 0.48699,
+      "selection_cap": 15,
+      "selections": [
+        {
+          "asset_group": "fixed_income",
+          "direction": "Up",
+          "indicator_id": "X41",
+          "p_down": 0.367232,
+          "p_up": 0.747628,
+          "rank": 1,
+          "selection_score": 0.715027
+        },
+        {
+          "asset_group": "fixed_income",
+          "direction": "Up",
+          "indicator_id": "X39",
+          "p_down": 0.506117,
+          "p_up": 0.648536,
+          "rank": 2,
+          "selection_score": 0.600105
+        },
+        {
+          "asset_group": "fixed_income",
+          "direction": "Up",
+          "indicator_id": "X40",
+          "p_down": 0.437752,
+          "p_up": 0.627407,
+          "rank": 3,
+          "selection_score": 0.590006
+        },
+        {
+          "asset_group": "us_sector",
+          "direction": "Up",
+          "indicator_id": "X24",
+          "p_down": 0.403753,
+          "p_up": 0.624989,
+          "rank": 4,
+          "selection_score": 0.551597
+        },
+        {
+          "asset_group": "thematic_equity",
+          "direction": "Up",
+          "indicator_id": "X9",
+          "p_down": 0.523185,
+          "p_up": 0.621217,
+          "rank": 5,
+          "selection_score": 0.546335
+        },
+        {
+          "asset_group": "thematic_equity",
+          "direction": "Up",
+          "indicator_id": "X11",
+          "p_down": 0.469676,
+          "p_up": 0.613626,
+          "rank": 6,
+          "selection_score": 0.546797
+        },
+        {
+          "asset_group": "thematic_equity",
+          "direction": "Up",
+          "indicator_id": "X10",
+          "p_down": 0.455749,
+          "p_up": 0.610233,
+          "rank": 7,
+          "selection_score": 0.545505
+        },
+        {
+          "asset_group": "fixed_income",
+          "direction": "Up",
+          "indicator_id": "X43",
+          "p_down": 0.467904,
+          "p_up": 0.601121,
+          "rank": 8,
+          "selection_score": 0.560016
+        },
+        {
+          "asset_group": "fixed_income",
+          "direction": "Up",
+          "indicator_id": "X38",
+          "p_down": 0.553896,
+          "p_up": 0.593263,
+          "rank": 9,
+          "selection_score": 0.539472
+        },
+        {
+          "asset_group": "us_sector",
+          "direction": "Up",
+          "indicator_id": "X30",
+          "p_down": 0.53935,
+          "p_up": 0.591068,
+          "rank": 10,
+          "selection_score": 0.496959
+        },
+        {
+          "asset_group": "thematic_equity",
+          "direction": "Up",
+          "indicator_id": "X3",
+          "p_down": 0.455244,
+          "p_up": 0.576353,
+          "rank": 11,
+          "selection_score": 0.511799
+        },
+        {
+          "asset_group": "global_equity",
+          "direction": "Up",
+          "indicator_id": "X32",
+          "p_down": 0.531581,
+          "p_up": 0.574475,
+          "rank": 12,
+          "selection_score": 0.514825
+        },
+        {
+          "asset_group": "global_equity",
+          "direction": "Up",
+          "indicator_id": "X33",
+          "p_down": 0.514253,
+          "p_up": 0.566739,
+          "rank": 13,
+          "selection_score": 0.50979
+        },
+        {
+          "asset_group": "global_equity",
+          "direction": "Up",
+          "indicator_id": "X37",
+          "p_down": 0.560496,
+          "p_up": 0.556695,
+          "rank": 14,
+          "selection_score": 0.492929
+        },
+        {
+          "asset_group": "global_equity",
+          "direction": "Up",
+          "indicator_id": "X34",
+          "p_down": 0.516171,
+          "p_up": 0.543555,
+          "rank": 15,
+          "selection_score": 0.486568
+        }
+      ],
+      "training_fit_through_origin": 314
+    },
+    {
+      "forecast_market_breadth": 0.530562,
+      "forecast_month": "2026-07",
+      "forward_regime_fit_through_origin": 314,
+      "generalized_graph_fit_through_origin": 315,
+      "horizon_months": 2,
+      "model_scope": "experimental_direct_horizon_regime_adaptive",
+      "regime_label": "mixed",
+      "regime_stress": 0.48665,
+      "selection_cap": 15,
+      "selections": [
+        {
+          "asset_group": "fixed_income",
+          "direction": "Up",
+          "indicator_id": "X41",
+          "p_down": 0.329468,
+          "p_up": 0.733994,
+          "rank": 1,
+          "selection_score": 0.707878
+        },
+        {
+          "asset_group": "fixed_income",
+          "direction": "Up",
+          "indicator_id": "X39",
+          "p_down": 0.36793,
+          "p_up": 0.658631,
+          "rank": 2,
+          "selection_score": 0.630522
+        },
+        {
+          "asset_group": "us_sector",
+          "direction": "Up",
+          "indicator_id": "X24",
+          "p_down": 0.34423,
+          "p_up": 0.640801,
+          "rank": 3,
+          "selection_score": 0.576556
+        },
+        {
+          "asset_group": "fixed_income",
+          "direction": "Up",
+          "indicator_id": "X40",
+          "p_down": 0.36216,
+          "p_up": 0.637113,
+          "rank": 4,
+          "selection_score": 0.610708
+        },
+        {
+          "asset_group": "thematic_equity",
+          "direction": "Up",
+          "indicator_id": "X9",
+          "p_down": 0.384997,
+          "p_up": 0.626953,
+          "rank": 5,
+          "selection_score": 0.572776
+        },
+        {
+          "asset_group": "thematic_equity",
+          "direction": "Up",
+          "indicator_id": "X10",
+          "p_down": 0.42524,
+          "p_up": 0.624731,
+          "rank": 6,
+          "selection_score": 0.564527
+        },
+        {
+          "asset_group": "fixed_income",
+          "direction": "Up",
+          "indicator_id": "X43",
+          "p_down": 0.392073,
+          "p_up": 0.619827,
+          "rank": 7,
+          "selection_score": 0.589531
+        },
+        {
+          "asset_group": "thematic_equity",
+          "direction": "Up",
+          "indicator_id": "X11",
+          "p_down": 0.431388,
+          "p_up": 0.618222,
+          "rank": 8,
+          "selection_score": 0.55712
+        },
+        {
+          "asset_group": "us_sector",
+          "direction": "Up",
+          "indicator_id": "X30",
+          "p_down": 0.528333,
+          "p_up": 0.613718,
+          "rank": 9,
+          "selection_score": 0.521499
+        },
+        {
+          "asset_group": "fixed_income",
+          "direction": "Up",
+          "indicator_id": "X38",
+          "p_down": 0.464568,
+          "p_up": 0.613656,
+          "rank": 10,
+          "selection_score": 0.572681
+        },
+        {
+          "asset_group": "us_sector",
+          "direction": "Up",
+          "indicator_id": "X29",
+          "p_down": 0.419178,
+          "p_up": 0.61208,
+          "rank": 11,
+          "selection_score": 0.536215
+        },
+        {
+          "asset_group": "global_equity",
+          "direction": "Up",
+          "indicator_id": "X32",
+          "p_down": 0.439351,
+          "p_up": 0.609252,
+          "rank": 12,
+          "selection_score": 0.562855
+        },
+        {
+          "asset_group": "global_equity",
+          "direction": "Up",
+          "indicator_id": "X34",
+          "p_down": 0.371191,
+          "p_up": 0.607944,
+          "rank": 13,
+          "selection_score": 0.571796
+        },
+        {
+          "asset_group": "global_equity",
+          "direction": "Up",
+          "indicator_id": "X37",
+          "p_down": 0.364855,
+          "p_up": 0.588024,
+          "rank": 14,
+          "selection_score": 0.55318
+        },
+        {
+          "asset_group": "global_equity",
+          "direction": "Up",
+          "indicator_id": "X36",
+          "p_down": 0.468415,
+          "p_up": 0.57522,
+          "rank": 15,
+          "selection_score": 0.525034
+        }
+      ],
+      "training_fit_through_origin": 313
+    },
+    {
+      "forecast_market_breadth": 0.530562,
+      "forecast_month": "2026-08",
+      "forward_regime_fit_through_origin": 314,
+      "generalized_graph_fit_through_origin": 315,
+      "horizon_months": 3,
+      "model_scope": "experimental_direct_horizon_regime_adaptive",
+      "regime_label": "mixed",
+      "regime_stress": 0.492687,
+      "selection_cap": 15,
+      "selections": [
+        {
+          "asset_group": "fixed_income",
+          "direction": "Up",
+          "indicator_id": "X41",
+          "p_down": 0.445752,
+          "p_up": 0.742511,
+          "rank": 1,
+          "selection_score": 0.698445
+        },
+        {
+          "asset_group": "fixed_income",
+          "direction": "Up",
+          "indicator_id": "X39",
+          "p_down": 0.403814,
+          "p_up": 0.671476,
+          "rank": 2,
+          "selection_score": 0.637432
+        },
+        {
+          "asset_group": "us_sector",
+          "direction": "Up",
+          "indicator_id": "X24",
+          "p_down": 0.53657,
+          "p_up": 0.656292,
+          "rank": 3,
+          "selection_score": 0.563438
+        },
+        {
+          "asset_group": "fixed_income",
+          "direction": "Up",
+          "indicator_id": "X40",
+          "p_down": 0.32478,
+          "p_up": 0.653025,
+          "rank": 4,
+          "selection_score": 0.631617
+        },
+        {
+          "asset_group": "global_equity",
+          "direction": "Up",
+          "indicator_id": "X34",
+          "p_down": 0.443382,
+          "p_up": 0.652877,
+          "rank": 5,
+          "selection_score": 0.604872
+        },
+        {
+          "asset_group": "global_equity",
+          "direction": "Up",
+          "indicator_id": "X36",
+          "p_down": 0.467983,
+          "p_up": 0.650505,
+          "rank": 6,
+          "selection_score": 0.598873
+        },
+        {
+          "asset_group": "thematic_equity",
+          "direction": "Up",
+          "indicator_id": "X9",
+          "p_down": 0.499997,
+          "p_up": 0.645705,
+          "rank": 7,
+          "selection_score": 0.574199
+        },
+        {
+          "asset_group": "thematic_equity",
+          "direction": "Up",
+          "indicator_id": "X10",
+          "p_down": 0.368009,
+          "p_up": 0.644459,
+          "rank": 8,
+          "selection_score": 0.592757
+        },
+        {
+          "asset_group": "fixed_income",
+          "direction": "Up",
+          "indicator_id": "X43",
+          "p_down": 0.413615,
+          "p_up": 0.640833,
+          "rank": 9,
+          "selection_score": 0.606572
+        },
+        {
+          "asset_group": "fixed_income",
+          "direction": "Up",
+          "indicator_id": "X38",
+          "p_down": 0.534874,
+          "p_up": 0.639296,
+          "rank": 10,
+          "selection_score": 0.586903
+        },
+        {
+          "asset_group": "thematic_equity",
+          "direction": "Up",
+          "indicator_id": "X11",
+          "p_down": 0.511582,
+          "p_up": 0.636184,
+          "rank": 11,
+          "selection_score": 0.562982
+        },
+        {
+          "asset_group": "us_sector",
+          "direction": "Up",
+          "indicator_id": "X30",
+          "p_down": 0.394833,
+          "p_up": 0.63497,
+          "rank": 12,
+          "selection_score": 0.56305
+        },
+        {
+          "asset_group": "global_equity",
+          "direction": "Up",
+          "indicator_id": "X32",
+          "p_down": 0.46976,
+          "p_up": 0.62175,
+          "rank": 13,
+          "selection_score": 0.570535
+        },
+        {
+          "asset_group": "global_equity",
+          "direction": "Up",
+          "indicator_id": "X37",
+          "p_down": 0.47289,
+          "p_up": 0.610853,
+          "rank": 14,
+          "selection_score": 0.559394
+        },
+        {
+          "asset_group": "global_equity",
+          "direction": "Up",
+          "indicator_id": "X33",
+          "p_down": 0.465431,
+          "p_up": 0.591522,
+          "rank": 15,
+          "selection_score": 0.541534
+        }
+      ],
+      "training_fit_through_origin": 312
+    }
+  ],
+  "generalized_correlation_overlay": {
+    "alpha": 0.35,
+    "enabled": true,
+    "graph_scope": "all_eligible_indicators",
+    "minimum_pairs": 24,
+    "pair_reliability_shrinkage": true,
+    "selected_on": "tuning_120_179_and_validation_180_219_development",
+    "transform": "percentage_return",
+    "window_months": 48
+  },
+  "generated_from_data_through": "2026-05-29",
+  "historical_regime_reference_through_origin": 266,
+  "method": "direct_multi_horizon_frozen_regime_adaptive",
+  "notes": [
+    "Horizon one applies the frozen regime-adaptive research policy.",
+    "Horizons two and three are experimental direct-horizon extensions.",
+    "The causal one-step breadth forecast controls the 15/20 cap and is only a regime reference for experimental horizons two and three.",
+    "Each horizon trains separate Up and Down models on causally available labels.",
+    "No future indicator values or hidden outcomes were synthesized or read.",
+    "The research artifacts and locked evaluation were not modified."
+  ],
+  "selected_parameters": {
+    "allow_down_predictions": true,
+    "down_margin": 0.0,
+    "down_threshold": 0.65,
+    "maximum_down_share": 0.5,
+    "maximum_replacements": 0,
+    "regime_down_bonus": 0.1,
+    "replacement_margin": 0.05,
+    "shock_down_bonus": 0.1,
+    "stress_trigger": 0.5
+  },
+  "selection_mode": "guarded_bidirectional_fallback_no_stable_candidate"
+}

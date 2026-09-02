@@ -1,40 +1,27 @@
 PYTHON ?= python
 
+install:
+	$(PYTHON) -m pip install -e ".[dev]"
+
 audit-data:
 	$(PYTHON) -m forecast_select audit-data
 
 build-model:
 	$(PYTHON) -m forecast_select build-model
 
+forecast:
+	$(PYTHON) -m forecast_select forecast-next-three
+
 show-results:
 	$(PYTHON) -m forecast_select show-results
-
-build-risk-gate:
-	$(PYTHON) -m forecast_select build-risk-gate
-
-show-risk-gate:
-	$(PYTHON) -m forecast_select show-risk-gate
-
-directional-downside:
-	$(PYTHON) -m forecast_select build-directional-downside
-
-build-context-selector:
-	$(PYTHON) -m forecast_select build-context-selector
-
-show-context-selector:
-	$(PYTHON) -m forecast_select show-context-selector
-
-build-unified-controller:
-	$(PYTHON) -m forecast_select build-unified-controller
-
-show-unified-controller:
-	$(PYTHON) -m forecast_select show-unified-controller
-
-forecast-next-three:
-	$(PYTHON) -m forecast_select forecast-next-three
 
 check-project:
 	$(PYTHON) -m forecast_select check-project
 
+lint:
+	$(PYTHON) -m ruff check src tests
+
 test:
 	$(PYTHON) -m pytest
+
+check: lint test

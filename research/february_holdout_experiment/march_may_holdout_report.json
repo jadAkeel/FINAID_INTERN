@@ -1,0 +1,1056 @@
+{
+  "holdout_consumed": true,
+  "holdout_origins": [
+    314,
+    315,
+    316
+  ],
+  "holdout_months": [
+    "2026-03",
+    "2026-04",
+    "2026-05"
+  ],
+  "origin": 313,
+  "baseline": {
+    "model": "Regime Adaptive baseline",
+    "origin": 313,
+    "horizons": [
+      {
+        "model": "baseline",
+        "horizon": 1,
+        "forecast_month": "2026-03",
+        "origin": 313,
+        "calls": 17,
+        "hits": 1,
+        "accuracy": 0.058823529411764705,
+        "dir_auc_selected": 1.0,
+        "sel_auc": 1.0,
+        "brier": 0.3565214167622333,
+        "bacc": 0.5,
+        "mcc": null,
+        "up_calls": 17,
+        "down_calls": 0,
+        "up_accuracy": 0.058823529411764705,
+        "down_accuracy": null,
+        "group_acc": {
+          "fixed_income": 0.2,
+          "global_equity": 0.0,
+          "us_sector": 0.0,
+          "thematic_equity": 0.0
+        },
+        "selected_ids": [
+          "X41",
+          "X34",
+          "X39",
+          "X24",
+          "X10",
+          "X9",
+          "X40",
+          "X11",
+          "X43",
+          "X30",
+          "X3",
+          "X38",
+          "X32",
+          "X37",
+          "X33",
+          "X36",
+          "X35"
+        ],
+        "directions": [
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up"
+        ],
+        "hits_misses": [
+          {
+            "indicator_id": "X41",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X34",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X39",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X24",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X10",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X9",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X40",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X11",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X43",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X30",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X3",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X38",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X32",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X37",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X33",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X36",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X35",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          }
+        ]
+      },
+      {
+        "model": "baseline",
+        "horizon": 2,
+        "forecast_month": "2026-04",
+        "origin": 313,
+        "calls": 17,
+        "hits": 15,
+        "accuracy": 0.8823529411764706,
+        "dir_auc_selected": 1.0,
+        "sel_auc": 1.0,
+        "brier": 0.1537542576294703,
+        "bacc": 0.5,
+        "mcc": null,
+        "up_calls": 17,
+        "down_calls": 0,
+        "up_accuracy": 0.8823529411764706,
+        "down_accuracy": null,
+        "group_acc": {
+          "fixed_income": 1.0,
+          "global_equity": 1.0,
+          "us_sector": 1.0,
+          "thematic_equity": 0.75,
+          "commodity": 0.0
+        },
+        "selected_ids": [
+          "X41",
+          "X34",
+          "X24",
+          "X39",
+          "X10",
+          "X30",
+          "X11",
+          "X9",
+          "X43",
+          "X40",
+          "X36",
+          "X32",
+          "X38",
+          "X3",
+          "X18",
+          "X37",
+          "X33"
+        ],
+        "directions": [
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up"
+        ],
+        "hits_misses": [
+          {
+            "indicator_id": "X41",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X34",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X24",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X39",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X10",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X30",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X11",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X9",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X43",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X40",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X36",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X32",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X38",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X3",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X18",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X37",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X33",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          }
+        ]
+      },
+      {
+        "model": "baseline",
+        "horizon": 3,
+        "forecast_month": "2026-05",
+        "origin": 313,
+        "calls": 17,
+        "hits": 13,
+        "accuracy": 0.7647058823529411,
+        "dir_auc_selected": 0.6153846153846154,
+        "sel_auc": 0.5961538461538461,
+        "brier": 0.18389454382643944,
+        "bacc": 0.5,
+        "mcc": null,
+        "up_calls": 17,
+        "down_calls": 0,
+        "up_accuracy": 0.7647058823529411,
+        "down_accuracy": null,
+        "group_acc": {
+          "fixed_income": 1.0,
+          "global_equity": 0.8,
+          "us_sector": 0.0,
+          "thematic_equity": 1.0,
+          "commodity": 0.0
+        },
+        "selected_ids": [
+          "X41",
+          "X34",
+          "X24",
+          "X39",
+          "X10",
+          "X9",
+          "X30",
+          "X43",
+          "X11",
+          "X40",
+          "X38",
+          "X32",
+          "X3",
+          "X36",
+          "X18",
+          "X33",
+          "X37"
+        ],
+        "directions": [
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up"
+        ],
+        "hits_misses": [
+          {
+            "indicator_id": "X41",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X34",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X24",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X39",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X10",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X9",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X30",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X43",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X11",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X40",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X38",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X32",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X3",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X36",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X18",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X33",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X37",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          }
+        ]
+      }
+    ],
+    "aggregate": {
+      "total_calls": 51,
+      "total_hits": 29,
+      "overall_accuracy": 0.5686274509803921
+    }
+  },
+  "challenger": {
+    "model": "Challenger hierarchical EB tau10 w0.75",
+    "origin": 313,
+    "horizons": [
+      {
+        "model": "challenger_hier_tau10_w0.75",
+        "horizon": 1,
+        "forecast_month": "2026-03",
+        "origin": 313,
+        "calls": 17,
+        "hits": 1,
+        "accuracy": 0.058823529411764705,
+        "dir_auc_selected": 1.0,
+        "sel_auc": 1.0,
+        "brier": 0.3850198888835067,
+        "bacc": 0.5,
+        "mcc": null,
+        "up_calls": 17,
+        "down_calls": 0,
+        "up_accuracy": 0.058823529411764705,
+        "down_accuracy": null,
+        "group_acc": {
+          "fixed_income": 0.16666666666666666,
+          "global_equity": 0.0,
+          "us_sector": 0.0,
+          "thematic_equity": 0.0
+        },
+        "selected_ids": [
+          "X41",
+          "X34",
+          "X39",
+          "X24",
+          "X10",
+          "X9",
+          "X40",
+          "X11",
+          "X43",
+          "X3",
+          "X38",
+          "X32",
+          "X37",
+          "X33",
+          "X36",
+          "X42",
+          "X35"
+        ],
+        "directions": [
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up"
+        ],
+        "hits_misses": [
+          {
+            "indicator_id": "X41",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X34",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X39",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X24",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X10",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X9",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X40",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X11",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X43",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X3",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X38",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X32",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X37",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X33",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X36",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X42",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X35",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          }
+        ]
+      },
+      {
+        "model": "challenger_hier_tau10_w0.75",
+        "horizon": 2,
+        "forecast_month": "2026-04",
+        "origin": 313,
+        "calls": 17,
+        "hits": 16,
+        "accuracy": 0.9411764705882353,
+        "dir_auc_selected": 0.5,
+        "sel_auc": 0.5,
+        "brier": 0.1324510300856066,
+        "bacc": 0.5,
+        "mcc": null,
+        "up_calls": 17,
+        "down_calls": 0,
+        "up_accuracy": 0.9411764705882353,
+        "down_accuracy": null,
+        "group_acc": {
+          "fixed_income": 0.8333333333333334,
+          "global_equity": 1.0,
+          "us_sector": 1.0,
+          "thematic_equity": 1.0
+        },
+        "selected_ids": [
+          "X41",
+          "X34",
+          "X24",
+          "X39",
+          "X10",
+          "X30",
+          "X11",
+          "X9",
+          "X43",
+          "X40",
+          "X36",
+          "X32",
+          "X38",
+          "X37",
+          "X33",
+          "X42",
+          "X35"
+        ],
+        "directions": [
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up"
+        ],
+        "hits_misses": [
+          {
+            "indicator_id": "X41",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X34",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X24",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X39",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X10",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X30",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X11",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X9",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X43",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X40",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X36",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X32",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X38",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X37",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X33",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X42",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X35",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          }
+        ]
+      },
+      {
+        "model": "challenger_hier_tau10_w0.75",
+        "horizon": 3,
+        "forecast_month": "2026-05",
+        "origin": 313,
+        "calls": 17,
+        "hits": 12,
+        "accuracy": 0.7058823529411765,
+        "dir_auc_selected": 0.8166666666666668,
+        "sel_auc": 0.8166666666666667,
+        "brier": 0.18917675902676123,
+        "bacc": 0.5,
+        "mcc": null,
+        "up_calls": 17,
+        "down_calls": 0,
+        "up_accuracy": 0.7058823529411765,
+        "down_accuracy": null,
+        "group_acc": {
+          "fixed_income": 1.0,
+          "global_equity": 0.6666666666666666,
+          "us_sector": 0.0,
+          "thematic_equity": 1.0,
+          "commodity": 0.0
+        },
+        "selected_ids": [
+          "X41",
+          "X34",
+          "X24",
+          "X39",
+          "X10",
+          "X9",
+          "X30",
+          "X43",
+          "X40",
+          "X38",
+          "X32",
+          "X36",
+          "X18",
+          "X33",
+          "X37",
+          "X42",
+          "X35"
+        ],
+        "directions": [
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up",
+          "Up"
+        ],
+        "hits_misses": [
+          {
+            "indicator_id": "X41",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X34",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X24",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X39",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X10",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X9",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X30",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X43",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X40",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X38",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X32",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X36",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X18",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          },
+          {
+            "indicator_id": "X33",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X37",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X42",
+            "predicted_direction": "Up",
+            "y_true_eval": 1.0,
+            "correct": 1
+          },
+          {
+            "indicator_id": "X35",
+            "predicted_direction": "Up",
+            "y_true_eval": 0.0,
+            "correct": 0
+          }
+        ]
+      }
+    ],
+    "aggregate": {
+      "total_calls": 51,
+      "total_hits": 29,
+      "overall_accuracy": 0.5686274509803921
+    }
+  },
+  "hit_delta_per_month": [
+    {
+      "month": "2026-03",
+      "delta": 0
+    },
+    {
+      "month": "2026-04",
+      "delta": 1
+    },
+    {
+      "month": "2026-05",
+      "delta": -1
+    }
+  ],
+  "acceptance_criteria": {
+    "cap_15_20_respected": true,
+    "no_leakage_assertion": "inputs used fit_through origin -2 -(horizon-1); holdout not used in fitting",
+    "directional_auc_improved": null,
+    "selection_auc_improved": null,
+    "accuracy_not_declined": true
+  }
+}

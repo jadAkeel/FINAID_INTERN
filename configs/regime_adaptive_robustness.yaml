@@ -1,0 +1,12 @@
+experiment_id: regime_adaptive_robustness
+replacement_caps: [0, 1, 2, 3]
+abstention_policies:
+  - id: conservative
+    down_threshold: 0.65
+    down_margin: 0.10
+  - id: balanced
+    down_threshold: 0.65
+    down_margin: 0.00
+  - id: permissive
+    down_threshold: 0.55
+    down_margin: 0.00

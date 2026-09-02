@@ -1,0 +1,92 @@
+{
+  "abstention_policies": [
+    {
+      "down_margin": 0.1,
+      "down_threshold": 0.65,
+      "id": "conservative"
+    },
+    {
+      "down_margin": 0.0,
+      "down_threshold": 0.65,
+      "id": "balanced"
+    },
+    {
+      "down_margin": 0.0,
+      "down_threshold": 0.55,
+      "id": "permissive"
+    }
+  ],
+  "base_experiment_id": "regime_adaptive_selector",
+  "best_validation": [
+    {
+      "abstained_down_candidates": 122,
+      "accuracy": 0.5851851851851851,
+      "calls": 675,
+      "down_calls": 0,
+      "down_hits": 0,
+      "down_margin": 0.1,
+      "down_precision": NaN,
+      "down_threshold": 0.65,
+      "hits": 395,
+      "maximum_replacements": 0,
+      "months": 40,
+      "normal_down_recall": 0.0,
+      "policy": "conservative",
+      "regime": "all",
+      "replacement_calls": 0,
+      "sudden_down_calls": 0,
+      "sudden_down_precision": NaN,
+      "sudden_drop_events": 34,
+      "sudden_drop_recall": 0.0,
+      "window": "180_219"
+    }
+  ],
+  "confirmation_descriptive_current_policy": [
+    {
+      "abstained_down_candidates": 78,
+      "accuracy": 0.6357947434292867,
+      "calls": 799,
+      "down_calls": 7,
+      "down_hits": 5,
+      "down_margin": 0.0,
+      "down_precision": 0.7142857142857143,
+      "down_threshold": 0.65,
+      "hits": 508,
+      "maximum_replacements": 0,
+      "months": 47,
+      "normal_down_recall": 0.005319148936170213,
+      "policy": "balanced",
+      "regime": "all",
+      "replacement_calls": 0,
+      "sudden_down_calls": 3,
+      "sudden_down_precision": 1.0,
+      "sudden_drop_events": 140,
+      "sudden_drop_recall": 0.02142857142857143,
+      "window": "220_266"
+    }
+  ],
+  "confirmation_used_for_selection": false,
+  "current_selector_parameters": {
+    "allow_down_predictions": true,
+    "down_margin": 0.0,
+    "down_threshold": 0.65,
+    "maximum_down_share": 0.5,
+    "maximum_replacements": 0,
+    "regime_down_bonus": 0.1,
+    "replacement_margin": 0.05,
+    "shock_down_bonus": 0.1,
+    "stress_trigger": 0.5
+  },
+  "experiment_id": "regime_adaptive_robustness",
+  "locked_evaluation_read": false,
+  "locked_origins": [
+    268,
+    315
+  ],
+  "replacement_caps": [
+    0,
+    1,
+    2,
+    3
+  ]
+}

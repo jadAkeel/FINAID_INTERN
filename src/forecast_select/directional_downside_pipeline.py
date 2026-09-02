@@ -8,6 +8,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import yaml
+
+from .correctness_calibration import apply_correctness_semantics
 from sklearn.metrics import average_precision_score, brier_score_loss, roc_auc_score
 
 from .directional_downside import (
@@ -461,6 +463,7 @@ def build_directional_downside_selector(root: Path = ROOT) -> Path:
     final["model_version"] = settings["experiment_release"]
     final["parameters_selected_on"] = "tuning_120_179"
     final["locked_evaluation_read"] = False
+    final = apply_correctness_semantics(final)
     validate_oof_columns(final.columns.tolist())
     selected_counts = final[final["accepted"]].groupby(
         "origin_position"

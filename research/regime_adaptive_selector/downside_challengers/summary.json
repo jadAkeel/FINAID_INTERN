@@ -1,0 +1,331 @@
+{
+  "active_model_changed": false,
+  "confirmation_used_for_selection": false,
+  "experiment_phase": "downside_challengers",
+  "locked_evaluation_read": false,
+  "locked_origins": [
+    268,
+    315
+  ],
+  "normalized_scale": "within_origin_cross_sectional_percentile_ranks",
+  "results": {
+    "current_guarded_up_first": {
+      "accepted": true,
+      "adequate_down_evidence": false,
+      "baseline_windows": {
+        "confirmation_descriptive": {
+          "accuracy": 0.6357947434292867,
+          "calls": 799,
+          "hits": 508
+        },
+        "early_tuning": {
+          "accuracy": 0.6340579710144928,
+          "calls": 552,
+          "hits": 350
+        },
+        "late_tuning": {
+          "accuracy": 0.6473988439306358,
+          "calls": 519,
+          "hits": 336
+        },
+        "tuning": {
+          "accuracy": 0.6405228758169934,
+          "calls": 1071,
+          "hits": 686
+        },
+        "validation": {
+          "accuracy": 0.5851851851851851,
+          "calls": 675,
+          "hits": 395
+        }
+      },
+      "bootstrap": {
+        "accuracy": 0.5851851851851851,
+        "bootstrap_p10": 0.5196869517543861,
+        "bootstrap_p90": 0.6361833827829377,
+        "calls": 675,
+        "down_calls": 0,
+        "hits": 395,
+        "months": 40,
+        "up_calls": 675
+      },
+      "down": {
+        "confirmation_descriptive": {
+          "calls": 7,
+          "hits": 5,
+          "precision": 0.7142857142857143
+        },
+        "early_tuning": {
+          "calls": 4,
+          "hits": 2,
+          "precision": 0.5
+        },
+        "late_tuning": {
+          "calls": 0,
+          "hits": 0,
+          "precision": NaN
+        },
+        "tuning": {
+          "calls": 4,
+          "hits": 2,
+          "precision": 0.5
+        },
+        "validation": {
+          "calls": 0,
+          "hits": 0,
+          "precision": NaN
+        }
+      },
+      "nonnegative_hit_deltas": true,
+      "paired_validation": {
+        "bootstrap_p10": 0.0,
+        "bootstrap_p90": 0.0,
+        "mean_monthly_hit_delta": 0.0,
+        "months": 40,
+        "total_hit_delta": 0
+      },
+      "rejection_reasons": [],
+      "windows": {
+        "confirmation_descriptive": {
+          "accuracy": 0.6357947434292867,
+          "calls": 799,
+          "hits": 508
+        },
+        "early_tuning": {
+          "accuracy": 0.6340579710144928,
+          "calls": 552,
+          "hits": 350
+        },
+        "late_tuning": {
+          "accuracy": 0.6473988439306358,
+          "calls": 519,
+          "hits": 336
+        },
+        "tuning": {
+          "accuracy": 0.6405228758169934,
+          "calls": 1071,
+          "hits": 686
+        },
+        "validation": {
+          "accuracy": 0.5851851851851851,
+          "calls": 675,
+          "hits": 395
+        }
+      }
+    },
+    "maximum_one_down_replacement": {
+      "accepted": false,
+      "adequate_down_evidence": true,
+      "baseline_windows": {
+        "confirmation_descriptive": {
+          "accuracy": 0.6357947434292867,
+          "calls": 799,
+          "hits": 508
+        },
+        "early_tuning": {
+          "accuracy": 0.6340579710144928,
+          "calls": 552,
+          "hits": 350
+        },
+        "late_tuning": {
+          "accuracy": 0.6473988439306358,
+          "calls": 519,
+          "hits": 336
+        },
+        "tuning": {
+          "accuracy": 0.6405228758169934,
+          "calls": 1071,
+          "hits": 686
+        },
+        "validation": {
+          "accuracy": 0.5851851851851851,
+          "calls": 675,
+          "hits": 395
+        }
+      },
+      "bootstrap": {
+        "accuracy": 0.5822222222222222,
+        "bootstrap_p10": 0.5197080538355694,
+        "bootstrap_p90": 0.6322379708462332,
+        "calls": 675,
+        "down_calls": 31,
+        "hits": 393,
+        "months": 40,
+        "up_calls": 644
+      },
+      "down": {
+        "confirmation_descriptive": {
+          "calls": 19,
+          "hits": 9,
+          "precision": 0.47368421052631576
+        },
+        "early_tuning": {
+          "calls": 14,
+          "hits": 6,
+          "precision": 0.42857142857142855
+        },
+        "late_tuning": {
+          "calls": 11,
+          "hits": 9,
+          "precision": 0.8181818181818182
+        },
+        "tuning": {
+          "calls": 25,
+          "hits": 15,
+          "precision": 0.6
+        },
+        "validation": {
+          "calls": 31,
+          "hits": 14,
+          "precision": 0.45161290322580644
+        }
+      },
+      "nonnegative_hit_deltas": false,
+      "paired_validation": {
+        "bootstrap_p10": -0.15,
+        "bootstrap_p90": 0.075,
+        "mean_monthly_hit_delta": -0.05,
+        "months": 40,
+        "total_hit_delta": -2
+      },
+      "rejection_reasons": [
+        "negative_temporal_or_validation_hit_delta",
+        "paired_validation_bootstrap_p10"
+      ],
+      "windows": {
+        "confirmation_descriptive": {
+          "accuracy": 0.6307884856070087,
+          "calls": 799,
+          "hits": 504
+        },
+        "early_tuning": {
+          "accuracy": 0.6304347826086957,
+          "calls": 552,
+          "hits": 348
+        },
+        "late_tuning": {
+          "accuracy": 0.6570327552986512,
+          "calls": 519,
+          "hits": 341
+        },
+        "tuning": {
+          "accuracy": 0.6433239962651728,
+          "calls": 1071,
+          "hits": 689
+        },
+        "validation": {
+          "accuracy": 0.5822222222222222,
+          "calls": 675,
+          "hits": 393
+        }
+      }
+    },
+    "normalized_bidirectional_percentile": {
+      "accepted": false,
+      "adequate_down_evidence": true,
+      "baseline_windows": {
+        "confirmation_descriptive": {
+          "accuracy": 0.6357947434292867,
+          "calls": 799,
+          "hits": 508
+        },
+        "early_tuning": {
+          "accuracy": 0.6340579710144928,
+          "calls": 552,
+          "hits": 350
+        },
+        "late_tuning": {
+          "accuracy": 0.6473988439306358,
+          "calls": 519,
+          "hits": 336
+        },
+        "tuning": {
+          "accuracy": 0.6405228758169934,
+          "calls": 1071,
+          "hits": 686
+        },
+        "validation": {
+          "accuracy": 0.5851851851851851,
+          "calls": 675,
+          "hits": 395
+        }
+      },
+      "bootstrap": {
+        "accuracy": 0.5777777777777777,
+        "bootstrap_p10": 0.5156412216202271,
+        "bootstrap_p90": 0.6271528100275198,
+        "calls": 675,
+        "down_calls": 20,
+        "hits": 390,
+        "months": 40,
+        "up_calls": 655
+      },
+      "down": {
+        "confirmation_descriptive": {
+          "calls": 12,
+          "hits": 5,
+          "precision": 0.4166666666666667
+        },
+        "early_tuning": {
+          "calls": 10,
+          "hits": 4,
+          "precision": 0.4
+        },
+        "late_tuning": {
+          "calls": 11,
+          "hits": 9,
+          "precision": 0.8181818181818182
+        },
+        "tuning": {
+          "calls": 21,
+          "hits": 13,
+          "precision": 0.6190476190476191
+        },
+        "validation": {
+          "calls": 20,
+          "hits": 8,
+          "precision": 0.4
+        }
+      },
+      "nonnegative_hit_deltas": false,
+      "paired_validation": {
+        "bootstrap_p10": -0.20249999999999987,
+        "bootstrap_p90": 0.0,
+        "mean_monthly_hit_delta": -0.125,
+        "months": 40,
+        "total_hit_delta": -5
+      },
+      "rejection_reasons": [
+        "negative_temporal_or_validation_hit_delta",
+        "paired_validation_bootstrap_p10"
+      ],
+      "windows": {
+        "confirmation_descriptive": {
+          "accuracy": 0.6282853566958698,
+          "calls": 799,
+          "hits": 502
+        },
+        "early_tuning": {
+          "accuracy": 0.6286231884057971,
+          "calls": 552,
+          "hits": 347
+        },
+        "late_tuning": {
+          "accuracy": 0.651252408477842,
+          "calls": 519,
+          "hits": 338
+        },
+        "tuning": {
+          "accuracy": 0.6395891690009337,
+          "calls": 1071,
+          "hits": 685
+        },
+        "validation": {
+          "accuracy": 0.5777777777777777,
+          "calls": 675,
+          "hits": 390
+        }
+      }
+    }
+  }
+}

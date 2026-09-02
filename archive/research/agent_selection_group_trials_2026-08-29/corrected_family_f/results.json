@@ -1,0 +1,17 @@
+{
+  "decision": "REJECTED",
+  "causal_contract": "forecast origin t uses labels through t-2 only",
+  "baseline_reference": {
+    "tuning": {"hits": 686, "calls": 1071, "directional_auc": 0.5794955087243013, "selection_auc": 0.5413123319828859},
+    "validation": {"hits": 395, "calls": 675, "directional_auc": 0.5094375312800075, "selection_auc": 0.40151898734177216},
+    "development": {"hits": 1081, "calls": 1746, "directional_auc": 0.553276138808273, "selection_auc": 0.5091748798453117},
+    "confirmation": {"hits": 508, "calls": 799, "directional_auc": 0.5379822582817129, "selection_auc": 0.4411004681115892}
+  },
+  "corrected_family_f": {
+    "tuning": {"hits": 680, "calls": 1071, "directional_auc": 0.565679496873967, "selection_auc": 0.533424853317286},
+    "validation": {"hits": 397, "calls": 675, "directional_auc": 0.5145689631015956, "selection_auc": 0.4221680590036786},
+    "development": {"hits": 1077, "calls": 1746, "directional_auc": 0.548427372571598, "selection_auc": 0.5065543577978469},
+    "confirmation": {"hits": 504, "calls": 799, "directional_auc": 0.5295984249688758, "selection_auc": 0.44971751412429384}
+  },
+  "reason": "Validation gained two hits, but Selection AUC stayed below 0.50 and tuning, development, and confirmation accuracy declined."
+}

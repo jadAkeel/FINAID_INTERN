@@ -9,6 +9,10 @@ import numpy as np
 import pandas as pd
 import yaml
 
+from .correctness_calibration import (
+    SCORE_SEMANTICS_VERSION,
+    apply_correctness_semantics,
+)
 from .uptrend_model import fit_uptrend_model, predict_uptrend_probability
 from .features import build_feature_panel
 from .io import atomic_write_json, atomic_write_parquet, load_workbook, sha256_file
@@ -34,11 +38,16 @@ def _read_yaml(path: Path) -> dict:
         return yaml.safe_load(handle)
 
 
-def _configuration_hash(root: Path) -> str:
+def _configuration_hash(
+    root: Path,
+    feature_families: tuple[str, ...] = (),
+) -> str:
     payload = {
         "project": _read_yaml(root / "configs/config.yaml"),
         "model": _read_yaml(root / "configs/uptrend_model.yaml"),
     }
+    if feature_families:
+        payload["feature_families"] = list(feature_families)
     encoded = json.dumps(
         payload,
         sort_keys=True,
@@ -47,16 +56,28 @@ def _configuration_hash(root: Path) -> str:
     return hashlib.sha256(encoded).hexdigest()
 
 
-def _prepare(root: Path) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, dict, dict]:
+def _prepare(
+    root: Path,
+    feature_families: tuple[str, ...] = (),
+    maximum_origin: int | None = None,
+) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, dict, dict]:
     config = _read_yaml(root / "configs/config.yaml")
     model_settings = _read_yaml(root / "configs/uptrend_model.yaml")
-    frame = load_workbook(root / config["data_path"])
+    frame = load_workbook(
+        root / config["data_path"],
+        maximum_position=(
+            int(maximum_origin) + 1
+            if maximum_origin is not None
+            else None
+        ),
+    )
     targets = build_targets(frame)
     assert_target_alignment(targets, frame)
     features = build_feature_panel(
         frame,
         availability_lag=int(model_settings["availability_lag_months"]),
         include_structured=True,
+        feature_families=feature_families,
     )
     panel = features.merge(
         targets[[
@@ -112,17 +133,23 @@ def _prediction_rows(
 def build_uptrend_predictions(
     root: Path = ROOT,
     origin_range: tuple[int, int] | None = None,
+    feature_families: tuple[str, ...] = (),
 ) -> pd.DataFrame:
     """Build causal walk-forward predictions for the configured or requested origins."""
-    frame, targets, panel, config, model_settings = _prepare(root)
+    model_settings = _read_yaml(root / "configs/uptrend_model.yaml")
     start, end = (
         origin_range
         if origin_range is not None
         else model_settings["selection_origins"]
     )
+    frame, targets, panel, config, model_settings = _prepare(
+        root,
+        feature_families=feature_families,
+        maximum_origin=int(end),
+    )
     lag = int(model_settings["availability_lag_months"])
     data_hash = sha256_file(root / config["data_path"])
-    config_hash = _configuration_hash(root)
+    config_hash = _configuration_hash(root, feature_families)
     model_config = model_settings["model"]
     eligible = panel[panel["eligible"]].copy()
     logistic_parts = []
@@ -136,6 +163,7 @@ def build_uptrend_predictions(
             seed=int(config["seed"]),
             logistic_c=float(model_config["logistic_c"]),
             max_iter=int(model_config["logistic_max_iter"]),
+            feature_families=feature_families,
         )
         probability = predict_uptrend_probability(model, test)
         logistic_parts.append(_prediction_rows(
@@ -144,8 +172,8 @@ def build_uptrend_predictions(
             probability,
             data_hash,
             config_hash,
-            str(config["feature_version"]),
-            str(model_settings["model_release"]),
+            f"{config['feature_version']}:{','.join(feature_families) or 'baseline'}",
+            f"{model_settings['model_release']}:{','.join(feature_families) or 'baseline'}",
             int(config["seed"]),
             time.perf_counter() - started,
         ))
@@ -204,7 +232,7 @@ def build_uptrend_predictions(
         raise AssertionError("The model must select the configured number of unique indicators per month")
     if (result["calibration_fit_through_origin"] > result["origin_position"] - 2).any():
         raise AssertionError("Model selection used an unavailable target")
-    return result
+    return apply_correctness_semantics(result)
 
 
 def active_model_artifact(root: Path = ROOT) -> Path:
@@ -263,6 +291,20 @@ def _assert_model_invariants(
         > ready["origin_position"] - 2
     ).any():
         raise AssertionError("Model reliability used an unavailable target")
+    correctness_ready = predictions[
+        predictions.get(
+            "correctness_fit_through_origin",
+            pd.Series(np.nan, index=predictions.index),
+        ).notna()
+    ]
+    if (
+        len(correctness_ready)
+        and (
+            correctness_ready["correctness_fit_through_origin"]
+            > correctness_ready["origin_position"] - 2
+        ).any()
+    ):
+        raise AssertionError("Correctness monitoring used an unavailable target")
 
 
 def _assert_artifact_provenance(
@@ -337,9 +379,22 @@ def build_active_model(root: Path = ROOT) -> Path:
     if output.exists():
         try:
             predictions = pd.read_parquet(output)
+            needs_semantic_upgrade = (
+                "score_semantics_version" not in predictions
+                or set(
+                    predictions["score_semantics_version"]
+                    .dropna()
+                    .astype(str)
+                    .unique()
+                )
+                != {SCORE_SEMANTICS_VERSION}
+            )
+            predictions = apply_correctness_semantics(predictions)
             validate_oof_columns(predictions.columns.tolist())
             _assert_model_invariants(predictions, model_settings)
             _assert_artifact_provenance(predictions, root)
+            if needs_semantic_upgrade:
+                atomic_write_parquet(predictions, output)
             summary = write_model_report(predictions, root)
             if not summary["registered_result_matches"]:
                 raise AssertionError(

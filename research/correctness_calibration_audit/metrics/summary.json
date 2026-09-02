@@ -1,0 +1,46 @@
+{
+  "active_best_brier_improvement_vs_causal_constant": 0.00013603930719355284,
+  "active_legacy_auc": 0.5224655895124208,
+  "active_legacy_brier": 0.23850435758930727,
+  "active_model_changed": false,
+  "adaptive_best_brier_improvement_vs_causal_constant": -0.000175847034523946,
+  "adaptive_legacy_auc": 0.5001955125588842,
+  "adaptive_legacy_brier": 0.23710920790169046,
+  "adaptive_selection_changed": false,
+  "best_causal_auc": 0.4969850560518031,
+  "bootstrap": {
+    "block_months": 6,
+    "interval_quantiles": [
+      0.05,
+      0.95
+    ],
+    "replicates": 500,
+    "seed": 20260727
+  },
+  "correctness_probability_status": "unavailable_no_valid_oof_individual_calibrator",
+  "decision": "no_individual_correctness_probability",
+  "experiment_id": "correctness_calibration_audit",
+  "individual_probability_release_gate": {
+    "minimum_auc": 0.55,
+    "minimum_brier_improvement_vs_constant": 0.002,
+    "passed": false,
+    "requires_stable_accuracy_coverage_by_time_window": true
+  },
+  "legacy_score_ranges": {
+    "active": {
+      "maximum": 0.7936173653037134,
+      "minimum": 0.5260125275490357
+    },
+    "adaptive": {
+      "maximum": 0.79289490201691,
+      "minimum": 0.4817550624610437
+    }
+  },
+  "locked_evaluation_path_read": false,
+  "locked_evaluation_read": false,
+  "reason": "No causal candidate demonstrated useful stable discrimination; the cohort baseline is monitoring-only.",
+  "upgraded_artifacts": {
+    "active": "research/correctness_calibration_audit/artifacts/active_scored.parquet",
+    "adaptive": "research/correctness_calibration_audit/artifacts/adaptive_scored.parquet"
+  }
+}

@@ -1,0 +1,127 @@
+experiment_id: regime_adaptive_selector
+experiment_name: Regime Adaptive Bidirectional Selector
+experiment_release: forward_breadth_graduated_15_to_20_v1
+availability_lag_months: 1
+
+tuning_origins: [120, 179]
+validation_origins: [180, 219]
+confirmation_origins: [220, 266]
+locked_origins: [268, 315]
+
+selection:
+  monthly_selection_count: 15
+  minimum_selection_count: 15
+  maximum_selection_count: 20
+  dynamic_cap_enabled: true
+  cap_stress_low: 0.35
+  cap_stress_high: 0.75
+  stress_increases_cap: false
+  down_threshold_grid: [0.65]
+  down_margin_grid: [0.00]
+  stress_trigger_grid: [0.50]
+  maximum_down_share_grid: [0.50]
+  regime_down_bonus_grid: [0.10]
+  shock_down_bonus_grid: [0.10]
+  replacement_margin_grid: [0.05]
+  maximum_replacements_grid: [0]
+  minimum_tuning_down_calls: 20
+  minimum_tuning_down_precision: 0.50
+  internal_tuning_windows:
+    - [120, 149]
+    - [150, 179]
+  minimum_internal_down_calls: 8
+  minimum_internal_down_precision: 0.50
+  require_nonnegative_internal_hit_delta: true
+  require_nonnegative_validation_hit_delta: true
+  fallback_allow_down_predictions: true
+  fallback_parameters:
+    down_threshold: 0.65
+    down_margin: 0.00
+    stress_trigger: 0.50
+    maximum_down_share: 0.50
+    regime_down_bonus: 0.10
+    shock_down_bonus: 0.10
+    replacement_margin: 0.05
+    maximum_replacements: 0
+
+asset_group_overlay:
+  enabled: true
+  trailing_months: 12
+  weight: 0.25
+  label_availability_lag_months: 2
+  selected_on: tuning_120_179_and_validation_180_219_development
+
+selection_overlay:
+  enabled: true
+  recent_miss_window_months: 6
+  label_lag_months: 2
+  base_threshold: 0.45
+  threshold_relax: 0.10
+  history_full: 4
+  history_zero: 1
+  stability_bonus: 0.30
+  miss_penalty_strength: 0.40
+  stability_penalty_std: 0.5
+  selected_on: development_120_219_with_confirmation_descriptive_only
+
+generalized_correlation_overlay:
+  enabled: true
+  transform: percentage_return
+  window_months: 48
+  minimum_pairs: 24
+  alpha: 0.35
+  graph_scope: all_eligible_indicators
+  pair_reliability_shrinkage: true
+  selected_on: tuning_120_179_and_validation_180_219_development
+
+forward_regime:
+  enabled: true
+  expansion_threshold: 0.65
+  cap_mode: graduated_15_to_20
+  graduated_low: 0.52
+  graduated_high: 0.68
+  selected_on: development_120_219_without_confirmation_or_locked_evaluation
+  model:
+    max_iter: 100
+    learning_rate: 0.04
+    max_depth: 2
+    minimum_samples_leaf: 12
+    l2_regularization: 10.0
+
+expansion_quality:
+  feature_contract_version: expansion_quality_v1
+  minimum_history_origins: 12
+  ridge_alpha: 10.0
+  graduated_threshold_pairs:
+    - [0.55, 0.70]
+    - [0.60, 0.70]
+    - [0.60, 0.75]
+  quality_threshold_pairs:
+    - [0.55, 0.60]
+    - [0.575, 0.625]
+    - [0.60, 0.65]
+
+accuracy_first:
+  enabled: true
+  experiment_release: accuracy_first_fixed15_v2
+  development_origins: [120, 219]
+  internal_windows:
+    - [120, 149]
+    - [150, 179]
+    - [180, 219]
+  target_accuracy: 0.65
+  cap_grid: [15]
+  group_weight_grid: [0.00, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65, 0.70, 0.75, 0.80, 0.85, 0.90, 0.95, 1.00]
+
+stress:
+  market_weight: 0.45
+  peer_weight: 0.35
+  shock_weight: 0.20
+  hard_down_threshold: 0.80
+
+promotion:
+  require_positive_validation_delta: true
+  require_positive_bootstrap_p10: true
+  require_locked_evaluation_for_promotion: true
+
+locked_evaluation_read_allowed: false

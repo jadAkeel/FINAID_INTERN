@@ -4,10 +4,46 @@ import numpy as np
 import pandas as pd
 
 
+FEATURE_FAMILY_COLUMNS = {
+    "trend_persistence": [
+        "signed_run_length",
+        "momentum_acceleration_3",
+    ],
+    "cross_sectional_dynamics": [
+        "cross_section_rank_change_1",
+        "cross_section_rank_change_3",
+        "breadth_impulse_3",
+        "dispersion_change_3",
+    ],
+    "risk_normalized": [
+        "return_volatility_12",
+        "risk_normalized_momentum_3",
+        "risk_normalized_momentum_6",
+    ],
+}
+
+
 def _stale_run(series: pd.Series) -> pd.Series:
     changed = series.diff().ne(0) & series.notna() & series.shift(1).notna()
     groups = changed.cumsum()
     return series.notna().groupby(groups).cumcount().astype(float).where(series.notna(), np.nan)
+
+
+def _signed_run_length(changes: pd.Series) -> pd.Series:
+    values = []
+    previous_sign = 0.0
+    run = 0
+    for value in pd.to_numeric(changes, errors="coerce"):
+        if not np.isfinite(value) or value == 0:
+            previous_sign = 0.0
+            run = 0
+            values.append(np.nan if not np.isfinite(value) else 0.0)
+            continue
+        sign = float(np.sign(value))
+        run = run + 1 if sign == previous_sign else 1
+        previous_sign = sign
+        values.append(sign * run)
+    return pd.Series(values, index=changes.index, dtype=float)
 
 
 def _canonicalize_component_signs(loadings: np.ndarray, scores: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
@@ -101,9 +137,17 @@ def build_feature_panel(
     frame: pd.DataFrame,
     availability_lag: int = 1,
     include_structured: bool = False,
+    feature_families: tuple[str, ...] = (),
 ) -> pd.DataFrame:
     """Build causal features. At origin t, feature values use observations through t-lag."""
     indicators = [c for c in frame.columns if c.startswith("X")]
+    unknown_families = set(feature_families).difference(
+        FEATURE_FAMILY_COLUMNS
+    )
+    if unknown_families:
+        raise ValueError(
+            f"Unknown feature families: {sorted(unknown_families)}"
+        )
     source = frame[indicators].shift(availability_lag)
     feature_parts = []
     changes = source.diff()
@@ -112,6 +156,8 @@ def build_feature_panel(
         d = changes[indicator]
         rolling_mean = s.rolling(12, min_periods=6).mean()
         rolling_std = s.rolling(12, min_periods=6).std()
+        momentum_3 = s / s.shift(3).replace(0, np.nan) - 1
+        momentum_6 = s / s.shift(6).replace(0, np.nan) - 1
         mad = s.rolling(12, min_periods=6).apply(lambda x: np.median(np.abs(x - np.median(x))), raw=True)
         out = pd.DataFrame({
             "origin_position": frame["position"],
@@ -131,8 +177,8 @@ def build_feature_panel(
             "change_lag_3": d.shift(3),
             "change_lag_6": d.shift(6),
             "change_lag_12": d.shift(12),
-            "momentum_3": s / s.shift(3).replace(0, np.nan) - 1,
-            "momentum_6": s / s.shift(6).replace(0, np.nan) - 1,
+            "momentum_3": momentum_3,
+            "momentum_6": momentum_6,
             "momentum_9": s / s.shift(9).replace(0, np.nan) - 1,
             "momentum_12": s / s.shift(12).replace(0, np.nan) - 1,
             "rolling_mean_12": rolling_mean,
@@ -145,6 +191,24 @@ def build_feature_panel(
             "observed": s.notna().astype(float),
             "time_since_observation": (~s.notna()).groupby(s.notna().cumsum()).cumcount().astype(float),
         })
+        if "trend_persistence" in feature_families:
+            out["signed_run_length"] = _signed_run_length(d)
+            previous_momentum_3 = (
+                s.shift(3) / s.shift(6).replace(0, np.nan) - 1
+            )
+            out["momentum_acceleration_3"] = (
+                momentum_3 - previous_momentum_3
+            )
+        if "risk_normalized" in feature_families:
+            returns = s.pct_change(fill_method=None)
+            return_volatility = returns.rolling(12, min_periods=6).std()
+            out["return_volatility_12"] = return_volatility
+            out["risk_normalized_momentum_3"] = momentum_3.div(
+                return_volatility.mul(np.sqrt(3.0)).replace(0, np.nan)
+            )
+            out["risk_normalized_momentum_6"] = momentum_6.div(
+                return_volatility.mul(np.sqrt(6.0)).replace(0, np.nan)
+            )
         feature_parts.append(out)
     panel = pd.concat(feature_parts, ignore_index=True)
     changes_long = changes.stack(future_stack=True).rename("current_change").reset_index()
@@ -167,6 +231,45 @@ def build_feature_panel(
         validate="one_to_one",
     )
     panel = panel.drop(columns="row_index")
+    if "cross_sectional_dynamics" in feature_families:
+        panel = panel.sort_values(
+            ["indicator_id", "origin_position"]
+        ).reset_index(drop=True)
+        grouped_rank = panel.groupby("indicator_id", sort=False)[
+            "cross_section_rank"
+        ]
+        panel["cross_section_rank_change_1"] = (
+            panel["cross_section_rank"] - grouped_rank.shift(1)
+        )
+        panel["cross_section_rank_change_3"] = (
+            panel["cross_section_rank"] - grouped_rank.shift(3)
+        )
+        origin_stats = panel[[
+            "origin_position",
+            "cross_section_breadth",
+            "cross_section_dispersion",
+        ]].drop_duplicates("origin_position").sort_values("origin_position")
+        origin_stats["breadth_impulse_3"] = (
+            origin_stats["cross_section_breadth"]
+            - origin_stats["cross_section_breadth"].shift(3)
+        )
+        origin_stats["dispersion_change_3"] = (
+            origin_stats["cross_section_dispersion"]
+            - origin_stats["cross_section_dispersion"].shift(3)
+        )
+        panel = panel.merge(
+            origin_stats[[
+                "origin_position",
+                "breadth_impulse_3",
+                "dispersion_change_3",
+            ]],
+            on="origin_position",
+            how="left",
+            validate="many_to_one",
+        )
+        panel = panel.sort_values(
+            ["origin_position", "indicator_id"]
+        ).reset_index(drop=True)
     if include_structured:
         structured = build_structured_feature_panel(frame, availability_lag=availability_lag)
         panel = panel.merge(structured, on=["origin_position", "indicator_id"], how="left", validate="one_to_one")

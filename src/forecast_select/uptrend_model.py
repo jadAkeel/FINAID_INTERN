@@ -11,6 +11,8 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
+from .features import FEATURE_FAMILY_COLUMNS
+
 
 FEATURE_COLUMNS = [
     "level", "diff_1", "pct_change_1", "direction_1",
@@ -44,8 +46,18 @@ def fit_uptrend_model(
     seed: int,
     logistic_c: float,
     max_iter: int,
+    feature_families: tuple[str, ...] = (),
 ) -> UptrendModel:
-    numeric = [column for column in FEATURE_COLUMNS if column in train.columns]
+    requested = [
+        column
+        for family in feature_families
+        for column in FEATURE_FAMILY_COLUMNS[family]
+    ]
+    numeric = [
+        column
+        for column in [*FEATURE_COLUMNS, *requested]
+        if column in train.columns
+    ]
     preprocessor = ColumnTransformer([
         (
             "numeric",

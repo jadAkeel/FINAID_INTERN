@@ -461,7 +461,8 @@ def apply_bidirectional_selector(
         result["p_down"],
         p_up,
     )
-    result["correctness_probability"] = result["directional_confidence"]
+    result["directional_score"] = result["directional_confidence"]
+    result["correctness_probability"] = np.nan
     result["correctness_lcb"] = np.nan
     result["selection_score"] = result["directional_confidence"]
     result["selection_mode"] = "bidirectional_downside"

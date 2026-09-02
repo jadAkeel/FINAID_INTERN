@@ -1,0 +1,345 @@
+{
+  "accuracy_first_selective": {
+    "active_model_changed": false,
+    "all_internal_windows_meet_target": false,
+    "all_nonlocked": {
+      "accuracy": 0.6299319727891156,
+      "average_regime_stress": 0.5226714531278164,
+      "calls": 2205,
+      "changed_calls": 0,
+      "direction_changed_calls": 0,
+      "down_calls": 0,
+      "down_hits": 0,
+      "down_precision": NaN,
+      "hits": 1389,
+      "months": 147,
+      "replacement_calls": 0,
+      "replacement_months": 0,
+      "up_calls": 2205
+    },
+    "confirmation": {
+      "accuracy": 0.6283687943262412,
+      "average_regime_stress": 0.5050710215287084,
+      "calls": 705,
+      "changed_calls": 0,
+      "direction_changed_calls": 0,
+      "down_calls": 0,
+      "down_hits": 0,
+      "down_precision": NaN,
+      "hits": 443,
+      "months": 47,
+      "replacement_calls": 0,
+      "replacement_months": 0,
+      "up_calls": 705
+    },
+    "confirmation_used_for_selection": false,
+    "coverage_vs_fixed_top15": 1.0,
+    "development": {
+      "accuracy": 0.6306666666666667,
+      "average_regime_stress": 0.5309436559793971,
+      "calls": 1500,
+      "changed_calls": 0,
+      "direction_changed_calls": 0,
+      "down_calls": 0,
+      "down_hits": 0,
+      "down_precision": NaN,
+      "hits": 946,
+      "months": 100,
+      "replacement_calls": 0,
+      "replacement_months": 0,
+      "up_calls": 1500
+    },
+    "enabled": true,
+    "internal_windows": [
+      {
+        "accuracy": 0.64,
+        "average_regime_stress": 0.540558169339831,
+        "calls": 450,
+        "changed_calls": 0,
+        "direction_changed_calls": 0,
+        "down_calls": 0,
+        "down_hits": 0,
+        "down_precision": NaN,
+        "hits": 288,
+        "months": 30,
+        "origins": [
+          120,
+          149
+        ],
+        "replacement_calls": 0,
+        "replacement_months": 0,
+        "up_calls": 450
+      },
+      {
+        "accuracy": 0.6666666666666666,
+        "average_regime_stress": 0.522190500930998,
+        "calls": 450,
+        "changed_calls": 0,
+        "direction_changed_calls": 0,
+        "down_calls": 0,
+        "down_hits": 0,
+        "down_precision": NaN,
+        "hits": 300,
+        "months": 30,
+        "origins": [
+          150,
+          179
+        ],
+        "replacement_calls": 0,
+        "replacement_months": 0,
+        "up_calls": 450
+      },
+      {
+        "accuracy": 0.5966666666666667,
+        "average_regime_stress": 0.5302976372453709,
+        "calls": 600,
+        "changed_calls": 0,
+        "direction_changed_calls": 0,
+        "down_calls": 0,
+        "down_hits": 0,
+        "down_precision": NaN,
+        "hits": 358,
+        "months": 40,
+        "origins": [
+          180,
+          219
+        ],
+        "replacement_calls": 0,
+        "replacement_months": 0,
+        "up_calls": 600
+      }
+    ],
+    "locked_evaluation_read": false,
+    "promotion_eligible": false,
+    "selected_cap": 15,
+    "selected_group_weight": 0.25,
+    "selected_on": "development_120_219_only",
+    "selection_mode": "accuracy_first_fixed_coverage_up_only",
+    "target_accuracy": 0.65,
+    "temporal_block_bootstrap": {
+      "all_nonlocked": {
+        "accuracy": 0.6299319727891156,
+        "bootstrap_p10": 0.6,
+        "bootstrap_p90": 0.6530612244897959,
+        "calls": 2205,
+        "down_calls": 0,
+        "hits": 1389,
+        "months": 147,
+        "up_calls": 2205
+      },
+      "block_months": 6,
+      "confirmation": {
+        "accuracy": 0.6283687943262412,
+        "bootstrap_p10": 0.581418439716312,
+        "bootstrap_p90": 0.6768794326241137,
+        "calls": 705,
+        "down_calls": 0,
+        "hits": 443,
+        "months": 47,
+        "up_calls": 705
+      },
+      "development": {
+        "accuracy": 0.6306666666666667,
+        "bootstrap_p10": 0.598,
+        "bootstrap_p90": 0.6647333333333334,
+        "calls": 1500,
+        "down_calls": 0,
+        "hits": 946,
+        "months": 100,
+        "up_calls": 1500
+      },
+      "replicates": 500
+    }
+  },
+  "active_model_changed": false,
+  "asset_group_overlay": {
+    "enabled": true,
+    "label_availability_lag_months": 2,
+    "selected_on": "tuning_120_179_and_validation_180_219_development",
+    "trailing_months": 12,
+    "weight": 0.25
+  },
+  "average_monthly_cap": 17.312925170068027,
+  "base": {
+    "confirmation": {
+      "accuracy": 0.6257822277847309,
+      "average_regime_stress": 0.5006140420309393,
+      "calls": 799,
+      "changed_calls": 0,
+      "direction_changed_calls": 0,
+      "down_calls": 0,
+      "down_hits": 0,
+      "down_precision": NaN,
+      "hits": 500,
+      "months": 47,
+      "replacement_calls": 0,
+      "replacement_months": 0,
+      "up_calls": 799
+    },
+    "tuning": {
+      "accuracy": 0.6358543417366946,
+      "average_regime_stress": 0.5302746587113643,
+      "calls": 1071,
+      "changed_calls": 0,
+      "direction_changed_calls": 0,
+      "down_calls": 0,
+      "down_hits": 0,
+      "down_precision": NaN,
+      "hits": 681,
+      "months": 60,
+      "replacement_calls": 0,
+      "replacement_months": 0,
+      "up_calls": 1071
+    },
+    "validation": {
+      "accuracy": 0.5896296296296296,
+      "average_regime_stress": 0.5256095868947058,
+      "calls": 675,
+      "changed_calls": 0,
+      "direction_changed_calls": 0,
+      "down_calls": 0,
+      "down_hits": 0,
+      "down_precision": NaN,
+      "hits": 398,
+      "months": 40,
+      "replacement_calls": 0,
+      "replacement_months": 0,
+      "up_calls": 675
+    }
+  },
+  "candidate": {
+    "confirmation": {
+      "accuracy": 0.6307884856070087,
+      "average_regime_stress": 0.5006140420309393,
+      "calls": 799,
+      "changed_calls": 196,
+      "direction_changed_calls": 6,
+      "down_calls": 6,
+      "down_hits": 5,
+      "down_precision": 0.8333333333333334,
+      "hits": 504,
+      "months": 47,
+      "replacement_calls": 0,
+      "replacement_months": 0,
+      "up_calls": 793
+    },
+    "tuning": {
+      "accuracy": 0.6349206349206349,
+      "average_regime_stress": 0.5302746587113643,
+      "calls": 1071,
+      "changed_calls": 321,
+      "direction_changed_calls": 7,
+      "down_calls": 7,
+      "down_hits": 3,
+      "down_precision": 0.42857142857142855,
+      "hits": 680,
+      "months": 60,
+      "replacement_calls": 0,
+      "replacement_months": 0,
+      "up_calls": 1064
+    },
+    "validation": {
+      "accuracy": 0.5881481481481482,
+      "average_regime_stress": 0.5256095868947058,
+      "calls": 675,
+      "changed_calls": 175,
+      "direction_changed_calls": 6,
+      "down_calls": 1,
+      "down_hits": 0,
+      "down_precision": 0.0,
+      "hits": 397,
+      "months": 40,
+      "replacement_calls": 0,
+      "replacement_months": 0,
+      "up_calls": 674
+    }
+  },
+  "config_hash": "2b4892ffdb47d8e09d7448d45503501eccd5d33d281d1de81435024acf7c28d8",
+  "confirmation_accuracy_delta": 0.005006257822277815,
+  "data_hash": "8f9fc27ae0a33f4a25d1241b7d896b56ba7515d4ad7e984999f0c5fe42b20d29",
+  "dynamic_cap": true,
+  "effective_cap": "dynamic",
+  "excluded_indicators": [
+    "X16"
+  ],
+  "experiment_id": "regime_adaptive_selector",
+  "experiment_name": "Regime Adaptive Bidirectional Selector",
+  "experiment_release": "forward_breadth_graduated_15_to_20_v1",
+  "forward_regime": {
+    "cap_mode": "graduated_15_to_20",
+    "enabled": true,
+    "expansion_threshold": 0.65,
+    "graduated_high": 0.68,
+    "graduated_low": 0.52,
+    "model": {
+      "l2_regularization": 10.0,
+      "learning_rate": 0.04,
+      "max_depth": 2,
+      "max_iter": 100,
+      "minimum_samples_leaf": 12
+    },
+    "selected_on": "development_120_219_without_confirmation_or_locked_evaluation"
+  },
+  "frozen_base_config_hash": "6a6f0c457a24621d9f5b30909f0639e1890e8cec526320c6c6a702ec9306899a",
+  "generalized_correlation_overlay": {
+    "alpha": 0.35,
+    "enabled": true,
+    "graph_scope": "all_eligible_indicators",
+    "minimum_pairs": 24,
+    "pair_reliability_shrinkage": true,
+    "selected_on": "tuning_120_179_and_validation_180_219_development",
+    "transform": "percentage_return",
+    "window_months": 48
+  },
+  "internal_tuning_windows": [
+    [
+      120,
+      149
+    ],
+    [
+      150,
+      179
+    ]
+  ],
+  "locked_evaluation_read": false,
+  "locked_origins": [
+    268,
+    315
+  ],
+  "maximum_cap": 20,
+  "minimum_cap": 15,
+  "monthly_cap_distribution": {
+    "15": 33,
+    "16": 23,
+    "17": 20,
+    "18": 27,
+    "19": 24,
+    "20": 20
+  },
+  "nonlocked_development_gate_passed": false,
+  "parameters_selected_on": {
+    "asset_group_overlay": "tuning_120_179_and_validation_180_219_development",
+    "down_gate": "tuning_120_179_with_internal_stability_gate",
+    "forward_regime": "development_120_219_without_confirmation_or_locked_evaluation",
+    "generalized_correlation_overlay": "tuning_120_179_and_validation_180_219_development"
+  },
+  "promotion_eligible": false,
+  "promotion_requires_locked_evaluation": true,
+  "selected_candidate_development_qualifying": false,
+  "selected_candidate_qualifying": false,
+  "selected_candidate_stable_qualifying": false,
+  "selected_parameters": {
+    "allow_down_predictions": true,
+    "down_margin": 0.0,
+    "down_threshold": 0.65,
+    "maximum_down_share": 0.5,
+    "maximum_replacements": 0,
+    "regime_down_bonus": 0.1,
+    "replacement_margin": 0.05,
+    "shock_down_bonus": 0.1,
+    "stress_trigger": 0.5
+  },
+  "selection_mode": "guarded_bidirectional_fallback_no_stable_candidate",
+  "stress_increases_cap": false,
+  "validation_accuracy_delta": -0.001481481481481417
+}

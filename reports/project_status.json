@@ -1,8 +1,13 @@
 {
-  "active_model": "uptrend_selector",
+  "active_model": "regime_adaptive_selector",
+  "active_model_activation_basis": "owner_directed_bidirectional_requirement",
+  "active_model_activation_status": "owner_promoted",
   "active_model_artifact_exists": true,
   "active_model_ready": true,
-  "claim": "artifact_integrity_only",
+  "active_model_research_gate_passed": false,
+  "active_model_research_promotion_eligible": false,
+  "active_model_supports_both_directions": true,
+  "claim": "owner_promoted_bidirectional_model_with_nonlocked_evidence",
   "contextual_defensive_selector_locked_evaluation_read": false,
   "contextual_defensive_selector_promoted": false,
   "contextual_defensive_selector_promotion_eligible": false,
@@ -26,5 +31,7 @@
   "unified_controller_locked_evaluation_read": false,
   "unified_controller_promoted": false,
   "unified_controller_promotion_eligible": false,
-  "unified_controller_ready": true
+  "unified_controller_ready": true,
+  "uptrend_baseline_artifact_exists": true,
+  "uptrend_baseline_ready": true
 }

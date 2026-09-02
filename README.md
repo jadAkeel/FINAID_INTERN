@@ -1,66 +1,76 @@
 # Forecast Select
 
-Predict the next-month direction of 50 indicators. The active model selects **15–20 indicators per month**.
+Forecast Select predicts the next-month direction of 50 anonymous indicators
+and selects 15–20 calls per forecast month. The code keeps every model decision
+inside a causal boundary: features use observations through `t-1`, training
+labels stop at `t-2`, and locked origins 268–315 are not used for tuning.
 
-**Active Model:** Regime Adaptive Bidirectional Selector (`forward_breadth_dynamic_cap_v3`)
+## Current model
 
-## Results
+The owner-promoted production model is the **Regime Adaptive Bidirectional
+Selector** (`forward_breadth_dynamic_cap_v3`). The **Uptrend Selector** remains
+the reproducible baseline.
 
-| Period | Accuracy | SelAUC | DirAUC |
-|---|---:|---:|---:|
-| Tuning (120–179) | 64.05% (686/1071) | 0.5413 | 0.5795 |
-| Validation (180–219) | 58.52% (395/675) | 0.4015 | 0.5094 |
-| Confirmation (220–266) | 63.58% (508/799) | 0.4411 | 0.5380 |
+| Evaluation window | Accuracy | Calls | Selection AUC | Directional AUC |
+|---|---:|---:|---:|---:|
+| Tuning (120–179) | 64.05% | 1,071 | 0.5413 | 0.5795 |
+| Validation (180–219) | 58.52% | 675 | 0.4015 | 0.5094 |
+| Confirmation (220–266) | 63.58% | 799 | 0.4411 | 0.5380 |
 
-## How to Run
+The active model was chosen to support both Up and Down calls. It did **not**
+pass the formal research promotion gate, so the repository does not claim 65%
+validated accuracy. Rejected and negative experiments are retained in
+[`docs/EXPERIMENT_REGISTRY.md`](docs/EXPERIMENT_REGISTRY.md).
+
+## Install and run
+
+Python 3.11 or newer is required.
 
 ```powershell
-pip install -e ".[dev]"
+python -m pip install -e ".[dev]"
 
-# Build model (uses data through May 2026)
-python -m forecast_select.cli build-regime-adaptive
+# Validate or rebuild the active artifact.
+python -m forecast_select build-model
 
-# Forecast next 3 months: June, July, August
-python -m forecast_select.cli forecast-regime-next-three
+# Write the next three direct-horizon forecasts.
+python -m forecast_select forecast-next-three
 
-# See result
-type reports\regime_adaptive_next_three_forecast.json
+# Validate delivery artifacts and provenance.
+python -m forecast_select check-project
+
+# Display the registered model result.
+python -m forecast_select show-results
 ```
 
-**To change number of picks (15–20):**
-```powershell
-python -m forecast_select.cli build-regime-adaptive --cap 15
-python -m forecast_select.cli forecast-regime-next-three
-# or --cap 20
+The generated forecast is written to
+`reports/regime_adaptive_next_three_forecast.json`. Each selected row includes
+the indicator, direction, directional scores, group, and rank.
+
+## Project layout
+
+```text
+configs/   Production and research settings
+data/      Source workbook
+src/       Installable forecast_select package
+tests/     Unit, leakage, regression, and artifact-contract tests
+artifacts/ Registered active and audit artifacts
+research/  Reproducible experiments and retained evidence
+reports/   Human- and machine-readable production results
+docs/      Methodology, experiment registry, and delivery notes
+archive/   Quarantined evidence that must not feed production
 ```
 
-## Latest Forecast (June–August 2026)
-
-Generated from `2026-05-29` (Origin 316):
-
-```
-2026-06 (H1) | mixed | cap 15 | 15 picks: X41, X39, X40, X24, X9, X11...
-2026-07 (H2) | mixed | cap 15 | 15 picks: X41, X39, X24, X40...
-2026-08 (H3) | mixed | cap 15 | 15 picks: X41, X39, X24, X40...
-```
-Full details: `reports/regime_adaptive_next_three_forecast.json`
-
-Each pick has: `indicator_id`, `direction` (Up/Down), `p_up`, `p_down`, `selection_score`, `group`, `rank`.
-
-## Project Structure
-
-```
-configs/  -> model settings (cap 15-20, group weight 0.25)
-data/     -> monthly_indicators.xlsx (316 positions)
-src/      -> pipeline code
-research/ -> experiments (baseline + two holdout studies)
-reports/  -> forecasts
-```
+The production entry point is `forecast_select.cli`. Experimental commands are
+implemented in `forecast_select.research_cli` and loaded only when requested.
+This keeps normal use readable without erasing research history.
 
 ## Verification
 
 ```powershell
-python -m pytest tests/unit/test_regime_adaptive.py -q  # 19 passed
+python -m ruff check src tests
+python -m pytest
 ```
 
-Causal: features `<= t-1`, labels `<= t-2`. Locked 268–315 never used for tuning.
+GitHub Actions runs the same lint and test checks. See
+[`docs/FINAL_DELIVERY.md`](docs/FINAL_DELIVERY.md) for the delivery boundary and
+[`CHANGELOG.md`](CHANGELOG.md) for the consolidated change record.

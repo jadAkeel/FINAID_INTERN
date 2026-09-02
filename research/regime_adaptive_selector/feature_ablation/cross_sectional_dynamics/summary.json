@@ -1,0 +1,159 @@
+{
+  "accepted": false,
+  "active_model_changed": false,
+  "adaptive": {
+    "baseline": {
+      "confirmation_descriptive": {
+        "accuracy": 0.6357947434292867,
+        "calls": 799,
+        "hits": 508
+      },
+      "early_tuning": {
+        "accuracy": 0.6340579710144928,
+        "calls": 552,
+        "hits": 350
+      },
+      "late_tuning": {
+        "accuracy": 0.6473988439306358,
+        "calls": 519,
+        "hits": 336
+      },
+      "tuning": {
+        "accuracy": 0.6405228758169934,
+        "calls": 1071,
+        "hits": 686
+      },
+      "validation": {
+        "accuracy": 0.5851851851851851,
+        "calls": 675,
+        "hits": 395
+      }
+    },
+    "candidate": {
+      "confirmation_descriptive": {
+        "accuracy": 0.6320400500625782,
+        "calls": 799,
+        "hits": 505
+      },
+      "early_tuning": {
+        "accuracy": 0.6322463768115942,
+        "calls": 552,
+        "hits": 349
+      },
+      "late_tuning": {
+        "accuracy": 0.6454720616570327,
+        "calls": 519,
+        "hits": 335
+      },
+      "tuning": {
+        "accuracy": 0.6386554621848739,
+        "calls": 1071,
+        "hits": 684
+      },
+      "validation": {
+        "accuracy": 0.5851851851851851,
+        "calls": 675,
+        "hits": 395
+      }
+    },
+    "gate_passed": false
+  },
+  "base": {
+    "baseline": {
+      "confirmation_descriptive": {
+        "accuracy": 0.6184397163120567,
+        "calls": 705,
+        "hits": 436
+      },
+      "early_tuning": {
+        "accuracy": 0.64,
+        "calls": 450,
+        "hits": 288
+      },
+      "late_tuning": {
+        "accuracy": 0.6466666666666666,
+        "calls": 450,
+        "hits": 291
+      },
+      "tuning": {
+        "accuracy": 0.6433333333333333,
+        "calls": 900,
+        "hits": 579
+      },
+      "validation": {
+        "accuracy": 0.5783333333333334,
+        "calls": 600,
+        "hits": 347
+      }
+    },
+    "candidate": {
+      "confirmation_descriptive": {
+        "accuracy": 0.6198581560283688,
+        "calls": 705,
+        "hits": 437
+      },
+      "early_tuning": {
+        "accuracy": 0.6288888888888889,
+        "calls": 450,
+        "hits": 283
+      },
+      "late_tuning": {
+        "accuracy": 0.64,
+        "calls": 450,
+        "hits": 288
+      },
+      "tuning": {
+        "accuracy": 0.6344444444444445,
+        "calls": 900,
+        "hits": 571
+      },
+      "validation": {
+        "accuracy": 0.585,
+        "calls": 600,
+        "hits": 351
+      }
+    },
+    "gate_passed": false
+  },
+  "cache_status": "exact_build",
+  "confirmation_used_for_selection": false,
+  "experiment_id": "phase2_feature_cross_sectional_dynamics",
+  "experiment_key": "c6e7593d8412c1ee1b3a668dc386d19c325c1ae14cc8853c44afd8625bd30e1a",
+  "experiment_release": "top15_feature_family_ablation_v1",
+  "family": "cross_sectional_dynamics",
+  "feature_columns": [
+    "cross_section_rank_change_1",
+    "cross_section_rank_change_3",
+    "breadth_impulse_3",
+    "dispersion_change_3"
+  ],
+  "locked_evaluation_read": false,
+  "locked_origins": [
+    268,
+    315
+  ],
+  "paired_validation": {
+    "bootstrap_p10": -0.025,
+    "bootstrap_p90": 0.05,
+    "mean_monthly_hit_delta": 0.0,
+    "months": 40,
+    "total_hit_delta": 0
+  },
+  "rejection_reasons": [
+    "base_top15_temporal_or_validation_gate",
+    "adaptive_temporal_or_validation_gate",
+    "paired_validation_bootstrap_p10"
+  ],
+  "runtime_seconds": 200.8367212000303,
+  "selected_on": "tuning_and_validation_without_confirmation_or_locked",
+  "validation_bootstrap": {
+    "accuracy": 0.5851851851851851,
+    "bootstrap_p10": 0.5196955624355006,
+    "bootstrap_p90": 0.6354708677330582,
+    "calls": 675,
+    "down_calls": 0,
+    "hits": 395,
+    "months": 40,
+    "up_calls": 675
+  }
+}

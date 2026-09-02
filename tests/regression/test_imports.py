@@ -1,4 +1,5 @@
 def test_public_imports():
+    import forecast_select.active_model  # noqa: F401
     import forecast_select.contextual_defensive  # noqa: F401
     import forecast_select.contextual_pipeline  # noqa: F401
     import forecast_select.downside_pipeline  # noqa: F401

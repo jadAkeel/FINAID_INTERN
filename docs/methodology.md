@@ -1,4 +1,15 @@
-# Uptrend Selector methodology
+# Forecast Select methodology
+
+## Active model decision
+
+The Regime Adaptive Bidirectional Selector is the owner-promoted active model.
+It was activated to support both Up and Down directions while the Uptrend
+Selector remains the reproducible baseline. This product decision is recorded
+separately from the research gate: Validation accuracy was 60.00%, the research
+promotion gate did not pass, and the locked origins 268 through 315 remain
+unread.
+
+## Uptrend Selector baseline
 
 ## Target
 
@@ -96,3 +107,53 @@ The selected rule used a breadth threshold of `0.45` and roles `X44` and
 `X49`. Discovery improved by eight hits, but Confirmation produced no net
 change. The experiment is not promoted. The role labels describe observed
 behavior only because the source workbook does not provide indicator names.
+
+## Experimental Regime Adaptive Selector
+
+The adaptive path makes 15 calls normally and expands to 20 only when a
+walk-forward market-breadth forecast is at least `0.65`. That forecast uses
+structured panel aggregates through `t-1` and targets through `t-2`; the old
+descriptive stress-to-cap mapping is retained only as a disabled fallback.
+Expansion-only ranks 16-20 remain Up because their admission is conditioned on
+a broad-Up forecast. The path excludes `X16`, replaces the frozen graph with a
+causal rolling 48-month signed graph, and adds a 12-month asset-group
+relative-strength overlay whose labels stop at `t-2`. Its guarded Down fallback
+did not pass every research stability gate; its activation is the separate
+owner-directed product decision documented above.
+
+A separate fixed-coverage accuracy path searches Development origins 120-219
+over causal group weights while enforcing exactly 15 calls per month. Caps
+below the project's configured monthly minimum are rejected. The selected
+policy uses group weight `0.25`; its point estimates remain below 65%, so this
+fixed-coverage Up-only branch is not used by the active bidirectional model.
+Confirmation and locked origins are not used for parameter selection.
+
+The 2026-08-07 non-locked follow-up uses a provenance-keyed cache that separates
+causal replay inputs from outcomes and rejects locked origin ranges. Threshold
+screens use Tuning only; Validation is a gate; Confirmation is descriptive and
+cannot make a policy promotion-eligible. Three bounded cap policies, three
+single-family Uptrend ablations, and two Down challengers were evaluated. None
+improved the 60.00% Validation reference under the temporal and block-bootstrap
+gates, so optional model and correctness-meta-model searches were not run.
+
+## Score and correctness semantics
+
+The output fields intentionally separate three concepts:
+
+- `p_up`: estimated Up-direction score; not proven calibrated;
+- `selection_score`: ranking utility used to choose calls; not necessarily a
+  probability or comparable across regimes;
+- `directional_score`: strength of the chosen direction, retained under the
+  compatibility alias `directional_confidence`; not a correctness probability.
+
+No individual `correctness_probability` is released. Selected rows carry the
+status `unavailable_no_valid_oof_individual_calibrator`, and both
+`correctness_probability` and `correctness_lcb` are null. The previous copied
+values are retained only in `legacy_correctness_probability` for auditability.
+
+For monitoring, `cohort_correctness_probability` is the Laplace-smoothed
+marginal historical hit rate `(hits + 1) / (calls + 2)` over prior selected
+calls. Labels stop at `origin - 2`, at least 12 prior selection months are
+required, and `cohort_correctness_lcb` is a one-sided 95% Wilson lower bound.
+These cohort fields are not individualized and cannot justify threshold-based
+abstention.

@@ -1,0 +1,15 @@
+model_id: regime_adaptive_selector
+model_name: Regime Adaptive Bidirectional Selector
+model_release: forward_breadth_dynamic_cap_v3_with_recent_miss_overlay
+source_experiment: research/regime_adaptive_selector
+source_artifact: research/regime_adaptive_selector/artifacts/predictions.parquet
+active_artifact: artifacts/active/regime_adaptive_predictions.parquet
+activation_status: owner_promoted
+activation_basis: owner_directed_bidirectional_requirement_with_recent_miss_overlay
+baseline_model_id: uptrend_selector
+research_gate_passed: false
+evaluation_windows:
+  tuning: [120, 179]
+  validation: [180, 219]
+  confirmation: [220, 266]
+locked_origins: [268, 315]

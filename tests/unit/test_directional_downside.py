@@ -99,6 +99,7 @@ def test_bidirectional_selector_can_choose_down_and_keeps_exact_cap():
         "indicator_id"
     ]) == {"X1", "X2"}
     assert selected["correctness_lcb"].isna().all()
-    assert selected["correctness_probability"].equals(
+    assert selected["correctness_probability"].isna().all()
+    assert selected["directional_score"].equals(
         selected["directional_confidence"]
     )

@@ -1,0 +1,27 @@
+experiment_id: down_sensing_gate
+experiment_name: Down Sensing Gate
+experiment_release: initial_experiment
+
+evaluation_origins: [120, 266]
+train_lag_months: 2
+
+shock_definition:
+  trailing_window: 60
+  minimum_history: 24
+  lower_quantile: 0.05
+  robust_z: 2.0
+
+model:
+  logistic_c: 0.3
+  logistic_max_iter: 1500
+  minimum_train_rows: 800
+
+policy_grid:
+  breadth_gates: [0.45, 0.50, 0.55]
+  risk_quantiles: [0.85, 0.90]
+  max_replacements: [1, 2]
+  conviction_ceilings: [0.50, 0.60]
+
+bootstrap:
+  block_months: 6
+  replicates: 500

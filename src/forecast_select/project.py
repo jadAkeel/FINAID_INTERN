@@ -6,31 +6,17 @@ from typing import Any
 import yaml
 
 from .active_model import active_model_artifact, active_model_status
-from .contextual_pipeline import (
-    contextual_defensive_status,
-    contextual_predictions_artifact,
-)
-from .downside_pipeline import (
-    downside_risk_artifact,
-    downside_risk_gate_status,
-    gated_predictions_artifact,
-)
 from .directional_downside_pipeline import (
     directional_downside_predictions_artifact,
     directional_downside_status,
 )
+from .io import atomic_write_json, load_workbook, sha256_file
+from .targets import build_targets
 from .uptrend_pipeline import (
     active_model_artifact as uptrend_model_artifact,
     active_model_status as uptrend_model_status,
 )
-from .unified_pipeline import (
-    unified_controller_status,
-    unified_predictions_artifact,
-)
-from .io import atomic_write_json, load_workbook, sha256_file
-from .targets import build_targets
 from .validation import make_layout
-
 
 ROOT = Path(__file__).resolve().parents[2]
 LOCKED_EVALUATION_SHA256 = (
@@ -97,13 +83,14 @@ def audit_data(root: Path = ROOT) -> Path:
     return output
 
 
-def check_project(root: Path = ROOT) -> Path:
+def _core_project_checks(root: Path) -> dict[str, Any]:
+    """Return checks required by the active model and retained baseline."""
     baseline_status = uptrend_model_status(root)
     # active_model_status writes the public performance report, so run it last.
     status = active_model_status(root)
     locked_evaluation = root / "artifacts/audit/locked_evaluation.parquet"
     locked_hash = sha256_file(locked_evaluation) if locked_evaluation.exists() else None
-    checks = {
+    checks: dict[str, Any] = {
         "active_model": "regime_adaptive_selector",
         "active_model_artifact_exists": active_model_artifact(root).exists(),
         "active_model_ready": bool(status.get("ready")),
@@ -126,18 +113,6 @@ def check_project(root: Path = ROOT) -> Path:
         "locked_evaluation_used_by_active_model": False,
         "claim": "owner_promoted_bidirectional_model_with_nonlocked_evidence",
     }
-    risk_status = downside_risk_gate_status(root)
-    checks.update({
-        "downside_risk_gate_ready": bool(risk_status.get("ready")),
-        "downside_risk_artifact_exists": downside_risk_artifact(root).exists(),
-        "gated_predictions_artifact_exists": gated_predictions_artifact(
-            root
-        ).exists(),
-        "downside_risk_gate_promoted": False,
-        "downside_risk_gate_locked_evaluation_read": bool(
-            risk_status.get("locked_evaluation_read", False)
-        ),
-    })
     directional_status = directional_downside_status(root)
     checks.update({
         "directional_downside_selector_ready": bool(
@@ -154,6 +129,37 @@ def check_project(root: Path = ROOT) -> Path:
             directional_status.get("locked_evaluation_read", False)
         ),
     })
+    return checks
+
+
+def _legacy_research_checks(root: Path) -> dict[str, Any]:
+    """Load historical research checks only for the compatibility report."""
+    from .contextual_pipeline import (
+        contextual_defensive_status,
+        contextual_predictions_artifact,
+    )
+    from .downside_pipeline import (
+        downside_risk_artifact,
+        downside_risk_gate_status,
+        gated_predictions_artifact,
+    )
+    from .unified_pipeline import (
+        unified_controller_status,
+        unified_predictions_artifact,
+    )
+
+    risk_status = downside_risk_gate_status(root)
+    checks: dict[str, Any] = {
+        "downside_risk_gate_ready": bool(risk_status.get("ready")),
+        "downside_risk_artifact_exists": downside_risk_artifact(root).exists(),
+        "gated_predictions_artifact_exists": gated_predictions_artifact(
+            root
+        ).exists(),
+        "downside_risk_gate_promoted": False,
+        "downside_risk_gate_locked_evaluation_read": bool(
+            risk_status.get("locked_evaluation_read", False)
+        ),
+    }
     context_status = contextual_defensive_status(root)
     checks.update({
         "contextual_defensive_selector_ready": bool(
@@ -182,6 +188,18 @@ def check_project(root: Path = ROOT) -> Path:
             unified_status.get("locked_evaluation_read", False)
         ),
     })
+    return checks
+
+
+def check_project(root: Path = ROOT) -> Path:
+    """Write the legacy complete status report without changing its schema.
+
+    The core and historical research checks are built separately. Research
+    imports stay lazy, but this compatibility command still includes their
+    established JSON fields so existing consumers are not broken silently.
+    """
+    checks = _core_project_checks(root)
+    checks.update(_legacy_research_checks(root))
     output = root / "reports/project_status.json"
     atomic_write_json(checks, output)
     return output

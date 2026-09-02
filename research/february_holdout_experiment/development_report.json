@@ -1,0 +1,1851 @@
+{
+  "phase1_diagnosis": {
+    "all_nonlocked_120_266": {
+      "accuracy": 0.6243614931237721,
+      "asset_group": {
+        "commodity": {
+          "acc": 0.5909090909090909,
+          "n": 88
+        },
+        "currency": {
+          "acc": 0.5714285714285714,
+          "n": 49
+        },
+        "fixed_income": {
+          "acc": 0.6449511400651465,
+          "n": 614
+        },
+        "global_equity": {
+          "acc": 0.6063829787234043,
+          "n": 376
+        },
+        "thematic_equity": {
+          "acc": 0.6424581005586593,
+          "n": 358
+        },
+        "us_sector": {
+          "acc": 0.6179245283018868,
+          "n": 1060
+        }
+      },
+      "bacc": 0.5023886009885771,
+      "bounds": [
+        120,
+        266
+      ],
+      "brier": 0.24710085998522419,
+      "calls": 2545,
+      "cap_distribution": {
+        "15": 495,
+        "16": 368,
+        "17": 340,
+        "18": 486,
+        "19": 456,
+        "20": 400
+      },
+      "directional_auc_all": 0.5469232693812386,
+      "directional_auc_selected": 0.49405709762297056,
+      "down_accuracy": 0.6363636363636364,
+      "down_calls": 11,
+      "down_precision": 0.6363636363636364,
+      "hits": 1589,
+      "mcc": 0.03528863425745457,
+      "months": 147,
+      "p_up_auc": 0.5429785051527998,
+      "p_up_graph_auc": 0.5433533953520067,
+      "rank_bands": {
+        "1-5": {
+          "acc": 0.6462585034013606,
+          "n": 735
+        },
+        "11-15": {
+          "acc": 0.6108843537414966,
+          "n": 735
+        },
+        "16-20": {
+          "acc": 0.6176470588235294,
+          "n": 340
+        },
+        "6-10": {
+          "acc": 0.6190476190476191,
+          "n": 735
+        }
+      },
+      "regime": {
+        "calm": {
+          "acc": 0.5435684647302904,
+          "n": 482
+        },
+        "mixed": {
+          "acc": 0.6609822646657572,
+          "n": 1466
+        },
+        "stressed": {
+          "acc": 0.5996649916247906,
+          "n": 597
+        }
+      },
+      "selection_correctness_auc": 0.48851544746702613,
+      "up_accuracy": 0.6243093922651933,
+      "up_calls": 2534,
+      "window": "all_nonlocked_120_266"
+    },
+    "confirmation_220_266": {
+      "accuracy": 0.6357947434292867,
+      "asset_group": {
+        "fixed_income": {
+          "acc": 0.6559139784946236,
+          "n": 186
+        },
+        "global_equity": {
+          "acc": 0.6372549019607843,
+          "n": 102
+        },
+        "thematic_equity": {
+          "acc": 0.6302083333333334,
+          "n": 192
+        },
+        "us_sector": {
+          "acc": 0.6269592476489029,
+          "n": 319
+        }
+      },
+      "bacc": 0.5065232033407422,
+      "bounds": [
+        220,
+        266
+      ],
+      "brier": 0.24536844167132252,
+      "calls": 799,
+      "cap_distribution": {
+        "15": 165,
+        "16": 176,
+        "17": 119,
+        "18": 144,
+        "19": 95,
+        "20": 100
+      },
+      "directional_auc_all": 0.5379822582817129,
+      "directional_auc_selected": 0.439428840843268,
+      "down_accuracy": 0.7142857142857143,
+      "down_calls": 7,
+      "down_precision": 0.7142857142857143,
+      "hits": 508,
+      "mcc": 0.0675147487254521,
+      "months": 47,
+      "p_up_auc": 0.5370505655803932,
+      "p_up_graph_auc": 0.5394071505521142,
+      "rank_bands": {
+        "1-5": {
+          "acc": 0.6595744680851063,
+          "n": 235
+        },
+        "11-15": {
+          "acc": 0.6212765957446809,
+          "n": 235
+        },
+        "16-20": {
+          "acc": 0.6808510638297872,
+          "n": 94
+        },
+        "6-10": {
+          "acc": 0.6085106382978723,
+          "n": 235
+        }
+      },
+      "regime": {
+        "calm": {
+          "acc": 0.5589519650655022,
+          "n": 229
+        },
+        "mixed": {
+          "acc": 0.6774193548387096,
+          "n": 403
+        },
+        "stressed": {
+          "acc": 0.6407185628742516,
+          "n": 167
+        }
+      },
+      "selection_correctness_auc": 0.4411004681115892,
+      "up_accuracy": 0.63510101010101,
+      "up_calls": 792,
+      "window": "confirmation_220_266"
+    },
+    "correlations": {
+      "p_up_selection_vs_group_logit": 0.5533680662414268,
+      "p_up_selection_vs_risk_adjusted": 0.9241369116041304,
+      "p_up_vs_graph": 0.9603261939643556,
+      "p_up_vs_group_logit": 0.3873182013029516,
+      "p_up_vs_p_up_selection": 0.9460554618424876
+    },
+    "development_120_219": {
+      "accuracy": 0.6191294387170676,
+      "asset_group": {
+        "commodity": {
+          "acc": 0.5909090909090909,
+          "n": 88
+        },
+        "currency": {
+          "acc": 0.5714285714285714,
+          "n": 49
+        },
+        "fixed_income": {
+          "acc": 0.6401869158878505,
+          "n": 428
+        },
+        "global_equity": {
+          "acc": 0.5948905109489051,
+          "n": 274
+        },
+        "thematic_equity": {
+          "acc": 0.6566265060240963,
+          "n": 166
+        },
+        "us_sector": {
+          "acc": 0.6140350877192983,
+          "n": 741
+        }
+      },
+      "bacc": 0.5005786900182927,
+      "bounds": [
+        120,
+        219
+      ],
+      "brier": 0.2480220300609393,
+      "calls": 1746,
+      "cap_distribution": {
+        "15": 330,
+        "16": 192,
+        "17": 221,
+        "18": 342,
+        "19": 361,
+        "20": 300
+      },
+      "directional_auc_all": 0.553276138808273,
+      "directional_auc_selected": 0.5174337323419558,
+      "down_accuracy": 0.5,
+      "down_calls": 4,
+      "down_precision": 0.5,
+      "hits": 1081,
+      "mcc": 0.011755621261085425,
+      "months": 100,
+      "p_up_auc": 0.5481229243637074,
+      "p_up_graph_auc": 0.5475569221364887,
+      "rank_bands": {
+        "1-5": {
+          "acc": 0.64,
+          "n": 500
+        },
+        "11-15": {
+          "acc": 0.606,
+          "n": 500
+        },
+        "16-20": {
+          "acc": 0.5934959349593496,
+          "n": 246
+        },
+        "6-10": {
+          "acc": 0.624,
+          "n": 500
+        }
+      },
+      "regime": {
+        "calm": {
+          "acc": 0.5296442687747036,
+          "n": 253
+        },
+        "mixed": {
+          "acc": 0.6547507055503292,
+          "n": 1063
+        },
+        "stressed": {
+          "acc": 0.5837209302325581,
+          "n": 430
+        }
+      },
+      "selection_correctness_auc": 0.5091748798453117,
+      "up_accuracy": 0.6194029850746269,
+      "up_calls": 1742,
+      "window": "development_120_219"
+    },
+    "group_overlay_lift": {
+      "all_nonlocked_120_266": {
+        "graph": 0.5433533953520067,
+        "graph_delta": 0.0003748901992068898,
+        "group": 0.5469232693812386,
+        "group_delta": 0.003569874029231923,
+        "raw": 0.5429785051527998
+      },
+      "confirmation_220_266": {
+        "graph": 0.5394071505521142,
+        "graph_delta": 0.0023565849717209764,
+        "group": 0.5379822582817129,
+        "group_delta": -0.0014248922704013234,
+        "raw": 0.5370505655803932
+      },
+      "development_120_219": {
+        "graph": 0.5475569221364887,
+        "graph_delta": -0.0005660022272186982,
+        "group": 0.553276138808273,
+        "group_delta": 0.005719216671784322,
+        "raw": 0.5481229243637074
+      },
+      "tuning_120_179": {
+        "graph": 0.5698776477752783,
+        "graph_delta": 0.00151464057700057,
+        "group": 0.5794955087243013,
+        "group_delta": 0.00961786094902306,
+        "raw": 0.5683630071982777
+      },
+      "validation_180_219": {
+        "graph": 0.5080937224555315,
+        "graph_delta": -0.004562119303426204,
+        "group": 0.5094375312800075,
+        "group_delta": 0.0013438088244759339,
+        "raw": 0.5126558417589577
+      }
+    },
+    "group_prior_stability_12m": {
+      "commodity": {
+        "autocorr1": 0.9165198994464527,
+        "max": 0.5610134122020601,
+        "mean": -0.323443760277612,
+        "min": -1.0728328038334891,
+        "sign_flip_rate": 0.05442176870748299,
+        "std": 0.3242812718259668
+      },
+      "currency": {
+        "autocorr1": 0.8581497220662061,
+        "max": 0.096411321233683,
+        "mean": -0.3082111121598467,
+        "min": -0.9162907318741551,
+        "sign_flip_rate": 0.07482993197278912,
+        "std": 0.19362557463357233
+      },
+      "fixed_income": {
+        "autocorr1": 0.9090626029757269,
+        "max": 1.2404102005283675,
+        "mean": 0.31567683275728403,
+        "min": -0.21805448180673853,
+        "sign_flip_rate": 0.1360544217687075,
+        "std": 0.29296132515455
+      },
+      "global_equity": {
+        "autocorr1": 0.9450542699935736,
+        "max": 1.1314021114911013,
+        "mean": 0.11391185284683046,
+        "min": -0.5433043627757485,
+        "sign_flip_rate": 0.09523809523809523,
+        "std": 0.3394606758299908
+      },
+      "thematic_equity": {
+        "autocorr1": 0.929138019575359,
+        "max": 0.31897307675472114,
+        "mean": -0.05556580100732678,
+        "min": -0.4677290965826185,
+        "sign_flip_rate": 0.14965986394557823,
+        "std": 0.19107031636716296
+      },
+      "ungrouped": {
+        "autocorr1": NaN,
+        "max": 0.0,
+        "mean": 0.0,
+        "min": 0.0,
+        "sign_flip_rate": 0.006802721088435374,
+        "std": 0.0
+      },
+      "us_sector": {
+        "autocorr1": 0.9131355982635313,
+        "max": 0.7070210796231494,
+        "mean": 0.15237277470015326,
+        "min": -0.1651308999464266,
+        "sign_flip_rate": 0.14965986394557823,
+        "std": 0.1925623544274823
+      }
+    },
+    "tuning_120_179": {
+      "accuracy": 0.6405228758169934,
+      "asset_group": {
+        "commodity": {
+          "acc": 0.5909090909090909,
+          "n": 88
+        },
+        "currency": {
+          "acc": 0.5714285714285714,
+          "n": 49
+        },
+        "fixed_income": {
+          "acc": 0.6752767527675276,
+          "n": 271
+        },
+        "global_equity": {
+          "acc": 0.6183206106870229,
+          "n": 131
+        },
+        "thematic_equity": {
+          "acc": 0.6410256410256411,
+          "n": 78
+        },
+        "us_sector": {
+          "acc": 0.6431718061674009,
+          "n": 454
+        }
+      },
+      "bacc": 0.5011396766498807,
+      "bounds": [
+        120,
+        179
+      ],
+      "brier": 0.24320266259006332,
+      "calls": 1071,
+      "cap_distribution": {
+        "15": 150,
+        "16": 80,
+        "17": 85,
+        "18": 270,
+        "19": 266,
+        "20": 220
+      },
+      "directional_auc_all": 0.5794955087243013,
+      "directional_auc_selected": 0.5421528908409374,
+      "down_accuracy": 0.5,
+      "down_calls": 4,
+      "down_precision": 0.5,
+      "hits": 686,
+      "mcc": 0.01793047783111768,
+      "months": 60,
+      "p_up_auc": 0.5683630071982777,
+      "p_up_graph_auc": 0.5698776477752783,
+      "rank_bands": {
+        "1-5": {
+          "acc": 0.6833333333333333,
+          "n": 300
+        },
+        "11-15": {
+          "acc": 0.62,
+          "n": 300
+        },
+        "16-20": {
+          "acc": 0.5964912280701754,
+          "n": 171
+        },
+        "6-10": {
+          "acc": 0.6433333333333333,
+          "n": 300
+        }
+      },
+      "regime": {
+        "calm": {
+          "acc": 0.5714285714285714,
+          "n": 126
+        },
+        "mixed": {
+          "acc": 0.6820728291316527,
+          "n": 714
+        },
+        "stressed": {
+          "acc": 0.5497835497835498,
+          "n": 231
+        }
+      },
+      "selection_correctness_auc": 0.5413123319828859,
+      "up_accuracy": 0.6410496719775071,
+      "up_calls": 1067,
+      "window": "tuning_120_179"
+    },
+    "validation_180_219": {
+      "accuracy": 0.5851851851851851,
+      "asset_group": {
+        "fixed_income": {
+          "acc": 0.5796178343949044,
+          "n": 157
+        },
+        "global_equity": {
+          "acc": 0.5734265734265734,
+          "n": 143
+        },
+        "thematic_equity": {
+          "acc": 0.6704545454545454,
+          "n": 88
+        },
+        "us_sector": {
+          "acc": 0.5679442508710801,
+          "n": 287
+        }
+      },
+      "bacc": 0.5,
+      "bounds": [
+        180,
+        219
+      ],
+      "brier": 0.2546176786853668,
+      "calls": 675,
+      "cap_distribution": {
+        "15": 180,
+        "16": 112,
+        "17": 136,
+        "18": 72,
+        "19": 95,
+        "20": 80
+      },
+      "directional_auc_all": 0.5094375312800075,
+      "directional_auc_selected": 0.4122965641952984,
+      "down_accuracy": null,
+      "down_calls": 0,
+      "down_precision": null,
+      "hits": 395,
+      "mcc": 0.0,
+      "months": 40,
+      "p_up_auc": 0.5126558417589577,
+      "p_up_graph_auc": 0.5080937224555315,
+      "rank_bands": {
+        "1-5": {
+          "acc": 0.575,
+          "n": 200
+        },
+        "11-15": {
+          "acc": 0.585,
+          "n": 200
+        },
+        "16-20": {
+          "acc": 0.5866666666666667,
+          "n": 75
+        },
+        "6-10": {
+          "acc": 0.595,
+          "n": 200
+        }
+      },
+      "regime": {
+        "calm": {
+          "acc": 0.4881889763779528,
+          "n": 127
+        },
+        "mixed": {
+          "acc": 0.5988538681948424,
+          "n": 349
+        },
+        "stressed": {
+          "acc": 0.6231155778894473,
+          "n": 199
+        }
+      },
+      "selection_correctness_auc": 0.40151898734177216,
+      "up_accuracy": 0.5851851851851851,
+      "up_calls": 675,
+      "window": "validation_180_219"
+    }
+  },
+  "candidate_a": {
+    "description": "Hierarchical EB group overlay tau grid 10/30/50/100 weight 0-0.75 stability",
+    "best_tuning": {
+      "tau": 10,
+      "weight": 0.75,
+      "stability_penalty": false,
+      "split": "tuning",
+      "auc": 0.5829110979258887,
+      "auc_base": 0.5698776477752783,
+      "auc_delta": 0.0130334501506104,
+      "sel_acc": 0.6367880485527544
+    },
+    "validation_delta": {
+      "tau": 10,
+      "weight": 0.75,
+      "stability_penalty": false,
+      "split": "validation",
+      "auc": 0.512699190430715,
+      "auc_base": 0.5080937224555315,
+      "auc_delta": 0.0046054679751834,
+      "sel_acc": 0.5881481481481482
+    },
+    "ablation": [
+      {
+        "variant": "without_group",
+        "split": "tuning",
+        "auc": 0.5698776477752783,
+        "brier": 0.2437480043892565,
+        "sel_acc": 0.6237161531279178
+      },
+      {
+        "variant": "without_group",
+        "split": "validation",
+        "auc": 0.5080937224555315,
+        "brier": 0.2534976475717497,
+        "sel_acc": 0.5837037037037037
+      },
+      {
+        "variant": "without_group",
+        "split": "development",
+        "auc": 0.5475569221364887,
+        "brier": 0.2478642590501402,
+        "sel_acc": 0.6082474226804123
+      },
+      {
+        "variant": "without_group",
+        "split": "confirmation",
+        "auc": 0.5394071505521142,
+        "brier": 0.2446755339630556,
+        "sel_acc": 0.6295369211514393
+      },
+      {
+        "variant": "current_group_0.25",
+        "split": "tuning",
+        "auc": 0.5698776477752783,
+        "brier": 0.2437480043892565,
+        "sel_acc": 0.6237161531279178
+      },
+      {
+        "variant": "current_group_0.25",
+        "split": "validation",
+        "auc": 0.5080937224555315,
+        "brier": 0.2534976475717497,
+        "sel_acc": 0.5837037037037037
+      },
+      {
+        "variant": "current_group_0.25",
+        "split": "development",
+        "auc": 0.5475569221364887,
+        "brier": 0.2478642590501402,
+        "sel_acc": 0.6082474226804123
+      },
+      {
+        "variant": "current_group_0.25",
+        "split": "confirmation",
+        "auc": 0.5394071505521142,
+        "brier": 0.2446755339630556,
+        "sel_acc": 0.6295369211514393
+      },
+      {
+        "variant": "current_group_0.25_raw",
+        "split": "tuning",
+        "auc": 0.5794955087243013,
+        "brier": 0.2432026625900633,
+        "sel_acc": 0.6405228758169934
+      },
+      {
+        "variant": "current_group_0.25_raw",
+        "split": "validation",
+        "auc": 0.5094375312800075,
+        "brier": 0.2546176786853668,
+        "sel_acc": 0.5851851851851851
+      },
+      {
+        "variant": "current_group_0.25_raw",
+        "split": "development",
+        "auc": 0.553276138808273,
+        "brier": 0.2480220300609393,
+        "sel_acc": 0.6191294387170676
+      },
+      {
+        "variant": "current_group_0.25_raw",
+        "split": "confirmation",
+        "auc": 0.5379822582817129,
+        "brier": 0.2453684416713225,
+        "sel_acc": 0.6357947434292867
+      },
+      {
+        "variant": "hier_tau10_w0.75_stabFalse",
+        "split": "tuning",
+        "auc": 0.5829110979258887,
+        "brier": 0.243827359224063,
+        "sel_acc": 0.6367880485527544
+      },
+      {
+        "variant": "hier_tau10_w0.75_stabFalse",
+        "split": "validation",
+        "auc": 0.512699190430715,
+        "brier": 0.2577950803300713,
+        "sel_acc": 0.5881481481481482
+      },
+      {
+        "variant": "hier_tau10_w0.75_stabFalse",
+        "split": "development",
+        "auc": 0.5565620175715391,
+        "brier": 0.2497244670492776,
+        "sel_acc": 0.6179839633447881
+      },
+      {
+        "variant": "hier_tau10_w0.75_stabFalse",
+        "split": "confirmation",
+        "auc": 0.5394071505521142,
+        "brier": 0.2446755339630556,
+        "sel_acc": 0.6295369211514393
+      },
+      {
+        "variant": "hier_no_graph_tau10_w0.75",
+        "split": "tuning",
+        "auc": 0.5813815172586498,
+        "brier": 0.2440048602588028,
+        "sel_acc": 0.6377217553688141
+      },
+      {
+        "variant": "hier_no_graph_tau10_w0.75",
+        "split": "validation",
+        "auc": 0.5157230886848144,
+        "brier": 0.2571441319971249,
+        "sel_acc": 0.5881481481481482
+      },
+      {
+        "variant": "hier_no_graph_tau10_w0.75",
+        "split": "development",
+        "auc": 0.5569598699704217,
+        "brier": 0.2495522005584563,
+        "sel_acc": 0.6185567010309279
+      },
+      {
+        "variant": "hier_no_graph_tau10_w0.75",
+        "split": "confirmation",
+        "auc": 0.5370505655803932,
+        "brier": 0.2445569720820377,
+        "sel_acc": 0.6282853566958698
+      },
+      {
+        "variant": "hier_plus_residual_0.15",
+        "split": "tuning",
+        "auc": 0.5836431623475578,
+        "brier": NaN,
+        "sel_acc": NaN
+      },
+      {
+        "variant": "hier_plus_residual_0.15",
+        "split": "validation",
+        "auc": 0.5126519009706162,
+        "brier": NaN,
+        "sel_acc": NaN
+      }
+    ],
+    "conclusion": "Tuning AUC +0.013 over no-group, +0.003 over current; validation AUC +0.0046 over no-group, +0.0033 over current; selected accuracy tuning 0.636 vs baseline 0.640 (worse), validation 0.588 vs 0.585 (+0.003) but development acc 0.617 vs 0.619 (down). Small unstable gain, fails accuracy gate."
+  },
+  "candidate_b": {
+    "description": "Cross-sectional regularized logistic ranker with 19 features, balanced class weight",
+    "grid": [
+      {
+        "C": 0.1,
+        "penalty": "l2",
+        "auc_train": 0.6053482677321086,
+        "auc_val": 0.4891161993986356
+      },
+      {
+        "C": 0.5,
+        "penalty": "l2",
+        "auc_train": 0.6060618348991971,
+        "auc_val": 0.4884909276484396
+      },
+      {
+        "C": 1.0,
+        "penalty": "l2",
+        "auc_train": 0.6061849127854446,
+        "auc_val": 0.4882557939440591
+      }
+    ],
+    "best_tuning_auc": 0.6061,
+    "validation_auc": 0.4882,
+    "baseline_validation_auc": 0.5094,
+    "delta_validation": -0.021,
+    "ablation": [
+      {
+        "ablation": "full",
+        "cols": 19,
+        "auc_val": 0.4884909276484396,
+        "acc_val": 0.4859259259259259,
+        "dir_auc": 0.4884909276484396
+      },
+      {
+        "ablation": "no_group",
+        "cols": 16,
+        "auc_val": 0.4947672898804496,
+        "acc_val": 0.4385185185185185,
+        "dir_auc": 0.4947672898804496
+      },
+      {
+        "ablation": "no_graph",
+        "cols": 17,
+        "auc_val": 0.4935456454945623,
+        "acc_val": 0.5066666666666667,
+        "dir_auc": 0.4935456454945623
+      },
+      {
+        "ablation": "no_downside",
+        "cols": 13,
+        "auc_val": 0.4909250212474171,
+        "acc_val": 0.5007407407407407,
+        "dir_auc": 0.4909250212474171
+      },
+      {
+        "ablation": "only_base",
+        "cols": 3,
+        "auc_val": 0.5111478334202496,
+        "acc_val": 0.4296296296296296,
+        "dir_auc": 0.5111478334202496
+      }
+    ],
+    "conclusion": "Strong overfit: tuning +0.027, validation -0.021, accuracy validation 0.484 vs baseline 0.585 collapsed. Rejected: fails directional AUC and accuracy gates, not generalizable."
+  },
+  "candidate_c": {
+    "baseline_tuning_auc": 0.5413123319828859,
+    "baseline_validation_auc": 0.40151898734177216,
+    "best_C": 0.1,
+    "best_train_auc": 0.5783234258452917,
+    "best_val_auc": 0.439249547920434,
+    "improves_validation": true
+  },
+  "holdout": {
+    "holdout_consumed": true,
+    "holdout_origins": [
+      314,
+      315,
+      316
+    ],
+    "holdout_months": [
+      "2026-03",
+      "2026-04",
+      "2026-05"
+    ],
+    "origin": 313,
+    "baseline": {
+      "model": "Regime Adaptive baseline",
+      "origin": 313,
+      "horizons": [
+        {
+          "model": "baseline",
+          "horizon": 1,
+          "forecast_month": "2026-03",
+          "origin": 313,
+          "calls": 17,
+          "hits": 1,
+          "accuracy": 0.058823529411764705,
+          "dir_auc_selected": 1.0,
+          "sel_auc": 1.0,
+          "brier": 0.3565214167622333,
+          "bacc": 0.5,
+          "mcc": null,
+          "up_calls": 17,
+          "down_calls": 0,
+          "up_accuracy": 0.058823529411764705,
+          "down_accuracy": null,
+          "group_acc": {
+            "fixed_income": 0.2,
+            "global_equity": 0.0,
+            "us_sector": 0.0,
+            "thematic_equity": 0.0
+          },
+          "selected_ids": [
+            "X41",
+            "X34",
+            "X39",
+            "X24",
+            "X10",
+            "X9",
+            "X40",
+            "X11",
+            "X43",
+            "X30",
+            "X3",
+            "X38",
+            "X32",
+            "X37",
+            "X33",
+            "X36",
+            "X35"
+          ],
+          "directions": [
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up"
+          ],
+          "hits_misses": [
+            {
+              "indicator_id": "X41",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X34",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X39",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X24",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X10",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X9",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X40",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X11",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X43",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X30",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X3",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X38",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X32",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X37",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X33",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X36",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X35",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            }
+          ]
+        },
+        {
+          "model": "baseline",
+          "horizon": 2,
+          "forecast_month": "2026-04",
+          "origin": 313,
+          "calls": 17,
+          "hits": 15,
+          "accuracy": 0.8823529411764706,
+          "dir_auc_selected": 1.0,
+          "sel_auc": 1.0,
+          "brier": 0.1537542576294703,
+          "bacc": 0.5,
+          "mcc": null,
+          "up_calls": 17,
+          "down_calls": 0,
+          "up_accuracy": 0.8823529411764706,
+          "down_accuracy": null,
+          "group_acc": {
+            "fixed_income": 1.0,
+            "global_equity": 1.0,
+            "us_sector": 1.0,
+            "thematic_equity": 0.75,
+            "commodity": 0.0
+          },
+          "selected_ids": [
+            "X41",
+            "X34",
+            "X24",
+            "X39",
+            "X10",
+            "X30",
+            "X11",
+            "X9",
+            "X43",
+            "X40",
+            "X36",
+            "X32",
+            "X38",
+            "X3",
+            "X18",
+            "X37",
+            "X33"
+          ],
+          "directions": [
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up"
+          ],
+          "hits_misses": [
+            {
+              "indicator_id": "X41",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X34",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X24",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X39",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X10",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X30",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X11",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X9",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X43",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X40",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X36",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X32",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X38",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X3",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X18",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X37",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X33",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            }
+          ]
+        },
+        {
+          "model": "baseline",
+          "horizon": 3,
+          "forecast_month": "2026-05",
+          "origin": 313,
+          "calls": 17,
+          "hits": 13,
+          "accuracy": 0.7647058823529411,
+          "dir_auc_selected": 0.6153846153846154,
+          "sel_auc": 0.5961538461538461,
+          "brier": 0.18389454382643944,
+          "bacc": 0.5,
+          "mcc": null,
+          "up_calls": 17,
+          "down_calls": 0,
+          "up_accuracy": 0.7647058823529411,
+          "down_accuracy": null,
+          "group_acc": {
+            "fixed_income": 1.0,
+            "global_equity": 0.8,
+            "us_sector": 0.0,
+            "thematic_equity": 1.0,
+            "commodity": 0.0
+          },
+          "selected_ids": [
+            "X41",
+            "X34",
+            "X24",
+            "X39",
+            "X10",
+            "X9",
+            "X30",
+            "X43",
+            "X11",
+            "X40",
+            "X38",
+            "X32",
+            "X3",
+            "X36",
+            "X18",
+            "X33",
+            "X37"
+          ],
+          "directions": [
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up"
+          ],
+          "hits_misses": [
+            {
+              "indicator_id": "X41",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X34",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X24",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X39",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X10",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X9",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X30",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X43",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X11",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X40",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X38",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X32",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X3",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X36",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X18",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X33",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X37",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            }
+          ]
+        }
+      ],
+      "aggregate": {
+        "total_calls": 51,
+        "total_hits": 29,
+        "overall_accuracy": 0.5686274509803921
+      }
+    },
+    "challenger": {
+      "model": "Challenger hierarchical EB tau10 w0.75",
+      "origin": 313,
+      "horizons": [
+        {
+          "model": "challenger_hier_tau10_w0.75",
+          "horizon": 1,
+          "forecast_month": "2026-03",
+          "origin": 313,
+          "calls": 17,
+          "hits": 1,
+          "accuracy": 0.058823529411764705,
+          "dir_auc_selected": 1.0,
+          "sel_auc": 1.0,
+          "brier": 0.3850198888835067,
+          "bacc": 0.5,
+          "mcc": null,
+          "up_calls": 17,
+          "down_calls": 0,
+          "up_accuracy": 0.058823529411764705,
+          "down_accuracy": null,
+          "group_acc": {
+            "fixed_income": 0.16666666666666666,
+            "global_equity": 0.0,
+            "us_sector": 0.0,
+            "thematic_equity": 0.0
+          },
+          "selected_ids": [
+            "X41",
+            "X34",
+            "X39",
+            "X24",
+            "X10",
+            "X9",
+            "X40",
+            "X11",
+            "X43",
+            "X3",
+            "X38",
+            "X32",
+            "X37",
+            "X33",
+            "X36",
+            "X42",
+            "X35"
+          ],
+          "directions": [
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up"
+          ],
+          "hits_misses": [
+            {
+              "indicator_id": "X41",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X34",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X39",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X24",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X10",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X9",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X40",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X11",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X43",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X3",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X38",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X32",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X37",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X33",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X36",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X42",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X35",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            }
+          ]
+        },
+        {
+          "model": "challenger_hier_tau10_w0.75",
+          "horizon": 2,
+          "forecast_month": "2026-04",
+          "origin": 313,
+          "calls": 17,
+          "hits": 16,
+          "accuracy": 0.9411764705882353,
+          "dir_auc_selected": 0.5,
+          "sel_auc": 0.5,
+          "brier": 0.1324510300856066,
+          "bacc": 0.5,
+          "mcc": null,
+          "up_calls": 17,
+          "down_calls": 0,
+          "up_accuracy": 0.9411764705882353,
+          "down_accuracy": null,
+          "group_acc": {
+            "fixed_income": 0.8333333333333334,
+            "global_equity": 1.0,
+            "us_sector": 1.0,
+            "thematic_equity": 1.0
+          },
+          "selected_ids": [
+            "X41",
+            "X34",
+            "X24",
+            "X39",
+            "X10",
+            "X30",
+            "X11",
+            "X9",
+            "X43",
+            "X40",
+            "X36",
+            "X32",
+            "X38",
+            "X37",
+            "X33",
+            "X42",
+            "X35"
+          ],
+          "directions": [
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up"
+          ],
+          "hits_misses": [
+            {
+              "indicator_id": "X41",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X34",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X24",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X39",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X10",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X30",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X11",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X9",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X43",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X40",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X36",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X32",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X38",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X37",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X33",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X42",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X35",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            }
+          ]
+        },
+        {
+          "model": "challenger_hier_tau10_w0.75",
+          "horizon": 3,
+          "forecast_month": "2026-05",
+          "origin": 313,
+          "calls": 17,
+          "hits": 12,
+          "accuracy": 0.7058823529411765,
+          "dir_auc_selected": 0.8166666666666668,
+          "sel_auc": 0.8166666666666667,
+          "brier": 0.18917675902676123,
+          "bacc": 0.5,
+          "mcc": null,
+          "up_calls": 17,
+          "down_calls": 0,
+          "up_accuracy": 0.7058823529411765,
+          "down_accuracy": null,
+          "group_acc": {
+            "fixed_income": 1.0,
+            "global_equity": 0.6666666666666666,
+            "us_sector": 0.0,
+            "thematic_equity": 1.0,
+            "commodity": 0.0
+          },
+          "selected_ids": [
+            "X41",
+            "X34",
+            "X24",
+            "X39",
+            "X10",
+            "X9",
+            "X30",
+            "X43",
+            "X40",
+            "X38",
+            "X32",
+            "X36",
+            "X18",
+            "X33",
+            "X37",
+            "X42",
+            "X35"
+          ],
+          "directions": [
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up",
+            "Up"
+          ],
+          "hits_misses": [
+            {
+              "indicator_id": "X41",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X34",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X24",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X39",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X10",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X9",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X30",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X43",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X40",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X38",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X32",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X36",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X18",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            },
+            {
+              "indicator_id": "X33",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X37",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X42",
+              "predicted_direction": "Up",
+              "y_true_eval": 1.0,
+              "correct": 1
+            },
+            {
+              "indicator_id": "X35",
+              "predicted_direction": "Up",
+              "y_true_eval": 0.0,
+              "correct": 0
+            }
+          ]
+        }
+      ],
+      "aggregate": {
+        "total_calls": 51,
+        "total_hits": 29,
+        "overall_accuracy": 0.5686274509803921
+      }
+    },
+    "hit_delta_per_month": [
+      {
+        "month": "2026-03",
+        "delta": 0
+      },
+      {
+        "month": "2026-04",
+        "delta": 1
+      },
+      {
+        "month": "2026-05",
+        "delta": -1
+      }
+    ],
+    "acceptance_criteria": {
+      "cap_15_20_respected": true,
+      "no_leakage_assertion": "inputs used fit_through origin -2 -(horizon-1); holdout not used in fitting",
+      "directional_auc_improved": null,
+      "selection_auc_improved": null,
+      "accuracy_not_declined": true
+    }
+  },
+  "overall_development_conclusion": "No candidate passes all gates. Candidate A shows tiny AUC lift but accuracy not improving and unstable across windows. Candidate B overfits. Candidate C improves correctness AUC from 0.401 to 0.439 but absolute remains <0.5 and corrected score degrades validation to 0.39. Hence no promotion.",
+  "leakage_assertions": "All training used origins <=313, feature fit_through <= origin-2-(horizon-1), no 314-316 rows in training; assertions would fail if holdout entered."
+}

@@ -12,14 +12,13 @@ tmp/
 .DS_Store
 *.log
 
-# Keep only the registered active and locked-evaluation artifacts.
+# Local generated runs and reproducible research caches are not delivery inputs.
+runs/
+research/**/cache/
+
+# Keep only the registered production and audit artifacts.
 artifacts/active/*
 !artifacts/active/uptrend_predictions.parquet
+!artifacts/active/regime_adaptive_predictions.parquet
 artifacts/audit/*
 !artifacts/audit/locked_evaluation.parquet
-
-# Keep exactly one artifact and one metrics file per reference model.
-research/reference_models/artifacts/*
-!research/reference_models/artifacts/*.parquet
-research/reference_models/metrics/*
-!research/reference_models/metrics/*.csv

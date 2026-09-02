@@ -1,0 +1,90 @@
+{
+  "experiment": "February Holdout Regime Adaptive Bounded Challengers",
+  "origin": 313,
+  "holdout_origins": [314, 315, 316],
+  "holdout_months": ["2026-03", "2026-04", "2026-05"],
+  "holdout_consumed": true,
+  "do_not_retune_after_open": true,
+  "development_origins": "120-219 (tuning 120-179 early, validation 180-219 late), confirmation 220-266 descriptive",
+  "candidates_tested": [
+    {
+      "id": "candidate_a_hierarchical_eb",
+      "description": "Empirical-Bayes group prior with tau shrunken toward market, stability penalty across 12/24/48m, residual and horizon-specific weights",
+      "grid": "tau=[10,30,50,100], weight=[0,0.1,0.25,0.35,0.5,0.75], stability=[False,True]",
+      "selection_rule": "best tuning AUC delta, verify on validation",
+      "best_tuning": {"tau": 10, "weight": 0.75, "stability": false, "auc_delta": 0.01303},
+      "validation_auc_delta_vs_no_group": 0.0046,
+      "validation_auc_delta_vs_current": 0.0033,
+      "tuning_sel_acc": 0.6368,
+      "baseline_tuning_sel_acc": 0.6405,
+      "validation_sel_acc": 0.5881,
+      "baseline_validation_sel_acc": 0.5852,
+      "development_sel_acc": 0.618,
+      "baseline_development_sel_acc": 0.6191,
+      "status": "rejected: selected accuracy not improved (tuning down, development down), small unstable AUC gain, fails incremental value gate when cap-matched"
+    },
+    {
+      "id": "candidate_b_cross_sectional_ranker",
+      "description": "Regularized logistic ranker on 19 Regime Adaptive signals, balanced class weight, C grid 0.1-1.0",
+      "best_tuning_auc": 0.6061,
+      "baseline_tuning_auc": 0.5795,
+      "validation_auc": 0.4882,
+      "baseline_validation_auc": 0.5094,
+      "delta_validation": -0.021,
+      "validation_accuracy": 0.484,
+      "baseline_validation_accuracy": 0.585,
+      "status": "rejected: strong overfit, validation directional AUC and selected accuracy collapsed, fails both AUC and accuracy gates"
+    },
+    {
+      "id": "candidate_c_selection_quality_correction",
+      "description": "Logistic correction to selection_score targeting correctness, features non-circular",
+      "baseline_tuning_sel_auc": 0.5413,
+      "baseline_validation_sel_auc": 0.4015,
+      "best_train_auc": 0.5783,
+      "best_val_auc": 0.4392,
+      "improves_validation": true,
+      "corrected_score_validation_auc_alpha0.1": 0.3947,
+      "status": "rejected: though model AUC exceeds baseline (0.439 > 0.401), absolute remains <0.5 and corrected selection_score AUC degrades to 0.39, no ranking benefit, fails selection AUC gate"
+    }
+  ],
+  "ablations": {
+    "group_overlay": "without_group AUC tuning 0.5699 vs current 0.5795 (+0.0096) vs hier 0.5829 (+0.013); validation without 0.5081 vs current 0.5094 (+0.0013) vs hier 0.5127 (+0.0046)",
+    "correlation_graph": "hier without graph tuning 0.5813 vs hier with graph 0.5829, validation 0.5157 vs 0.5127, minimal incremental",
+    "downside_signals": "hier with downside not separately tested due to integration, but p_down already in baseline risk_adjusted; adding downside to hier did not change caps (still all Up)"
+  },
+  "final_holdout": {
+    "baseline": {"total_hits": 29, "total_calls": 51, "overall_accuracy": 0.5686, "per_month": [{"month": "2026-03", "hits": 1, "calls": 17, "acc": 0.0588}, {"month": "2026-04", "hits": 15, "calls": 17, "acc": 0.8823}, {"month": "2026-05", "hits": 13, "calls": 17, "acc": 0.7647}]},
+    "challenger_hier": {"total_hits": 29, "total_calls": 51, "overall_accuracy": 0.5686, "per_month": [{"month": "2026-03", "hits": 1, "calls": 17, "acc": 0.0588}, {"month": "2026-04", "hits": 16, "calls": 17, "acc": 0.9411}, {"month": "2026-05", "hits": 12, "calls": 17, "acc": 0.7058}], "delta_per_month": [0, 1, -1]},
+    "acceptance": {
+      "cap_15_20_respected": true,
+      "no_leakage": true,
+      "directional_auc_improved": false,
+      "selection_auc_improved": false,
+      "selected_accuracy_improved_or_not_declined": true,
+      "group_ablation_incremental": false,
+      "not_single_indicator": true,
+      "down_calls_meaningful": false,
+      "overall": false
+    },
+    "decision": "reject challenger, keep Regime Adaptive unchanged"
+  },
+  "files_changed": [
+    "scripts/diagnose_regime_adaptive.py (new, isolated)",
+    "scripts/candidate_a_hierarchical.py (new, isolated)",
+    "scripts/candidate_b_ranker.py (new, isolated)",
+    "scripts/candidate_c_selection_correction.py (new, isolated)",
+    "scripts/final_holdout_report.py (new, isolated)",
+    "research/february_holdout_experiment/* (new directory, isolated, does not modify artifacts/active)"
+  ],
+  "commands_run": [
+    "python scripts/diagnose_regime_adaptive.py",
+    "python scripts/candidate_a_hierarchical.py",
+    "python scripts/candidate_b_ranker.py",
+    "python scripts/candidate_c_selection_correction.py",
+    "python scripts/final_holdout_report.py (origin 313 horizons 1-3, frozen baseline vs hier challenger)",
+    "python -m pytest tests/unit/test_regime_adaptive.py -q",
+    "python -m ruff check src/forecast_select --quiet"
+  ],
+  "active_model_unchanged": true,
+  "next_step_recommendation": "Do not expand caps or tune on March-May. The strongest signal is regime flip in March (10% Up rate) missed by both 12m group prior and calm regime_stress 0.30. Next bounded step: causal forward breadth already drives caps but failed to anticipate March crash. Test a small causal leading-indicator stress that predicts extreme breadth reversals (e.g., 5% tail), or a guarded Down abstention that triggers on forecasted breadth <0.4 or group disagreement, evaluated with same frozen-origin protocol. Keep thresholds selected only on 120-219."
+}

@@ -19,10 +19,12 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
   "pytest>=8,<9",
+  "ruff>=0.15,<0.16",
 ]
 
 [project.scripts]
 forecast-select = "forecast_select.cli:main"
+forecast-select-research = "forecast_select.research_cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -31,3 +33,8 @@ where = ["src"]
 testpaths = ["tests"]
 pythonpath = ["src"]
 addopts = "-q"
+norecursedirs = ["archive", ".git", ".pytest_cache", ".ruff_cache"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 88

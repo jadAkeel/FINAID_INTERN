@@ -1,0 +1,156 @@
+{
+  "accepted": false,
+  "active_model_changed": false,
+  "adaptive": {
+    "baseline": {
+      "confirmation_descriptive": {
+        "accuracy": 0.6357947434292867,
+        "calls": 799,
+        "hits": 508
+      },
+      "early_tuning": {
+        "accuracy": 0.6340579710144928,
+        "calls": 552,
+        "hits": 350
+      },
+      "late_tuning": {
+        "accuracy": 0.6473988439306358,
+        "calls": 519,
+        "hits": 336
+      },
+      "tuning": {
+        "accuracy": 0.6405228758169934,
+        "calls": 1071,
+        "hits": 686
+      },
+      "validation": {
+        "accuracy": 0.5851851851851851,
+        "calls": 675,
+        "hits": 395
+      }
+    },
+    "candidate": {
+      "confirmation_descriptive": {
+        "accuracy": 0.6332916145181476,
+        "calls": 799,
+        "hits": 506
+      },
+      "early_tuning": {
+        "accuracy": 0.6340579710144928,
+        "calls": 552,
+        "hits": 350
+      },
+      "late_tuning": {
+        "accuracy": 0.6435452793834296,
+        "calls": 519,
+        "hits": 334
+      },
+      "tuning": {
+        "accuracy": 0.6386554621848739,
+        "calls": 1071,
+        "hits": 684
+      },
+      "validation": {
+        "accuracy": 0.5866666666666667,
+        "calls": 675,
+        "hits": 396
+      }
+    },
+    "gate_passed": false
+  },
+  "base": {
+    "baseline": {
+      "confirmation_descriptive": {
+        "accuracy": 0.6184397163120567,
+        "calls": 705,
+        "hits": 436
+      },
+      "early_tuning": {
+        "accuracy": 0.64,
+        "calls": 450,
+        "hits": 288
+      },
+      "late_tuning": {
+        "accuracy": 0.6466666666666666,
+        "calls": 450,
+        "hits": 291
+      },
+      "tuning": {
+        "accuracy": 0.6433333333333333,
+        "calls": 900,
+        "hits": 579
+      },
+      "validation": {
+        "accuracy": 0.5783333333333334,
+        "calls": 600,
+        "hits": 347
+      }
+    },
+    "candidate": {
+      "confirmation_descriptive": {
+        "accuracy": 0.6198581560283688,
+        "calls": 705,
+        "hits": 437
+      },
+      "early_tuning": {
+        "accuracy": 0.64,
+        "calls": 450,
+        "hits": 288
+      },
+      "late_tuning": {
+        "accuracy": 0.6444444444444445,
+        "calls": 450,
+        "hits": 290
+      },
+      "tuning": {
+        "accuracy": 0.6422222222222222,
+        "calls": 900,
+        "hits": 578
+      },
+      "validation": {
+        "accuracy": 0.5783333333333334,
+        "calls": 600,
+        "hits": 347
+      }
+    },
+    "gate_passed": false
+  },
+  "cache_status": "exact_build",
+  "confirmation_used_for_selection": false,
+  "experiment_id": "phase2_feature_trend_persistence",
+  "experiment_key": "775f6bf82102161c4c3042390d3b2081c5633a9aa6dc47ac759369f038d7ca24",
+  "experiment_release": "top15_feature_family_ablation_v1",
+  "family": "trend_persistence",
+  "feature_columns": [
+    "signed_run_length",
+    "momentum_acceleration_3"
+  ],
+  "locked_evaluation_read": false,
+  "locked_origins": [
+    268,
+    315
+  ],
+  "paired_validation": {
+    "bootstrap_p10": 0.0,
+    "bootstrap_p90": 0.05,
+    "mean_monthly_hit_delta": 0.025,
+    "months": 40,
+    "total_hit_delta": 1
+  },
+  "rejection_reasons": [
+    "base_top15_temporal_or_validation_gate",
+    "adaptive_temporal_or_validation_gate"
+  ],
+  "runtime_seconds": 261.16100239998195,
+  "selected_on": "tuning_and_validation_without_confirmation_or_locked",
+  "validation_bootstrap": {
+    "accuracy": 0.5866666666666667,
+    "bootstrap_p10": 0.520967331011352,
+    "bootstrap_p90": 0.639124559253526,
+    "calls": 675,
+    "down_calls": 0,
+    "hits": 396,
+    "months": 40,
+    "up_calls": 675
+  }
+}
