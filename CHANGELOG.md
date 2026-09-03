@@ -12,6 +12,8 @@
   quarantined results remain discoverable without crowding the main README;
 - consolidated delivery instructions around `python -m forecast_select` and
   restored package, test, lint, and Git ignore configuration;
+- updated GitHub Actions to its Node 24-compatible releases and made the
+  correlation graph compatible with read-only arrays returned by pandas 3;
 - excluded generated run folders, Python caches, and reproducible research
   caches from the delivery repository.
 

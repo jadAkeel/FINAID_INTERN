@@ -50,9 +50,13 @@ def reliability_weighted_correlation(
     reliability = (
         (pair_counts - minimum_pairs + 1) / denominator
     ).clip(0.0, 1.0)
-    result = correlation * reliability
-    np.fill_diagonal(result.values, 0.0)
-    return result
+    weighted = (correlation * reliability).to_numpy(dtype=float, copy=True)
+    np.fill_diagonal(weighted, 0.0)
+    return pd.DataFrame(
+        weighted,
+        index=correlation.index,
+        columns=correlation.columns,
+    )
 
 
 def select_top_indicators(
