@@ -1,0 +1,2 @@
+statistic,status,reason
+selection_lift_over_all_up,unavailable,registered null permutations were not stored; independent row shuffling is invalid

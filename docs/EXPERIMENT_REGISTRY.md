@@ -297,15 +297,27 @@ rebuild from overwriting the public active-model report.
 
 ### 3.5 Signal Ceiling Audit (`signal_ceiling_audit`)
 - **Hypothesis**: Measure the empirical upper bound and date-block bootstrap distribution of active model accuracy on non-locked OOF predictions.
-- **Status**: `active_research` (diagnostic implementation; result not materialized)
-- **Code Paths**: `src/forecast_select/signal_ceiling_audit.py`
+- **Status**: `active_research` — **materialized 2026-09-22**; classification `inconclusive` for any stable > 65% claim.
+- **Code Paths**: `src/forecast_select/signal_ceiling_audit.py` (per-window evidence is now computed from the audited rows; the earlier hardcoded 381/635 literals were removed)
 - **Config Paths**: N/A
-- **Artifact Paths**: `research/signal_ceiling_audit/metrics/window_baselines.csv`, `rank_and_coverage.csv`, `temporal_drift.csv`, `block_bootstrap.csv` (**planned outputs; absent**)
-- **Report Paths**: `research/signal_ceiling_audit/metrics/summary.json` (**planned output; absent**)
-- **Observed Metrics**: Unknown; the output directory is not materialized. The code defines a six-month, 5,000-replicate date-block bootstrap, but generated values are not claimed as observed evidence.
-- **Rejection / Decision Reason**: No materialized audit decision. The implementation's declared classification is inconclusive unless and until its non-locked output is generated and reviewed.
-- **Leakage & Holdout Warning**: Evaluates only origins <= 266; locked evaluation strictly unread.
-- **Reproduction Command**: `python -m forecast_select.signal_ceiling_audit` (writes non-locked diagnostic outputs); `python -m pytest tests/unit/test_signal_ceiling_audit.py` verifies safeguards.
+- **Artifact Paths**: `research/signal_ceiling_audit/metrics/window_baselines.csv`, `rank_and_coverage.csv`, `temporal_drift.csv`, `block_bootstrap.csv`
+- **Report Paths**: `research/signal_ceiling_audit/README.md`, `research/signal_ceiling_audit/metrics/summary.json`
+- **Observed Metrics**: 2,545 selected calls over 147 non-locked months, pooled accuracy 62.44% (Tuning 686/1071 = 64.05%, Validation 395/675 = 58.52%, Confirmation 508/799 = 63.58%). Six-month block bootstrap, 5,000 replicates: median 62.60%, p10–p90 **59.96%–65.11%**, p95 65.81%, P(≥ 62%) = 61.6%, **P(≥ 65%) = 11.3%**. Ranks 1–2 hit 66–69%, ranks 3–15 hit 54–65%, ranks 16–19 hit 59–62%; a fixed 15-call policy on the same rows scores 63.13% versus the delivered 62.44%.
+- **Rejection / Decision Reason**: Not a promotion decision. The audit's central finding is that accuracy tracks the realized Up-prevalence of the selected set year by year almost exactly (2015: 46.7% / 46.7%; 2017: 74.8% / 74.8%; 2019: 76.2% / 76.7%; Jan–Apr 2022: 30.2% / 30.2%), because 2,534 of 2,545 calls are Up. Year-to-year accuracy swings (rolling-12 range 42.5%–76.2%) are market breadth, not model skill.
+- **Leakage & Holdout Warning**: Evaluates only origins ≤ 266; locked evaluation strictly unread. Learning curves, null-signal tests, error overlap, and oracle bounds are recorded as unavailable because their prerequisite artifacts were not pre-registered.
+- **Reproduction Command**: `python -m forecast_select.signal_ceiling_audit`; `python -m pytest tests/unit/test_signal_ceiling_audit.py`.
+
+### 3.6 Prior-Only Selector Diagnostic (`prior_only_selector`)
+- **Hypothesis**: Quantify how much of the active model's accuracy a zero-feature rule — top-15 by causal trailing Up-rate, all called Up — already explains, across every window length, with nothing selected.
+- **Status**: `active_research` (diagnostic; not a candidate)
+- **Code Paths**: `research/prior_only_selector/prior_only_diagnostic.py`
+- **Config Paths**: N/A (window lengths 24/36/48/60/96/all, k ∈ {15, 20}, modes `up_only` and `majority` are all reported)
+- **Artifact Paths**: `research/prior_only_selector/metrics/prior_only_windows.csv`
+- **Report Paths**: `research/prior_only_selector/README.md`
+- **Observed Metrics**: Production 64.05% / 58.52% / 63.58% (Tuning / Validation / Confirmation). Best zero-feature rule per window: N=48 63.33% on Tuning, N=60 60.33% on Validation, N=96 62.41% on Confirmation — a different window wins each time, spread ≈ ±2 pp. Fixed N=48: 63.33% / 57.67% / 61.70%. Majority-direction (Down allowed) is worse in every window; k=20 is below k=15 everywhere; excluding X16 changes nothing.
+- **Rejection / Decision Reason**: Not a promotion decision. Production's edge over the best zero-feature rule is about one point on Tuning and Confirmation and negative against N=60 on Validation. That one point sits inside the ±2 pp window-to-window spread, which is the same magnitude as every challenger improvement recorded in Section 2. Promoting the N=60 rule for its Validation win would be the exact window-picking the table exposes.
+- **Leakage & Holdout Warning**: Labels used only through `t-2`; no origin above 266 read; the loader asserts that no locked row is loaded. Confirms `research/accuracy_feasibility/key_results.csv` (rolling 60-month Up-rate 62.40% Discovery, 60.69% Confirmation) and the local-logistic constant-`p_up` ablation.
+- **Reproduction Command**: `python research/prior_only_selector/prior_only_diagnostic.py`.
 
 ---
 

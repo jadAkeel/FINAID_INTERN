@@ -41,6 +41,18 @@ def _metric(frame: pd.DataFrame, name: str, group: str = "all") -> dict:
             "avg_monthly_calls": calls / frame["origin_position"].nunique() if calls and frame["origin_position"].nunique() else None}
 
 
+def _window_evidence(selected: pd.DataFrame) -> dict:
+    """Per-window hits and calls computed from the audited rows, never typed in."""
+    windows = {"tuning": (120, 179), "validation": (180, 219), "confirmation": (220, 266)}
+    out = {}
+    for name, (lo, hi) in windows.items():
+        rows = selected.loc[selected["origin_position"].between(lo, hi)]
+        calls = int(len(rows))
+        hits = int(rows["hit"].sum())
+        out[name] = {"hits": hits, "calls": calls, "accuracy": hits / calls if calls else None}
+    return out
+
+
 def run() -> dict:
     df = _load_nonlocked_predictions()
     df["hit"] = (df["predicted_direction"].eq("Up") == df["y_true"].eq(1)).astype(int)
@@ -104,7 +116,7 @@ def run() -> dict:
     pd.DataFrame([{"block_months": block, "seed": BOOTSTRAP_SEED, "replicates": BOOTSTRAP_REPLICATES, "mean_accuracy": float(np.mean(vals)) if len(vals) else None, "median": float(np.median(b)) if len(b) else None, "p10": float(np.quantile(b,.1)) if len(b) else None, "p90": float(np.quantile(b,.9)) if len(b) else None, "p95": float(np.quantile(b,.95)) if len(b) else None, "prob_ge_62": float(np.mean(b>=.62)) if len(b) else None, "prob_ge_65": float(np.mean(b>=.65)) if len(b) else None, "interpretation": "conditional historical block bootstrap; not a future guarantee"}]).to_csv(outm / "block_bootstrap.csv", index=False)
 
     pd.DataFrame([{"statistic": "selection_lift_over_all_up", "status": "unavailable", "reason": "registered null permutations were not stored; independent row shuffling is invalid"}]).to_csv(outm / "null_signal_tests.csv", index=False)
-    summary = {"audit": "signal_ceiling_audit", "usable_months": int(selected.origin_position.nunique()), "nominal_prediction_rows": int(len(df)), "selected_calls": int(len(selected)), "max_nonlocked_origin": MAX_NONLOCKED_ORIGIN, "locked_evaluation_read": False, "active_model_changed": False, "locked_origins": [268, 315], "reference_accuracy": float(selected.hit.mean()), "classification": "inconclusive", "classification_reason": "Available non-locked evidence does not support a stable >65% claim; null tests and multiplicity-adjusted inference are unavailable.", "evidence": {"validation": {"hits": 381, "calls": 635, "accuracy": .60}, "tuning": {"hits": 630, "calls": 965, "accuracy": .6528497409}, "bootstrap": "see block_bootstrap.csv"}}
+    summary = {"audit": "signal_ceiling_audit", "usable_months": int(selected.origin_position.nunique()), "nominal_prediction_rows": int(len(df)), "selected_calls": int(len(selected)), "max_nonlocked_origin": MAX_NONLOCKED_ORIGIN, "locked_evaluation_read": False, "active_model_changed": False, "locked_origins": [268, 315], "reference_accuracy": float(selected.hit.mean()), "classification": "inconclusive", "classification_reason": "Available non-locked evidence does not support a stable >65% claim; null tests and multiplicity-adjusted inference are unavailable.", "evidence": {**_window_evidence(selected), "bootstrap": "see block_bootstrap.csv"}}
     (outm / "summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
     return summary
 

@@ -1,0 +1,34 @@
+{
+  "audit": "signal_ceiling_audit",
+  "usable_months": 147,
+  "nominal_prediction_rows": 6349,
+  "selected_calls": 2545,
+  "max_nonlocked_origin": 266,
+  "locked_evaluation_read": false,
+  "active_model_changed": false,
+  "locked_origins": [
+    268,
+    315
+  ],
+  "reference_accuracy": 0.6243614931237721,
+  "classification": "inconclusive",
+  "classification_reason": "Available non-locked evidence does not support a stable >65% claim; null tests and multiplicity-adjusted inference are unavailable.",
+  "evidence": {
+    "tuning": {
+      "hits": 686,
+      "calls": 1071,
+      "accuracy": 0.6405228758169934
+    },
+    "validation": {
+      "hits": 395,
+      "calls": 675,
+      "accuracy": 0.5851851851851851
+    },
+    "confirmation": {
+      "hits": 508,
+      "calls": 799,
+      "accuracy": 0.6357947434292867
+    },
+    "bootstrap": "see block_bootstrap.csv"
+  }
+}

@@ -1,0 +1,3 @@
+oracle,status,reason
+candidate_family_hindsight,unavailable,candidate outcomes are not available in a common matched matrix
+causal_meta_selector,unavailable,no pre-registered walk-forward meta-selector artifact

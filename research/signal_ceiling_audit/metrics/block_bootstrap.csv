@@ -1,0 +1,2 @@
+block_months,seed,replicates,mean_accuracy,median,p10,p90,p95,prob_ge_62,prob_ge_65,interpretation
+6,20260807,5000,0.6226232598302479,0.6259863302045965,0.5995563488553316,0.6510553607407875,0.6581187957639195,0.6158,0.113,conditional historical block bootstrap; not a future guarantee
