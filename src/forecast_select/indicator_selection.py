@@ -33,6 +33,17 @@ def propagate_correlation_graph(
     return np.clip(1.0 / (1.0 + np.exp(-blended_logit)), 1e-6, 1.0 - 1e-6)
 
 
+def without_self_loops(graph: pd.DataFrame) -> pd.DataFrame:
+    """Return the graph with a zeroed diagonal.
+
+    `DataFrame.values` can hand back a read-only view, so filling the diagonal
+    through it raises on newer pandas/numpy. Copy into an owned array instead.
+    """
+    values = graph.to_numpy(dtype=float, copy=True)
+    np.fill_diagonal(values, 0.0)
+    return pd.DataFrame(values, index=graph.index, columns=graph.columns)
+
+
 def reliability_weighted_correlation(
     changes: pd.DataFrame,
     minimum_pairs: int,

@@ -21,6 +21,7 @@ from .indicator_selection import (
     propagate_correlation_graph,
     select_top_indicators,
     summarize_selected_predictions,
+    without_self_loops,
 )
 from .targets import build_targets
 from .validation import (
@@ -181,10 +182,9 @@ def build_uptrend_predictions(
 
     graph_config = model_settings["graph"]
     indicators = [column for column in frame.columns if column.startswith("X")]
-    graph = frame[indicators].diff().iloc[
+    graph = without_self_loops(frame[indicators].diff().iloc[
         :int(graph_config["estimation_end"])
-    ].corr(min_periods=int(graph_config["minimum_pairs"]))
-    np.fill_diagonal(graph.values, 0.0)
+    ].corr(min_periods=int(graph_config["minimum_pairs"])))
     graph_parts = []
     for origin, group in logistic.groupby("origin_position", sort=True):
         current = group.copy()

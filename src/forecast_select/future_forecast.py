@@ -10,6 +10,7 @@ from .features import build_feature_panel
 from .indicator_selection import (
     propagate_correlation_graph,
     select_top_indicators,
+    without_self_loops,
 )
 from .io import atomic_write_json, load_workbook, sha256_file
 from .uptrend_model import fit_uptrend_model, predict_uptrend_probability
@@ -106,10 +107,9 @@ def build_direct_monthly_forecasts(
     )
     graph_settings = settings["graph"]
     indicators = [column for column in frame.columns if column.startswith("X")]
-    graph = frame[indicators].diff().iloc[
+    graph = without_self_loops(frame[indicators].diff().iloc[
         :int(graph_settings["estimation_end"])
-    ].corr(min_periods=int(graph_settings["minimum_pairs"]))
-    np.fill_diagonal(graph.values, 0.0)
+    ].corr(min_periods=int(graph_settings["minimum_pairs"])))
 
     model_settings = settings["model"]
     selection_settings = settings["selection"]

@@ -25,7 +25,11 @@ import pandas as pd
 import yaml
 
 from .features import build_feature_panel
-from .indicator_selection import propagate_correlation_graph, select_top_indicators
+from .indicator_selection import (
+    propagate_correlation_graph,
+    select_top_indicators,
+    without_self_loops,
+)
 from .io import load_workbook
 from .local_logistic import (
     fit_interaction_logistic_model,
@@ -135,10 +139,9 @@ def prepare_experiment_panel(root: Path = ROOT) -> ExperimentPanel:
 
     graph_config = settings["graph"]
     indicators = [column for column in frame.columns if column.startswith("X")]
-    graph = frame[indicators].diff().iloc[
+    graph = without_self_loops(frame[indicators].diff().iloc[
         :int(graph_config["estimation_end"])
-    ].corr(min_periods=int(graph_config["minimum_pairs"]))
-    np.fill_diagonal(graph.values, 0.0)
+    ].corr(min_periods=int(graph_config["minimum_pairs"])))
     return ExperimentPanel(
         frame=frame,
         targets=targets,
