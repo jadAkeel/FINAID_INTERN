@@ -1,6 +1,6 @@
 # Experiment Registry
 
-Last updated: 2026-08-30  
+Last updated: 2026-09-21
 Authoritative Negative Results Companion: [`docs/SELECTION_GROUP_FAILED_REGISTRY.md`](SELECTION_GROUP_FAILED_REGISTRY.md)  
 Quarantine Record: [`archive/research/agent_selection_group_trials_2026-08-29/QUARANTINE_NOTICE.md`](../archive/research/agent_selection_group_trials_2026-08-29/QUARANTINE_NOTICE.md)
 
@@ -57,7 +57,7 @@ treated as evidence that an experiment passed or failed.
 - **Code Paths**: `src/forecast_select/uptrend_model.py`, `src/forecast_select/uptrend_pipeline.py`
 - **Config Paths**: `configs/uptrend_model.yaml`, `configs/config.yaml`
 - **Artifact Paths**: `artifacts/active/uptrend_predictions.parquet`
-- **Report Paths**: `reports/model_performance.json`, `reports/model_performance.md`
+- **Report Paths**: `reports/uptrend_model_performance.json`, `reports/uptrend_model_performance.md`
 - **Observed Metrics**:
   - Development (120–219): Accuracy 61.73% (926/1500), 100% Up calls.
 - **Rejection / Decision Reason**: Retained reproducible baseline reference used throughout all research stages.
@@ -67,6 +67,21 @@ treated as evidence that an experiment passed or failed.
 ---
 
 ## 2. Historical & Rejected Research Challengers
+
+### Down V2 and V3 research (2026-09-21)
+
+- **Status**: `rejected` for promotion; research artifacts retained for reproducibility.
+- **Hypothesis**: A calibrated Down model, improved Down features, or a limited bidirectional replacement policy can increase the hit rate over the current Up-first selector.
+- **Code & artifacts**: `research/down_v2/` and `research/down_v3/` (including the V3 row-level audit and frozen parquet selections).
+- **Reports**: `research/down_v2/FINAL_REPORT.md`, `research/down_v3/FINAL_REPORT.md`, `research/down_v3/audit/AUDIT_REPORT.md`, and [`RESEARCH_OUTCOMES.md`](RESEARCH_OUTCOMES.md).
+- **Observed metrics**: V2 standalone Validation AUC 0.5256 (isotonic); V3 standalone Validation AUC 0.5314. V3 insertion lost 4 hits on Validation (391/675 vs production 395/675) and 5 on Confirmation. Production has 4 / 0 / 7 Down calls in Tuning / Validation / Confirmation; the earlier V3 0 / 0 / 0 claim was corrected by the audit.
+- **Decision**: Neither Down version passes the replacement gate. Keep `maximum_replacements: 0` and the owner-promoted active model. Calibration and feature simplification are useful research findings, not approved production changes.
+- **Reproduction**: `python research/down_v3/audit/reconcile_audit.py`; `python research/down_v3/v3_selection.py`; `python research/down_v3/final_comparison.py`; `python -m pytest research/down_v3/audit/test_reconciliation.py -q`. See the final reports for the complete, compute-intensive rebuild order.
+- **Boundary**: This study used origins 120–266. Treat any previously inspected terminal holdout separately; the consumed March–May 2026 holdout in §4.2 cannot be reused for tuning or promotion.
+
+The Uptrend baseline writes `reports/uptrend_model_performance.*`; the active
+model owns `reports/model_performance.*`. These separate paths prevent a baseline
+rebuild from overwriting the public active-model report.
 
 ### 2.1 Directional Downside Selector (`directional_downside_selector`)
 - **Hypothesis**: Direct Down target modeling (`Down = 1 - y_true`) blending global logistic, local per-indicator logistic, and rise-then-stall pattern priors with learned lead-lag peer correlations to admit top Down calls into the monthly top 15.

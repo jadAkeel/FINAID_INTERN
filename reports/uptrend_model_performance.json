@@ -1,0 +1,17 @@
+{
+  "accuracy": 0.6173333333333333,
+  "artifact": "artifacts/active/uptrend_predictions.parquet",
+  "bootstrap_p10": 0.586,
+  "bootstrap_p90": 0.6480666666666668,
+  "calls": 1500,
+  "confirmation_read": false,
+  "down_calls": 0,
+  "hits": 926,
+  "locked_evaluation_read": false,
+  "model_id": "uptrend_selector",
+  "model_name": "Uptrend Selector",
+  "model_release": "initial_release",
+  "months": 100,
+  "registered_result_matches": true,
+  "up_calls": 1500
+}

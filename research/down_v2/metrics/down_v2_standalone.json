@@ -1,0 +1,328 @@
+{
+  "calls_at_threshold": {
+    "confirmation": {
+      "calls": 1,
+      "hits": 0,
+      "precision": 0.0
+    },
+    "tuning": {
+      "calls": 29,
+      "hits": 20,
+      "precision": 0.6896551724137931
+    },
+    "validation": {
+      "calls": 1,
+      "hits": 0,
+      "precision": 0.0
+    }
+  },
+  "features": [
+    "down_volatility_3",
+    "down_volatility_12",
+    "down_volatility_compression",
+    "down_return_1",
+    "down_return_lag_1",
+    "down_return_lag_2",
+    "down_drawdown_12",
+    "down_distance_mean_12",
+    "down_momentum_3",
+    "down_negative_share_3"
+  ],
+  "isotonic": {
+    "confirmation": {
+      "auc": 0.5348907489762301,
+      "brier": 0.24470480775667872,
+      "ece": 0.0219996101469557,
+      "mean_pred": 0.43357654281118513,
+      "n": 2208,
+      "observed": 0.4270833333333333,
+      "top1": {
+        "calls": 47,
+        "hits": 28,
+        "months": 47,
+        "precision": 0.5957446808510638
+      },
+      "top10": {
+        "calls": 470,
+        "hits": 206,
+        "months": 47,
+        "precision": 0.43829787234042555
+      },
+      "top3": {
+        "calls": 141,
+        "hits": 66,
+        "months": 47,
+        "precision": 0.46808510638297873
+      },
+      "top5": {
+        "calls": 235,
+        "hits": 105,
+        "months": 47,
+        "precision": 0.44680851063829785
+      }
+    },
+    "tuning": {
+      "auc": 0.5539707913701647,
+      "brier": 0.24143983294767626,
+      "ece": 4.1649321041381324e-10,
+      "mean_pred": 0.43023740066638905,
+      "n": 2401,
+      "observed": 0.4302374010828821,
+      "top1": {
+        "calls": 60,
+        "hits": 42,
+        "months": 60,
+        "precision": 0.7
+      },
+      "top10": {
+        "calls": 600,
+        "hits": 306,
+        "months": 60,
+        "precision": 0.51
+      },
+      "top3": {
+        "calls": 180,
+        "hits": 100,
+        "months": 60,
+        "precision": 0.5555555555555556
+      },
+      "top5": {
+        "calls": 300,
+        "hits": 166,
+        "months": 60,
+        "precision": 0.5533333333333333
+      }
+    },
+    "validation": {
+      "auc": 0.5255848125844584,
+      "brier": 0.2503481959413421,
+      "ece": 0.03515970340818015,
+      "mean_pred": 0.4367221070995607,
+      "n": 1751,
+      "observed": 0.46259280411193604,
+      "top1": {
+        "calls": 40,
+        "hits": 18,
+        "months": 40,
+        "precision": 0.45
+      },
+      "top10": {
+        "calls": 400,
+        "hits": 203,
+        "months": 40,
+        "precision": 0.5075
+      },
+      "top3": {
+        "calls": 120,
+        "hits": 58,
+        "months": 40,
+        "precision": 0.48333333333333334
+      },
+      "top5": {
+        "calls": 200,
+        "hits": 98,
+        "months": 40,
+        "precision": 0.49
+      }
+    }
+  },
+  "n_features": 10,
+  "platt": {
+    "confirmation": {
+      "auc": 0.5306393270153702,
+      "brier": 0.24387115354641684,
+      "ece": 0.026048532886610767,
+      "mean_pred": 0.433799932437665,
+      "n": 2208,
+      "observed": 0.4270833333333333,
+      "top1": {
+        "calls": 47,
+        "hits": 29,
+        "months": 47,
+        "precision": 0.6170212765957447
+      },
+      "top10": {
+        "calls": 470,
+        "hits": 207,
+        "months": 47,
+        "precision": 0.44042553191489364
+      },
+      "top3": {
+        "calls": 141,
+        "hits": 79,
+        "months": 47,
+        "precision": 0.5602836879432624
+      },
+      "top5": {
+        "calls": 235,
+        "hits": 116,
+        "months": 47,
+        "precision": 0.49361702127659574
+      }
+    },
+    "tuning": {
+      "auc": 0.5423063750049535,
+      "brier": 0.24354590556193084,
+      "ece": 0.032100885733213826,
+      "mean_pred": 0.43024808075832044,
+      "n": 2401,
+      "observed": 0.4302374010828821,
+      "top1": {
+        "calls": 60,
+        "hits": 39,
+        "months": 60,
+        "precision": 0.65
+      },
+      "top10": {
+        "calls": 600,
+        "hits": 299,
+        "months": 60,
+        "precision": 0.49833333333333335
+      },
+      "top3": {
+        "calls": 180,
+        "hits": 99,
+        "months": 60,
+        "precision": 0.55
+      },
+      "top5": {
+        "calls": 300,
+        "hits": 159,
+        "months": 60,
+        "precision": 0.53
+      }
+    },
+    "validation": {
+      "auc": 0.5252161477807953,
+      "brier": 0.24915934459003067,
+      "ece": 0.03350815406985383,
+      "mean_pred": 0.43571638544553315,
+      "n": 1751,
+      "observed": 0.46259280411193604,
+      "top1": {
+        "calls": 40,
+        "hits": 19,
+        "months": 40,
+        "precision": 0.475
+      },
+      "top10": {
+        "calls": 400,
+        "hits": 200,
+        "months": 40,
+        "precision": 0.5
+      },
+      "top3": {
+        "calls": 120,
+        "hits": 57,
+        "months": 40,
+        "precision": 0.475
+      },
+      "top5": {
+        "calls": 200,
+        "hits": 98,
+        "months": 40,
+        "precision": 0.49
+      }
+    }
+  },
+  "raw": {
+    "confirmation": {
+      "auc": 0.5306393270153702,
+      "brier": 0.2461808488504056,
+      "ece": 0.04900122819112098,
+      "mean_pred": 0.44082869008690845,
+      "n": 2208,
+      "observed": 0.4270833333333333,
+      "top1": {
+        "calls": 47,
+        "hits": 29,
+        "months": 47,
+        "precision": 0.6170212765957447
+      },
+      "top10": {
+        "calls": 470,
+        "hits": 207,
+        "months": 47,
+        "precision": 0.44042553191489364
+      },
+      "top3": {
+        "calls": 141,
+        "hits": 79,
+        "months": 47,
+        "precision": 0.5602836879432624
+      },
+      "top5": {
+        "calls": 235,
+        "hits": 116,
+        "months": 47,
+        "precision": 0.49361702127659574
+      }
+    },
+    "tuning": {
+      "auc": 0.5423063750049535,
+      "brier": 0.24621433877204876,
+      "ece": 0.048899513372166796,
+      "mean_pred": 0.42968713101319367,
+      "n": 2401,
+      "observed": 0.4302374010828821,
+      "top1": {
+        "calls": 60,
+        "hits": 39,
+        "months": 60,
+        "precision": 0.65
+      },
+      "top10": {
+        "calls": 600,
+        "hits": 299,
+        "months": 60,
+        "precision": 0.49833333333333335
+      },
+      "top3": {
+        "calls": 180,
+        "hits": 99,
+        "months": 60,
+        "precision": 0.55
+      },
+      "top5": {
+        "calls": 300,
+        "hits": 159,
+        "months": 60,
+        "precision": 0.53
+      }
+    },
+    "validation": {
+      "auc": 0.5252161477807953,
+      "brier": 0.2525821219472018,
+      "ece": 0.05935298970147634,
+      "mean_pred": 0.4472783593977472,
+      "n": 1751,
+      "observed": 0.46259280411193604,
+      "top1": {
+        "calls": 40,
+        "hits": 19,
+        "months": 40,
+        "precision": 0.475
+      },
+      "top10": {
+        "calls": 400,
+        "hits": 200,
+        "months": 40,
+        "precision": 0.5
+      },
+      "top3": {
+        "calls": 120,
+        "hits": 57,
+        "months": 40,
+        "precision": 0.475
+      },
+      "top5": {
+        "calls": 200,
+        "hits": 98,
+        "months": 40,
+        "precision": 0.49
+      }
+    }
+  },
+  "regularization_c": 1.0,
+  "threshold": 0.55
+}

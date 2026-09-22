@@ -67,8 +67,9 @@ This keeps normal use readable without erasing research history.
 ## Verification
 
 ```powershell
-python -m ruff check src tests
+python -m ruff check src tests research/down_v2 research/down_v3
 python -m pytest
+python -m pytest research/down_v3/audit/test_reconciliation.py
 ```
 
 GitHub Actions runs the same lint and test checks. See

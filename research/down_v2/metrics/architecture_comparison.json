@@ -1,0 +1,153 @@
+{
+  "A": {
+    "bootstrap_vs_A": null,
+    "per_window": {
+      "confirmation": {
+        "calls": 799,
+        "down_calls": 7,
+        "down_hits": 5,
+        "down_precision": 0.7142857142857143,
+        "hit_rate": 0.6320400500625782,
+        "hits": 505,
+        "months": 47
+      },
+      "tuning": {
+        "calls": 1071,
+        "down_calls": 4,
+        "down_hits": 2,
+        "down_precision": 0.5,
+        "hit_rate": 0.6405228758169934,
+        "hits": 686,
+        "months": 60
+      },
+      "validation": {
+        "calls": 675,
+        "down_calls": 0,
+        "down_hits": 0,
+        "down_precision": null,
+        "hit_rate": 0.5851851851851851,
+        "hits": 395,
+        "months": 40
+      }
+    }
+  },
+  "B": {
+    "bootstrap_vs_A": {
+      "delta_mean": -0.00631232024973732,
+      "p10": -0.00980062200318721,
+      "p90": -0.002532957627495535,
+      "p_delta_positive": 0.014
+    },
+    "per_window": {
+      "confirmation": {
+        "calls": 799,
+        "down_calls": 53,
+        "down_hits": 26,
+        "down_precision": 0.49056603773584906,
+        "hit_rate": 0.6282853566958698,
+        "hits": 502,
+        "months": 47
+      },
+      "tuning": {
+        "calls": 1071,
+        "down_calls": 64,
+        "down_hits": 36,
+        "down_precision": 0.5625,
+        "hit_rate": 0.6311858076563959,
+        "hits": 676,
+        "months": 60
+      },
+      "validation": {
+        "calls": 675,
+        "down_calls": 40,
+        "down_hits": 19,
+        "down_precision": 0.475,
+        "hit_rate": 0.5822222222222222,
+        "hits": 393,
+        "months": 40
+      }
+    }
+  },
+  "C": {
+    "bootstrap_vs_A": {
+      "delta_mean": -0.0391052327363694,
+      "p10": -0.053300723798291205,
+      "p90": -0.025847116624427492,
+      "p_delta_positive": 0.0005
+    },
+    "per_window": {
+      "confirmation": {
+        "calls": 799,
+        "down_calls": 388,
+        "down_hits": 161,
+        "down_precision": 0.41494845360824745,
+        "hit_rate": 0.6082603254067585,
+        "hits": 486,
+        "months": 47
+      },
+      "tuning": {
+        "calls": 1071,
+        "down_calls": 521,
+        "down_hits": 246,
+        "down_precision": 0.472168905950096,
+        "hit_rate": 0.5910364145658263,
+        "hits": 633,
+        "months": 60
+      },
+      "validation": {
+        "calls": 675,
+        "down_calls": 325,
+        "down_hits": 163,
+        "down_precision": 0.5015384615384615,
+        "hit_rate": 0.5407407407407407,
+        "hits": 365,
+        "months": 40
+      }
+    }
+  },
+  "D": {
+    "bootstrap_vs_A": {
+      "delta_mean": -0.0014274715734246897,
+      "p10": -0.004460866217832182,
+      "p90": 0.0019260218707366943,
+      "p_delta_positive": 0.279
+    },
+    "per_window": {
+      "confirmation": {
+        "calls": 799,
+        "down_calls": 2,
+        "down_hits": 1,
+        "down_precision": 0.5,
+        "hit_rate": 0.6332916145181476,
+        "hits": 506,
+        "months": 47
+      },
+      "tuning": {
+        "calls": 1071,
+        "down_calls": 15,
+        "down_hits": 11,
+        "down_precision": 0.7333333333333333,
+        "hit_rate": 0.6395891690009337,
+        "hits": 685,
+        "months": 60
+      },
+      "validation": {
+        "calls": 675,
+        "down_calls": 4,
+        "down_hits": 2,
+        "down_precision": 0.5,
+        "hit_rate": 0.5807407407407408,
+        "hits": 392,
+        "months": 40
+      }
+    }
+  },
+  "screen": {
+    "down_floor": 0.4,
+    "insert_cap": 1,
+    "tuning_floor_precision": [
+      1132,
+      0.47791519434628976
+    ]
+  }
+}

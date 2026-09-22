@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -14,6 +15,7 @@ from forecast_select.uptrend_model import fit_uptrend_model
 from forecast_select.uptrend_pipeline import (
     _assert_model_invariants,
     active_model_status,
+    write_model_report,
 )
 
 
@@ -78,6 +80,31 @@ def test_model_status_is_json_serializable():
     payload = active_model_status()
     assert payload["registered_result_matches"] is True
     json.dumps(payload)
+
+
+def test_uptrend_report_does_not_replace_active_report(tmp_path):
+    configs = tmp_path / "configs"
+    configs.mkdir()
+    for name in ("config.yaml", "uptrend_model.yaml"):
+        (configs / name).write_bytes((Path("configs") / name).read_bytes())
+    reports = tmp_path / "reports"
+    reports.mkdir()
+    active_json = reports / "model_performance.json"
+    active_md = reports / "model_performance.md"
+    active_json.write_text('{"model_id": "regime_adaptive_selector"}\n')
+    active_md.write_text("# Active model\n")
+
+    predictions = pd.read_parquet("artifacts/active/uptrend_predictions.parquet")
+    summary = write_model_report(predictions, tmp_path)
+
+    assert summary["model_id"] == "uptrend_selector"
+    assert json.loads(active_json.read_text())["model_id"] == "regime_adaptive_selector"
+    assert active_md.read_text() == "# Active model\n"
+    baseline = json.loads(
+        (reports / "uptrend_model_performance.json").read_text()
+    )
+    assert baseline["model_id"] == "uptrend_selector"
+    assert (reports / "uptrend_model_performance.md").exists()
 
 
 @pytest.mark.parametrize("family", sorted(FEATURE_FAMILY_COLUMNS))

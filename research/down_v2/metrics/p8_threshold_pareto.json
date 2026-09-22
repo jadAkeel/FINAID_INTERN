@@ -1,0 +1,512 @@
+{
+  "p_down_blend": [
+    {
+      "confirmation": {
+        "calls": 1230,
+        "hits": 550,
+        "months": 47,
+        "precision": 0.44715447154471544
+      },
+      "threshold": 0.45,
+      "tuning": {
+        "calls": 1349,
+        "hits": 612,
+        "months": 60,
+        "precision": 0.4536693847294292
+      },
+      "validation": {
+        "calls": 1143,
+        "hits": 538,
+        "months": 40,
+        "precision": 0.47069116360454943
+      }
+    },
+    {
+      "confirmation": {
+        "calls": 667,
+        "hits": 321,
+        "months": 47,
+        "precision": 0.48125937031484256
+      },
+      "threshold": 0.5,
+      "tuning": {
+        "calls": 671,
+        "hits": 329,
+        "months": 60,
+        "precision": 0.4903129657228018
+      },
+      "validation": {
+        "calls": 728,
+        "hits": 360,
+        "months": 40,
+        "precision": 0.4945054945054945
+      }
+    },
+    {
+      "confirmation": {
+        "calls": 246,
+        "hits": 116,
+        "months": 47,
+        "precision": 0.4715447154471545
+      },
+      "threshold": 0.55,
+      "tuning": {
+        "calls": 262,
+        "hits": 139,
+        "months": 58,
+        "precision": 0.5305343511450382
+      },
+      "validation": {
+        "calls": 418,
+        "hits": 195,
+        "months": 40,
+        "precision": 0.4665071770334928
+      }
+    },
+    {
+      "confirmation": {
+        "calls": 62,
+        "hits": 30,
+        "months": 33,
+        "precision": 0.4838709677419355
+      },
+      "threshold": 0.6,
+      "tuning": {
+        "calls": 103,
+        "hits": 61,
+        "months": 53,
+        "precision": 0.5922330097087378
+      },
+      "validation": {
+        "calls": 113,
+        "hits": 51,
+        "months": 37,
+        "precision": 0.45132743362831856
+      }
+    },
+    {
+      "confirmation": {
+        "calls": 17,
+        "hits": 8,
+        "months": 12,
+        "precision": 0.47058823529411764
+      },
+      "threshold": 0.65,
+      "tuning": {
+        "calls": 49,
+        "hits": 31,
+        "months": 39,
+        "precision": 0.6326530612244898
+      },
+      "validation": {
+        "calls": 26,
+        "hits": 13,
+        "months": 17,
+        "precision": 0.5
+      }
+    },
+    {
+      "confirmation": {
+        "calls": 8,
+        "hits": 3,
+        "months": 7,
+        "precision": 0.375
+      },
+      "threshold": 0.7,
+      "tuning": {
+        "calls": 17,
+        "hits": 13,
+        "months": 16,
+        "precision": 0.7647058823529411
+      },
+      "validation": {
+        "calls": 4,
+        "hits": 3,
+        "months": 4,
+        "precision": 0.75
+      }
+    },
+    {
+      "confirmation": {
+        "calls": 4,
+        "hits": 2,
+        "months": 4,
+        "precision": 0.5
+      },
+      "threshold": 0.75,
+      "tuning": {
+        "calls": 10,
+        "hits": 7,
+        "months": 9,
+        "precision": 0.7
+      },
+      "validation": {
+        "calls": 2,
+        "hits": 1,
+        "months": 2,
+        "precision": 0.5
+      }
+    },
+    {
+      "confirmation": {
+        "calls": 1,
+        "hits": 1,
+        "months": 1,
+        "precision": 1.0
+      },
+      "threshold": 0.8,
+      "tuning": {
+        "calls": 5,
+        "hits": 4,
+        "months": 5,
+        "precision": 0.8
+      },
+      "validation": {
+        "calls": 0,
+        "hits": 0,
+        "months": 0,
+        "precision": null
+      }
+    }
+  ],
+  "p_down_global": [
+    {
+      "confirmation": {
+        "calls": 1602,
+        "hits": 683,
+        "months": 47,
+        "precision": 0.4263420724094881
+      },
+      "threshold": 0.45,
+      "tuning": {
+        "calls": 1631,
+        "hits": 732,
+        "months": 60,
+        "precision": 0.4488044144696505
+      },
+      "validation": {
+        "calls": 1376,
+        "hits": 633,
+        "months": 40,
+        "precision": 0.46002906976744184
+      }
+    },
+    {
+      "confirmation": {
+        "calls": 1026,
+        "hits": 456,
+        "months": 47,
+        "precision": 0.4444444444444444
+      },
+      "threshold": 0.5,
+      "tuning": {
+        "calls": 1044,
+        "hits": 488,
+        "months": 60,
+        "precision": 0.4674329501915709
+      },
+      "validation": {
+        "calls": 961,
+        "hits": 450,
+        "months": 40,
+        "precision": 0.46826222684703434
+      }
+    },
+    {
+      "confirmation": {
+        "calls": 473,
+        "hits": 209,
+        "months": 47,
+        "precision": 0.4418604651162791
+      },
+      "threshold": 0.55,
+      "tuning": {
+        "calls": 551,
+        "hits": 256,
+        "months": 59,
+        "precision": 0.4646098003629764
+      },
+      "validation": {
+        "calls": 562,
+        "hits": 262,
+        "months": 40,
+        "precision": 0.46619217081850534
+      }
+    },
+    {
+      "confirmation": {
+        "calls": 138,
+        "hits": 63,
+        "months": 42,
+        "precision": 0.45652173913043476
+      },
+      "threshold": 0.6,
+      "tuning": {
+        "calls": 253,
+        "hits": 124,
+        "months": 56,
+        "precision": 0.4901185770750988
+      },
+      "validation": {
+        "calls": 236,
+        "hits": 108,
+        "months": 37,
+        "precision": 0.4576271186440678
+      }
+    },
+    {
+      "confirmation": {
+        "calls": 46,
+        "hits": 26,
+        "months": 31,
+        "precision": 0.5652173913043478
+      },
+      "threshold": 0.65,
+      "tuning": {
+        "calls": 109,
+        "hits": 58,
+        "months": 46,
+        "precision": 0.5321100917431193
+      },
+      "validation": {
+        "calls": 71,
+        "hits": 32,
+        "months": 28,
+        "precision": 0.4507042253521127
+      }
+    },
+    {
+      "confirmation": {
+        "calls": 12,
+        "hits": 7,
+        "months": 10,
+        "precision": 0.5833333333333334
+      },
+      "threshold": 0.7,
+      "tuning": {
+        "calls": 53,
+        "hits": 27,
+        "months": 37,
+        "precision": 0.5094339622641509
+      },
+      "validation": {
+        "calls": 26,
+        "hits": 12,
+        "months": 15,
+        "precision": 0.46153846153846156
+      }
+    },
+    {
+      "confirmation": {
+        "calls": 4,
+        "hits": 2,
+        "months": 4,
+        "precision": 0.5
+      },
+      "threshold": 0.75,
+      "tuning": {
+        "calls": 31,
+        "hits": 19,
+        "months": 29,
+        "precision": 0.6129032258064516
+      },
+      "validation": {
+        "calls": 9,
+        "hits": 2,
+        "months": 7,
+        "precision": 0.2222222222222222
+      }
+    },
+    {
+      "confirmation": {
+        "calls": 3,
+        "hits": 2,
+        "months": 3,
+        "precision": 0.6666666666666666
+      },
+      "threshold": 0.8,
+      "tuning": {
+        "calls": 20,
+        "hits": 11,
+        "months": 19,
+        "precision": 0.55
+      },
+      "validation": {
+        "calls": 2,
+        "hits": 0,
+        "months": 2,
+        "precision": 0.0
+      }
+    }
+  ],
+  "p_down_indicator_prior": [
+    {
+      "confirmation": {
+        "calls": 947,
+        "hits": 444,
+        "months": 47,
+        "precision": 0.46884899683210135
+      },
+      "threshold": 0.45,
+      "tuning": {
+        "calls": 983,
+        "hits": 465,
+        "months": 60,
+        "precision": 0.47304170905391657
+      },
+      "validation": {
+        "calls": 900,
+        "hits": 443,
+        "months": 40,
+        "precision": 0.4922222222222222
+      }
+    },
+    {
+      "confirmation": {
+        "calls": 576,
+        "hits": 281,
+        "months": 47,
+        "precision": 0.4878472222222222
+      },
+      "threshold": 0.5,
+      "tuning": {
+        "calls": 582,
+        "hits": 279,
+        "months": 60,
+        "precision": 0.4793814432989691
+      },
+      "validation": {
+        "calls": 734,
+        "hits": 367,
+        "months": 40,
+        "precision": 0.5
+      }
+    },
+    {
+      "confirmation": {
+        "calls": 262,
+        "hits": 141,
+        "months": 47,
+        "precision": 0.5381679389312977
+      },
+      "threshold": 0.55,
+      "tuning": {
+        "calls": 223,
+        "hits": 124,
+        "months": 60,
+        "precision": 0.5560538116591929
+      },
+      "validation": {
+        "calls": 411,
+        "hits": 201,
+        "months": 40,
+        "precision": 0.48905109489051096
+      }
+    },
+    {
+      "confirmation": {
+        "calls": 104,
+        "hits": 50,
+        "months": 43,
+        "precision": 0.4807692307692308
+      },
+      "threshold": 0.6,
+      "tuning": {
+        "calls": 137,
+        "hits": 78,
+        "months": 60,
+        "precision": 0.5693430656934306
+      },
+      "validation": {
+        "calls": 214,
+        "hits": 105,
+        "months": 40,
+        "precision": 0.49065420560747663
+      }
+    },
+    {
+      "confirmation": {
+        "calls": 24,
+        "hits": 12,
+        "months": 15,
+        "precision": 0.5
+      },
+      "threshold": 0.65,
+      "tuning": {
+        "calls": 78,
+        "hits": 47,
+        "months": 57,
+        "precision": 0.6025641025641025
+      },
+      "validation": {
+        "calls": 21,
+        "hits": 10,
+        "months": 17,
+        "precision": 0.47619047619047616
+      }
+    },
+    {
+      "confirmation": {
+        "calls": 9,
+        "hits": 4,
+        "months": 7,
+        "precision": 0.4444444444444444
+      },
+      "threshold": 0.7,
+      "tuning": {
+        "calls": 28,
+        "hits": 18,
+        "months": 26,
+        "precision": 0.6428571428571429
+      },
+      "validation": {
+        "calls": 16,
+        "hits": 9,
+        "months": 12,
+        "precision": 0.5625
+      }
+    },
+    {
+      "confirmation": {
+        "calls": 9,
+        "hits": 4,
+        "months": 7,
+        "precision": 0.4444444444444444
+      },
+      "threshold": 0.75,
+      "tuning": {
+        "calls": 10,
+        "hits": 5,
+        "months": 10,
+        "precision": 0.5
+      },
+      "validation": {
+        "calls": 4,
+        "hits": 1,
+        "months": 4,
+        "precision": 0.25
+      }
+    },
+    {
+      "confirmation": {
+        "calls": 7,
+        "hits": 2,
+        "months": 5,
+        "precision": 0.2857142857142857
+      },
+      "threshold": 0.8,
+      "tuning": {
+        "calls": 8,
+        "hits": 3,
+        "months": 8,
+        "precision": 0.375
+      },
+      "validation": {
+        "calls": 3,
+        "hits": 1,
+        "months": 3,
+        "precision": 0.3333333333333333
+      }
+    }
+  ]
+}

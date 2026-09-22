@@ -351,11 +351,11 @@ def write_model_report(predictions: pd.DataFrame, root: Path = ROOT) -> dict:
         "locked_evaluation_read": False,
         "artifact": active_model_artifact(root).relative_to(root).as_posix(),
     })
-    atomic_write_json(summary, root / "reports/model_performance.json")
+    atomic_write_json(summary, root / "reports/uptrend_model_performance.json")
     lines = [
         "# Uptrend Selector performance",
         "",
-        "This is the single active model pipeline.",
+        "This is the retained Uptrend Selector baseline.",
         "",
         f"- Selection hits / calls: `{summary['hits']} / {summary['calls']}`",
         f"- Top-15 accuracy: `{summary['accuracy']:.4%}`",
@@ -366,7 +366,7 @@ def write_model_report(predictions: pd.DataFrame, root: Path = ROOT) -> dict:
         "",
         "The pipeline is Structured Logistic with corrected cross-sectional rank, followed by a frozen signed correlation graph and a causal top-indicator selector.",
     ]
-    (root / "reports/model_performance.md").write_text(
+    (root / "reports/uptrend_model_performance.md").write_text(
         "\n".join(lines) + "\n",
         encoding="utf-8",
     )

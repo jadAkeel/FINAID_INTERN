@@ -1,0 +1,163 @@
+{
+  "max_down": 5,
+  "screen": {
+    "v2": {
+      "floor": 0.65,
+      "margin": 0.08,
+      "tuning_delta": 0,
+      "tuning_down_calls": 4,
+      "tuning_events": 0
+    },
+    "v3": {
+      "floor": 0.55,
+      "margin": 0.0,
+      "tuning_delta": 1,
+      "tuning_down_calls": 5,
+      "tuning_events": 1
+    }
+  },
+  "v2": {
+    "bootstrap_vs_A": {
+      "delta_mean": 0.0,
+      "p10": 0.0,
+      "p90": 0.0,
+      "p_delta_positive": 0.0
+    },
+    "per_window": {
+      "confirmation": {
+        "calls": 799,
+        "delta_mean": null,
+        "down_precision": 0.7142857142857143,
+        "external_down_inserts": 0,
+        "final_down_calls": 7,
+        "final_down_hits": 5,
+        "hit_rate": 0.6357947434292867,
+        "hits": 508,
+        "hits_up_label_deprecated": 505,
+        "monthly_down_dist": {
+          "0": 43,
+          "1": 3,
+          "4": 1
+        },
+        "overlay_flips": 0,
+        "prod_down_rows_in_base": 7,
+        "replacement_delta": 0,
+        "up_calls": 792,
+        "up_hits": 503
+      },
+      "tuning": {
+        "calls": 1071,
+        "delta_mean": null,
+        "down_precision": 0.5,
+        "external_down_inserts": 0,
+        "final_down_calls": 4,
+        "final_down_hits": 2,
+        "hit_rate": 0.6405228758169934,
+        "hits": 686,
+        "hits_up_label_deprecated": 686,
+        "monthly_down_dist": {
+          "0": 59,
+          "4": 1
+        },
+        "overlay_flips": 0,
+        "prod_down_rows_in_base": 4,
+        "replacement_delta": 0,
+        "up_calls": 1067,
+        "up_hits": 684
+      },
+      "validation": {
+        "calls": 675,
+        "delta_mean": null,
+        "down_precision": null,
+        "external_down_inserts": 0,
+        "final_down_calls": 0,
+        "final_down_hits": 0,
+        "hit_rate": 0.5851851851851851,
+        "hits": 395,
+        "hits_up_label_deprecated": 395,
+        "monthly_down_dist": {
+          "0": 40
+        },
+        "overlay_flips": 0,
+        "prod_down_rows_in_base": 0,
+        "replacement_delta": 0,
+        "up_calls": 675,
+        "up_hits": 395
+      }
+    }
+  },
+  "v3": {
+    "bootstrap_vs_A": {
+      "delta_mean": -0.05442176870748299,
+      "p10": -0.1020408163265305,
+      "p90": -0.006802721088435604,
+      "p_delta_positive": 0.064
+    },
+    "per_window": {
+      "confirmation": {
+        "calls": 799,
+        "delta_mean": -0.38461538461538464,
+        "down_precision": 0.55,
+        "external_down_inserts": 13,
+        "final_down_calls": 20,
+        "final_down_hits": 11,
+        "hit_rate": 0.6295369211514393,
+        "hits": 503,
+        "hits_up_label_deprecated": 501,
+        "monthly_down_dist": {
+          "0": 32,
+          "1": 13,
+          "2": 1,
+          "5": 1
+        },
+        "overlay_flips": 0,
+        "prod_down_rows_in_base": 7,
+        "replacement_delta": -5,
+        "up_calls": 779,
+        "up_hits": 492
+      },
+      "tuning": {
+        "calls": 1071,
+        "delta_mean": 1.0,
+        "down_precision": 0.6,
+        "external_down_inserts": 1,
+        "final_down_calls": 5,
+        "final_down_hits": 3,
+        "hit_rate": 0.6414565826330533,
+        "hits": 687,
+        "hits_up_label_deprecated": 686,
+        "monthly_down_dist": {
+          "0": 58,
+          "1": 1,
+          "4": 1
+        },
+        "overlay_flips": 0,
+        "prod_down_rows_in_base": 4,
+        "replacement_delta": 1,
+        "up_calls": 1066,
+        "up_hits": 684
+      },
+      "validation": {
+        "calls": 675,
+        "delta_mean": -0.11764705882352941,
+        "down_precision": 0.4117647058823529,
+        "external_down_inserts": 34,
+        "final_down_calls": 34,
+        "final_down_hits": 14,
+        "hit_rate": 0.5792592592592593,
+        "hits": 391,
+        "hits_up_label_deprecated": 397,
+        "monthly_down_dist": {
+          "0": 10,
+          "1": 26,
+          "2": 4
+        },
+        "overlay_flips": 0,
+        "prod_down_rows_in_base": 0,
+        "replacement_delta": -4,
+        "up_calls": 641,
+        "up_hits": 377
+      }
+    }
+  }
+}

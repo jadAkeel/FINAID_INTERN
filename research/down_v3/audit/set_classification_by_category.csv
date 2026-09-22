@@ -1,0 +1,7 @@
+arch,n_same_indicator_same_dir,sum_delta_same_indicator_same_dir,base_correct_same_indicator_same_dir,chall_correct_same_indicator_same_dir,n_in_baseline_only,sum_delta_in_baseline_only,base_correct_in_baseline_only,chall_correct_in_baseline_only,n_in_challenger_only,sum_delta_in_challenger_only,base_correct_in_challenger_only,chall_correct_in_challenger_only
+B,2545.0,0.0,1589.0,1589.0,,,,,,,,
+C,2545.0,0.0,1589.0,1589.0,,,,,,,,
+D,2545.0,0.0,1589.0,1589.0,,,,,,,,
+E,2497.0,0.0,1560.0,1560.0,48.0,0.0,29.0,0.0,48.0,0.0,0.0,21.0
+F,2051.0,0.0,1296.0,1296.0,494.0,0.0,293.0,0.0,494.0,0.0,0.0,242.0
+G,2031.0,0.0,1281.0,1281.0,514.0,0.0,308.0,0.0,514.0,0.0,0.0,242.0
