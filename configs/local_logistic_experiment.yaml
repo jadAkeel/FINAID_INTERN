@@ -1,0 +1,65 @@
+experiment_id: local_logistic_selector
+experiment_name: Local / Interaction Logistic Up Selector Research
+experiment_release: initial_experiment
+availability_lag_months: 1
+
+# Evaluation windows mirror configs/active_model.yaml exactly.
+tuning_origins: [120, 179]
+validation_origins: [180, 219]
+confirmation_origins: [220, 266]
+locked_origins: [268, 315]
+
+# Hard guard: the workbook is never read past this row position, so the locked
+# origins 268-315 are structurally unreachable by this experiment.
+maximum_readable_position: 267
+
+global_model:
+  # Reproduced verbatim from configs/uptrend_model.yaml.
+  logistic_c: 0.25
+  logistic_max_iter: 120
+
+local_model:
+  # Fixed, not tuned. Inherited from the existing directional_downside
+  # experiment, which used the same per-indicator logistic construction.
+  logistic_max_iter: 500
+  minimum_local_class_rows: 8
+  solver: liblinear
+  # Tuning grids. Selected on tuning origins 120-179 only, then frozen.
+  feature_set_grid: [lean5, core8, wide12]
+  logistic_c_grid: [0.01, 0.03, 0.10, 0.25]
+  minimum_local_rows_grid: [36, 48, 60]
+
+shrinkage:
+  # p_hybrid = w * p_local + (1 - w) * p_global
+  local_weight_grid: [0.10, 0.20, 0.30, 0.40, 0.50]
+  # Sample-aware variant: w(n) = w_max * min(1, (n - n_min) / (n_ref - n_min))
+  sample_aware_reference_rows_grid: [120, 180, 240]
+
+interaction_model:
+  logistic_max_iter: 500
+  logistic_c_grid: [0.01, 0.05, 0.10, 0.25]
+  features:
+    - momentum_3
+    - momentum_6
+    - direction_lag_1
+    - rolling_std_12
+    - distance_mean_12
+    - cross_section_rank
+
+# Graph and selection stages are copied verbatim from configs/uptrend_model.yaml
+# and are NOT tuned in this experiment.
+graph:
+  estimation_end: 119
+  minimum_pairs: 24
+  alpha: 0.35
+
+selection:
+  monthly_selection_count: 15
+  trailing_target_window: 48
+  indicator_prior_weight: 0.5
+  minimum_history_months: 12
+  minimum_indicator_history: 24
+
+bootstrap:
+  block_months: 6
+  replicates: 500

@@ -1,0 +1,4 @@
+variant,tuning_hits,tuning_calls,tuning_accuracy,validation_hits,validation_calls,validation_accuracy,confirmation_hits,confirmation_calls,confirmation_accuracy
+global_logistic,579,900,0.6433333333333333,347,600,0.5783333333333334,436,705,0.6184397163120567
+constant_prior_only,570,900,0.6333333333333333,352,600,0.5866666666666667,438,705,0.6212765957446809
+shuffled_global,555,900,0.6166666666666667,343,600,0.5716666666666667,442,705,0.6269503546099291

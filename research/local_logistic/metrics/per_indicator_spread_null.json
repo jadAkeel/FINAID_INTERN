@@ -1,0 +1,10 @@
+{
+  "indicators": 48,
+  "observed_std_of_accuracy_difference": 0.053681851678257606,
+  "null_median_std": 0.03751588188860029,
+  "null_p95_std": 0.04436145297363364,
+  "observed_exceeds_null_p95": true,
+  "empirical_p_value": 0.0,
+  "disagreement_rate": 0.2604957005563986,
+  "rows": 3954
+}

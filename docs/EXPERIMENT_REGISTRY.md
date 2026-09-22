@@ -154,6 +154,25 @@ treated as evidence that an experiment passed or failed.
 - **Leakage & Holdout Warning**: Causal residuals stop at `t-2`.
 - **Reproduction Command**: No full experiment command is recorded. `python -m pytest tests/unit/test_group_score_challenger.py` verifies the retained helper logic only.
 
+### 2.8 Local / Indicator-Specific Logistic Regression (`local_logistic_selector`)
+- **Hypothesis**: The production global logistic regression shares every slope across indicators and can only express indicator-specific *intercepts* through its one-hot `indicator_id` block. Allowing indicator-specific *slopes* — via per-indicator local models, Global/Local shrinkage (partial pooling), or `indicator_id x feature` interaction terms — should improve the Up Selector.
+- **Status**: `rejected`
+- **Code Paths**: `src/forecast_select/local_logistic.py`, `src/forecast_select/local_logistic_pipeline.py`, `src/forecast_select/local_logistic_metrics.py`, `src/forecast_select/local_logistic_runner.py`, `src/forecast_select/local_logistic_report.py`, `research/local_logistic/diagnostics.py`
+- **Config Paths**: `configs/local_logistic_experiment.yaml`
+- **Artifact Paths**: `research/local_logistic/artifacts/predictions.parquet`, `full_signals.parquet`, `tuning_signals.parquet`, `local_coefficients.parquet`, `interaction_coefficients.parquet`
+- **Report Paths**: `docs/research/local_logistic_experiment.md`, `research/local_logistic/README.md`, `research/local_logistic/metrics/summary.json`, `metrics/tables.md`, `metrics/tuning_search.csv`
+- **Frozen Configuration**: Pure Local = `core8` (8 predictors), `C = 0.01`, minimum 60 local rows. Fixed shrinkage = `core8`, `C = 0.25`, minimum 60 rows, `w_local = 0.40`. Sample-aware shrinkage = `w_max = 0.10`, `n_ref = 180`. Interaction = 6 features x `indicator_id`, `C = 0.01`. All selected on Tuning 120–179 only, then frozen.
+- **Observed Metrics** (top-15 hit delta versus the Global Logistic baseline; baseline 579/900, 347/600, 436/705):
+  - Pure Local: Tuning −2, Validation +7, Confirmation 0
+  - Global + Local fixed shrinkage: Tuning −1, Validation +8, Confirmation −1
+  - Global + Local sample-aware shrinkage: Tuning −5, Validation +3, Confirmation −1
+  - Global + indicator interactions: Tuning −9, Validation +4, Confirmation +2
+  - Raw directional AUC (Global / Pure Local / Interaction): Tuning 0.5538 / 0.5264 / 0.5150; Validation 0.4963 / 0.5292 / 0.4891; Confirmation 0.5198 / 0.5308 / 0.5153
+- **Rejection / Decision Reason**: `GLOBAL LOGISTIC REMAINS PREFERRED`. Zero of 220 tuning configurations beat the baseline on the very window that selected their hyperparameters, and no candidate is positive in two consecutive evaluation windows; every block-bootstrap interval that excludes zero is contradicted by an adjacent window. Local modelling is retained as research evidence only.
+- **Secondary Findings**: Indicator-specific structure is genuine — per-indicator accuracy spread exceeds a matched coin-flip null (p ≈ 0.000) and local slopes reproduce at r = 0.63–0.87 between origin 179 and origin 266 — but it concentrates on indicators the selector never picks (+2.87 pp on never-selected indicators, −0.51 pp on selected ones). Local models are better calibrated than the global model in all three windows. A held-fixed-selector ablation shows the trailing 48-month prior dominates: replacing `p_up` with a constant scores 570/900, 352/600, 438/705, matching or beating the production model out of sample. Flagged for separate work; no production change proposed.
+- **Leakage & Holdout Warning**: Features `<= t-1`, training labels `<= t-2`; imputers, scalers, encoders and every model refit per origin. The workbook is read with `nrows` capped at position 267 and `assert_origins_unlocked` rejects any origin `>= 268`, so locked origins 268–315 were not read or used.
+- **Reproduction Command**: `python -m forecast_select.local_logistic_runner tune` / `python -m forecast_select.local_logistic_runner evaluate` / `python -m forecast_select.local_logistic_report` / `python research/local_logistic/diagnostics.py`
+
 ---
 
 ## 3. Active Research Studies & Diagnostic Tools
