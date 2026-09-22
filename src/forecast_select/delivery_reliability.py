@@ -81,3 +81,28 @@ def historical_reliability(
             "rate nor its bootstrap range guarantees future or individual accuracy."
         ),
     }
+
+
+def historical_reliability_or_unavailable(
+    predictions: pd.DataFrame, **kwargs
+) -> dict:
+    """Return the reliability summary, or a reason why it is unavailable.
+
+    `historical_reliability` is deliberately strict: it refuses to report a rate
+    computed on a partial window. That strictness must not take the forecast
+    itself down, so the delivery path reports the refusal instead of raising.
+    An unavailable summary is never a reliability claim.
+    """
+    try:
+        return historical_reliability(predictions, **kwargs)
+    except (ValueError, KeyError) as exc:
+        return {
+            "scope": "historical_selected_call_cohort_not_individual_confidence",
+            "available": False,
+            "reason": str(exc),
+            "individual_correctness_probability": None,
+            "interpretation": (
+                "No historical reliability evidence is reported for this run; "
+                "the required selected-call history was not available."
+            ),
+        }

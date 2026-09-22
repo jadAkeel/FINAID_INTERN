@@ -165,3 +165,9 @@ six-month moving-block bootstrap over months. These are descriptive cohort
 statistics on a previously viewed window. They do not calibrate individual
 calls, justify dropping below the required 15–20 calls, or validate the
 experimental second and third horizons.
+
+The reliability summary refuses to report a rate computed on a partial window:
+every month in 180–219 must be present with 15–20 selected calls. When that
+history is unavailable the forecast still ships, and the field carries
+`available: false` with the reason instead of a number. An unavailable summary
+is the absence of evidence, never a reliability claim.

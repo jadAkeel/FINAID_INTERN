@@ -3,7 +3,10 @@
 import pandas as pd
 import pytest
 
-from forecast_select.delivery_reliability import historical_reliability
+from forecast_select.delivery_reliability import (
+    historical_reliability,
+    historical_reliability_or_unavailable,
+)
 
 
 def _history():
@@ -43,3 +46,22 @@ def test_missing_month_or_insufficient_coverage_is_rejected():
         historical_reliability(history[history["origin_position"].ne(200)])
     with pytest.raises(ValueError, match="15–20"):
         historical_reliability(history.iloc[1:])
+
+
+def test_unavailable_history_reports_a_reason_instead_of_raising():
+    history = _history()
+    summary = historical_reliability_or_unavailable(
+        history[history["origin_position"].ne(200)]
+    )
+    assert summary["available"] is False
+    assert "every month" in summary["reason"]
+    assert summary["individual_correctness_probability"] is None
+    assert "observed_accuracy" not in summary
+    assert "monthly_block_bootstrap_p05_accuracy" not in summary
+
+
+def test_available_history_is_unchanged_by_the_wrapper():
+    history = _history()
+    assert historical_reliability_or_unavailable(
+        history, replicates=200
+    ) == historical_reliability(history, replicates=200)
