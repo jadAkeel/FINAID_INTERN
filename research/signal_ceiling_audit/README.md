@@ -48,9 +48,12 @@ direction autocorrelation across indicators is 0.01 and no indicator exceeds 0.2
 
 ## Rank profile
 
-Ranks 1–2 hit 66–69%; ranks 3–15 hit 54–65%; ranks 16–19 hit 59–62%. Expansion calls
-(ranks 16–20, 340 calls) run below the top-15 core (63.1%). A fixed 15-call policy on the
-same rows would have scored 1,392 / 2,205 = 63.13% versus the delivered 62.44%.
+Ranks 1–2 hit 66–69%; ranks 3–15 hit 54–65%; ranks 16–19 hit 59–62%. Pooled, expansion
+calls (ranks 16–20, 340 calls) run at 61.8% against 62.5% for the top-15 core — but the
+gap is not stable. On the delivered active artifact, expansion calls are worse on Tuning
+(102/171 = 59.7%), equal on Validation (44/75 = 58.7%), and *better* on Confirmation
+(64/94 = 68.1%). A fixed 15-call policy on the same rows would have scored 1,379 / 2,205 =
+62.54% versus the delivered 62.44%: dropping expansion buys nothing reliable.
 
 ## Files
 
