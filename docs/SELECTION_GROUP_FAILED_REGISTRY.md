@@ -102,6 +102,34 @@ The frozen baseline achieved 29/51 = 56.86%, with every call predicted Up:
 
 This result demonstrates reversal sensitivity but cannot be reused for threshold or feature selection.
 
+## Flexible joint directional selection trial (2026-09-21)
+
+A research-only selector ranked each indicator's strongest Tuning-calibrated
+Up or Down call, allowed at most five Down calls, and made positions 16–20
+optional. Its Tuning-selected policy took 15 calls in every Validation month.
+It scored 357/600 versus 351/600 for the active model at matched coverage, but
+445/709 versus 447/709 on Confirmation. At the active model's original monthly
+caps, it scored 394/675 versus 395/675 on Validation and 505/799 versus
+508/799 on Confirmation. It did not pass the non-locked screen and was not
+promoted. See `research/flexible_directional_selection/README.md` and
+`docs/EXPERIMENT_REGISTRY.md` for its reproducible record.
+
+A follow-up trained directly on Up and Down call correctness while preserving
+the same 15–20 total-call schedule. Its screen selected just one Down call,
+but the final refit selected 133 Down calls in Validation, with 61 correct.
+Total hits fell to 373/675 from 395/675 on Validation and 485/799 from
+508/799 on Confirmation. Validation correctness AUC was 0.5047. The trained
+mix is rejected; details are in `research/trained_directional_mix/README.md`.
+
+A bounded weight search then compared calibrated Up and Down scores with
+opposite-direction evidence and indicator-history priors. None of its 150
+Tuning-screened candidates selected Down on the screen. The chosen weights
+selected two Down calls in Validation (one correct), tied the active model at
+395/675, and fell to 505/799 versus 508/799 on Confirmation. Its selected-score
+correctness AUC fell from 0.5392 on screen to 0.4123 on Validation. The weights
+are rejected as a confidence measure. See
+`research/weighted_directional_mix/README.md`.
+
 ## Rules for future experiments
 
 1. Test one bounded hypothesis per cycle, preferably with no more than three tunable parameters.

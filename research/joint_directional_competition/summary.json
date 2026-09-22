@@ -1,0 +1,118 @@
+{
+  "method": "fixed_equal_weight_complementary_directional_calibration",
+  "calibration_labels_through_origin": 148,
+  "selection_rule": "one direction per indicator, top original monthly cap, no Down quota",
+  "windows": {
+    "validation": {
+      "candidate": {
+        "calls": 675,
+        "hits": 396,
+        "accuracy": 0.5866666666666667,
+        "down_calls": 0,
+        "down_hits": 0
+      },
+      "baseline": {
+        "calls": 675,
+        "hits": 395,
+        "accuracy": 0.5851851851851851,
+        "down_calls": 0,
+        "down_hits": 0
+      },
+      "hits_delta": 1,
+      "confidence": {
+        "correctness_auc": 0.4541924622569784,
+        "correctness_brier": 0.24401084766628983,
+        "score_quintiles": [
+          {
+            "quintile_low_to_high": 1,
+            "calls": 135,
+            "mean_score": 0.5603124527907335,
+            "observed_accuracy": 0.6592592592592592
+          },
+          {
+            "quintile_low_to_high": 2,
+            "calls": 135,
+            "mean_score": 0.5724292977568725,
+            "observed_accuracy": 0.5851851851851851
+          },
+          {
+            "quintile_low_to_high": 3,
+            "calls": 135,
+            "mean_score": 0.5810861745723996,
+            "observed_accuracy": 0.6222222222222222
+          },
+          {
+            "quintile_low_to_high": 4,
+            "calls": 135,
+            "mean_score": 0.5906045784913493,
+            "observed_accuracy": 0.5037037037037037
+          },
+          {
+            "quintile_low_to_high": 5,
+            "calls": 135,
+            "mean_score": 0.6073843045678624,
+            "observed_accuracy": 0.562962962962963
+          }
+        ],
+        "higher_score_more_accurate_by_quintile": false
+      }
+    },
+    "confirmation": {
+      "candidate": {
+        "calls": 799,
+        "hits": 501,
+        "accuracy": 0.6270337922403004,
+        "down_calls": 0,
+        "down_hits": 0
+      },
+      "baseline": {
+        "calls": 799,
+        "hits": 508,
+        "accuracy": 0.6357947434292867,
+        "down_calls": 7,
+        "down_hits": 5
+      },
+      "hits_delta": -7,
+      "confidence": {
+        "correctness_auc": 0.4586933515519297,
+        "correctness_brier": 0.2364093352876461,
+        "score_quintiles": [
+          {
+            "quintile_low_to_high": 1,
+            "calls": 160,
+            "mean_score": 0.5693677034344339,
+            "observed_accuracy": 0.6875
+          },
+          {
+            "quintile_low_to_high": 2,
+            "calls": 160,
+            "mean_score": 0.5814954435509728,
+            "observed_accuracy": 0.64375
+          },
+          {
+            "quintile_low_to_high": 3,
+            "calls": 159,
+            "mean_score": 0.5908834788498055,
+            "observed_accuracy": 0.610062893081761
+          },
+          {
+            "quintile_low_to_high": 4,
+            "calls": 160,
+            "mean_score": 0.5998518790183911,
+            "observed_accuracy": 0.6
+          },
+          {
+            "quintile_low_to_high": 5,
+            "calls": 160,
+            "mean_score": 0.6170093033055386,
+            "observed_accuracy": 0.59375
+          }
+        ],
+        "higher_score_more_accurate_by_quintile": false
+      }
+    }
+  },
+  "evidence_limit": "Validation and Confirmation have been viewed in prior research; upstream scores were also developed on earlier viewed windows. This is an exploratory replay, not a fresh blind test.",
+  "production_changed": false,
+  "nonlocked_gate_passed": false
+}

@@ -83,6 +83,47 @@ The Uptrend baseline writes `reports/uptrend_model_performance.*`; the active
 model owns `reports/model_performance.*`. These separate paths prevent a baseline
 rebuild from overwriting the public active-model report.
 
+### Flexible joint Up/Down selection trial (2026-09-21)
+
+- **Hypothesis**: Rank each eligible indicator's best Up or Down call on a shared Tuning-calibrated scale, allow 0–5 Down calls, and admit optional positions 16–20 only when their score clears a floor.
+- **Status**: `rejected` for production promotion; research implementation retained.
+- **Code Path**: `research/flexible_directional_selection.py`
+- **Artifacts & Report**: `research/flexible_directional_selection/predictions.parquet`, `summary.json`, `README.md`
+- **Observed Metrics**: The Tuning-selected policy used floor 0.60, Down margin 0.08, and extra-position floor 0.60. Validation was 357/600 versus 351/600 for the active model at matched monthly coverage, but Confirmation was 445/709 versus 447/709. At the original monthly caps the challenger was 394/675 versus 395/675 on Validation and 505/799 versus 508/799 on Confirmation. It selected five Down calls on Validation and none on Confirmation; its new overlay never fired.
+- **Decision**: The apparent 59.50% versus 58.52% raw Validation accuracy difference is confounded by coverage (600 versus 675 calls). Matched-coverage Confirmation and equal-cap comparisons do not support promotion. The active model remains unchanged.
+- **Boundary**: Thresholds and Platt calibration were fit on Tuning 120–179. Validation 180–219 was used only for evaluation, Confirmation 220–266 is descriptive, and locked origins were not read. Tuning metrics are in-sample for policy selection.
+- **Reproduction**: `python research/flexible_directional_selection.py`; `python -m pytest tests/unit/test_flexible_directional_selection.py`.
+
+### Correctness-trained directional mix trial (2026-09-21)
+
+- **Hypothesis**: Train a joint model of Up-call and Down-call correctness, then choose a variable 0–5 Down mix within the existing 15–20 monthly total.
+- **Status**: `rejected` for promotion; research code and row-level results retained.
+- **Code & report**: `research/trained_directional_mix.py`, `research/trained_directional_mix/README.md`, `summary.json`, and `predictions.parquet`.
+- **Observed metrics**: The Tuning screen gained one hit on 519 calls with one Down call. The frozen final policy selected 133 Down calls in Validation, 61 correct, and scored 373/675 versus 395/675 for the active model. Confirmation was 485/799 versus 508/799. Validation correctness AUC across both directional options was 0.5047.
+- **Decision**: The correctness scores and Down-call volume were unstable after refitting. The candidate lost 22 Validation and 23 Confirmation hits and cannot support confidence-based direction choices.
+- **Boundary**: Screen model labels stopped at origin 148; the final model stopped at 178 before Validation origin 180. Raw V3 Down scores are walk-forward, but their feature family had already been selected using Tuning 120–179 in prior research, so the screen is exploratory. Locked origins were excluded. Validation and Confirmation are previously inspected, not fresh blind holdouts.
+- **Reproduction**: `python -m research.trained_directional_mix`; `python -m pytest tests/unit/test_trained_directional_mix.py`.
+
+### Weighted Up/Down confidence trial (2026-09-21)
+
+- **Hypothesis**: Calibrated weights across Up, Down, opposite-direction evidence, and indicator-history priors can rank the most reliable 15–20 monthly calls and choose a variable Down mix.
+- **Status**: `rejected` for promotion; research artifacts retained.
+- **Code & report**: `research/weighted_directional_mix.py`, `research/weighted_directional_mix/README.md`, `summary.json`, `weight_screen.csv`, and `predictions.parquet`.
+- **Observed metrics**: A bounded 150-candidate screen selected weights 1.0/1.0; no candidate selected Down on screen origins 150–179. The frozen policy selected two Down calls in Validation, one correct, and tied the active model at 395/675; Confirmation was 505/799 versus 508/799. Selected-score correctness AUC was 0.5392 on the screen and 0.4123 on Validation; observed accuracy dropped from 68.15% in the lowest score quintile to 48.15% in the highest.
+- **Decision**: No tested weights produced a validated confidence ranking or reliable mixed-direction improvement. Production stays unchanged.
+- **Boundary**: Calibrators used labels through origin 148, weights were selected on 150–179, and later windows were only evaluated. Existing upstream model components were themselves developed with previously viewed windows; locked origins were excluded.
+- **Reproduction**: `python -m research.weighted_directional_mix`; `python -m pytest tests/unit/test_weighted_directional_mix.py`.
+
+### Open joint-direction competition check (2026-09-22)
+
+- **Hypothesis**: Calibrate Up and Down onto one complementary score, let every eligible indicator's stronger direction compete for the same 15–20 monthly slots, and admit any number of Down calls when they rank highest.
+- **Status**: `rejected` for promotion; the fixed-rule research implementation and row-level selections are retained.
+- **Code and report**: `research/joint_directional_competition.py`, `research/joint_directional_competition/README.md`, `summary.json`, and `predictions.parquet`.
+- **Observed metrics**: Validation 396/675 versus active 395/675, with 0 Down calls and correctness AUC 0.4542. Confirmation 501/799 versus active 508/799, with 0 Down calls and correctness AUC 0.4587. Higher score quintiles were not consistently more accurate.
+- **Decision**: The rule allows unrestricted Down competition in code but provides no reliable Down evidence or confidence ranking on this replay. It fails the non-locked gate; production remains unchanged.
+- **Boundary**: Arm calibrators use labels through origin 148; the selection rule has no outcome-tuned threshold or weight. Validation and Confirmation and upstream features were viewed in prior research, so this is exploratory rather than a fresh blind test. Locked origins were not read.
+- **Reproduction**: `python -m research.joint_directional_competition`; `python -m pytest tests/unit/test_joint_directional_competition.py -q`.
+
 ### 2.1 Directional Downside Selector (`directional_downside_selector`)
 - **Hypothesis**: Direct Down target modeling (`Down = 1 - y_true`) blending global logistic, local per-indicator logistic, and rise-then-stall pattern priors with learned lead-lag peer correlations to admit top Down calls into the monthly top 15.
 - **Status**: `rejected`

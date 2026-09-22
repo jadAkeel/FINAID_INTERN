@@ -1,0 +1,216 @@
+{
+  "selected_on": "tuning_120_179",
+  "calibration_note": "Tuning-fitted Platt scales; Tuning metrics are in-sample for policy selection.",
+  "policy": {
+    "down_floor": 0.6,
+    "down_margin": 0.08,
+    "extra_floor": 0.6
+  },
+  "baseline": {
+    "tuning": {
+      "calls": 1071,
+      "hits": 686,
+      "accuracy": 0.6405228758169934,
+      "down_calls": 4,
+      "down_hits": 2,
+      "down_overlay": 0,
+      "down_retained": 4,
+      "down_external": 0,
+      "calls_per_month": {
+        "15": 10,
+        "16": 5,
+        "17": 5,
+        "18": 15,
+        "19": 14,
+        "20": 11
+      }
+    },
+    "validation": {
+      "calls": 675,
+      "hits": 395,
+      "accuracy": 0.5851851851851851,
+      "down_calls": 0,
+      "down_hits": 0,
+      "down_overlay": 0,
+      "down_retained": 0,
+      "down_external": 0,
+      "calls_per_month": {
+        "15": 12,
+        "16": 7,
+        "17": 8,
+        "18": 4,
+        "19": 5,
+        "20": 4
+      }
+    },
+    "confirmation": {
+      "calls": 799,
+      "hits": 508,
+      "accuracy": 0.6357947434292867,
+      "down_calls": 7,
+      "down_hits": 5,
+      "down_overlay": 0,
+      "down_retained": 7,
+      "down_external": 0,
+      "calls_per_month": {
+        "15": 11,
+        "16": 11,
+        "17": 7,
+        "18": 8,
+        "19": 5,
+        "20": 5
+      }
+    }
+  },
+  "matched_coverage_baseline": {
+    "tuning": {
+      "calls": 924,
+      "hits": 603,
+      "accuracy": 0.6525974025974026,
+      "down_calls": 4,
+      "down_hits": 2,
+      "down_overlay": 0,
+      "down_retained": 4,
+      "down_external": 0,
+      "calls_per_month": {
+        "15": 50,
+        "16": 2,
+        "17": 5,
+        "19": 3
+      }
+    },
+    "validation": {
+      "calls": 600,
+      "hits": 351,
+      "accuracy": 0.585,
+      "down_calls": 0,
+      "down_hits": 0,
+      "down_overlay": 0,
+      "down_retained": 0,
+      "down_external": 0,
+      "calls_per_month": {
+        "15": 40
+      }
+    },
+    "confirmation": {
+      "calls": 709,
+      "hits": 447,
+      "accuracy": 0.6304654442877292,
+      "down_calls": 7,
+      "down_hits": 5,
+      "down_overlay": 0,
+      "down_retained": 7,
+      "down_external": 0,
+      "calls_per_month": {
+        "15": 45,
+        "17": 2
+      }
+    }
+  },
+  "flexible": {
+    "tuning": {
+      "calls": 924,
+      "hits": 608,
+      "accuracy": 0.658008658008658,
+      "down_calls": 0,
+      "down_hits": 0,
+      "down_overlay": 0,
+      "down_retained": 0,
+      "down_external": 0,
+      "calls_per_month": {
+        "15": 50,
+        "16": 2,
+        "17": 5,
+        "19": 3
+      }
+    },
+    "validation": {
+      "calls": 600,
+      "hits": 357,
+      "accuracy": 0.595,
+      "down_calls": 5,
+      "down_hits": 2,
+      "down_overlay": 0,
+      "down_retained": 0,
+      "down_external": 5,
+      "calls_per_month": {
+        "15": 40
+      }
+    },
+    "confirmation": {
+      "calls": 709,
+      "hits": 445,
+      "accuracy": 0.6276445698166432,
+      "down_calls": 0,
+      "down_hits": 0,
+      "down_overlay": 0,
+      "down_retained": 0,
+      "down_external": 0,
+      "calls_per_month": {
+        "15": 45,
+        "17": 2
+      }
+    }
+  },
+  "same_cap": {
+    "tuning": {
+      "calls": 1071,
+      "hits": 686,
+      "accuracy": 0.6405228758169934,
+      "down_calls": 0,
+      "down_hits": 0,
+      "down_overlay": 0,
+      "down_retained": 0,
+      "down_external": 0,
+      "calls_per_month": {
+        "15": 10,
+        "16": 5,
+        "17": 5,
+        "18": 15,
+        "19": 14,
+        "20": 11
+      }
+    },
+    "validation": {
+      "calls": 675,
+      "hits": 394,
+      "accuracy": 0.5837037037037037,
+      "down_calls": 5,
+      "down_hits": 2,
+      "down_overlay": 0,
+      "down_retained": 0,
+      "down_external": 5,
+      "calls_per_month": {
+        "15": 12,
+        "16": 7,
+        "17": 8,
+        "18": 4,
+        "19": 5,
+        "20": 4
+      }
+    },
+    "confirmation": {
+      "calls": 799,
+      "hits": 505,
+      "accuracy": 0.6320400500625782,
+      "down_calls": 0,
+      "down_hits": 0,
+      "down_overlay": 0,
+      "down_retained": 0,
+      "down_external": 0,
+      "calls_per_month": {
+        "15": 11,
+        "16": 11,
+        "17": 7,
+        "18": 8,
+        "19": 5,
+        "20": 5
+      }
+    }
+  },
+  "validation_matched_hits_delta": 6,
+  "confirmation_matched_hits_delta": -2,
+  "non_locked_screen_passed": false,
+  "promotion_eligible": false,
+  "production_changed": false
+}

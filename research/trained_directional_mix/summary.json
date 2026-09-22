@@ -1,0 +1,99 @@
+{
+  "training_labels_through_origin": 178,
+  "screen_training_labels_through_origin": 148,
+  "policy_selected_on": "origins_150_179",
+  "provenance_warning": "Raw V3 Down scores are walk-forward by origin, but the V3 feature family was chosen in earlier research using Tuning 120-179. The policy screen is exploratory, not an untouched holdout.",
+  "screen": {
+    "candidate_hits": 337,
+    "candidate_calls": 519,
+    "candidate_down_calls": 1,
+    "baseline_hits": 336
+  },
+  "regularization": 10.0,
+  "policy": {
+    "down_floor": 0.55,
+    "down_margin": 0.08,
+    "extra_floor": 0.0
+  },
+  "baseline": {
+    "validation": {
+      "calls": 675,
+      "hits": 395,
+      "accuracy": 0.5851851851851851,
+      "down_calls": 0,
+      "down_hits": 0,
+      "down_overlay": 0,
+      "down_retained": 0,
+      "down_external": 0,
+      "calls_per_month": {
+        "15": 12,
+        "16": 7,
+        "17": 8,
+        "18": 4,
+        "19": 5,
+        "20": 4
+      }
+    },
+    "confirmation": {
+      "calls": 799,
+      "hits": 508,
+      "accuracy": 0.6357947434292867,
+      "down_calls": 7,
+      "down_hits": 5,
+      "down_overlay": 0,
+      "down_retained": 7,
+      "down_external": 0,
+      "calls_per_month": {
+        "15": 11,
+        "16": 11,
+        "17": 7,
+        "18": 8,
+        "19": 5,
+        "20": 5
+      }
+    }
+  },
+  "candidate": {
+    "validation": {
+      "calls": 675,
+      "hits": 373,
+      "accuracy": 0.5525925925925926,
+      "down_calls": 133,
+      "down_hits": 61,
+      "down_overlay": 0,
+      "down_retained": 0,
+      "down_external": 133,
+      "calls_per_month": {
+        "15": 12,
+        "16": 7,
+        "17": 8,
+        "18": 4,
+        "19": 5,
+        "20": 4
+      }
+    },
+    "confirmation": {
+      "calls": 799,
+      "hits": 485,
+      "accuracy": 0.6070087609511889,
+      "down_calls": 80,
+      "down_hits": 34,
+      "down_overlay": 0,
+      "down_retained": 0,
+      "down_external": 80,
+      "calls_per_month": {
+        "15": 11,
+        "16": 11,
+        "17": 7,
+        "18": 8,
+        "19": 5,
+        "20": 5
+      }
+    }
+  },
+  "validation_correctness_auc_all_options": 0.5046616032221565,
+  "validation_correctness_brier_all_options": 0.25480414101053384,
+  "validation_hits_delta": -22,
+  "confirmation_hits_delta": -23,
+  "production_changed": false
+}
