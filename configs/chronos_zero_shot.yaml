@@ -1,0 +1,57 @@
+experiment_id: chronos_zero_shot
+experiment_name: Chronos-2 Zero-Shot Directional Forecasting
+research_only: true
+allow_promotion: false
+activation_status: research_only
+
+package_pin: chronos-forecasting==2.3.2
+package_name: chronos-forecasting
+package_version: "2.3.2"
+
+model_id: amazon/chronos-2
+model_revision: 29ec3766d36d6f73f0696f85560a422f50e8498c
+
+prediction_length: 2
+availability_lag: 1
+availability_lag_months: 1
+
+quantiles:
+  - 0.1
+  - 0.2
+  - 0.3
+  - 0.4
+  - 0.5
+  - 0.6
+  - 0.7
+  - 0.8
+  - 0.9
+
+tuning_origins: [120, 179]
+validation_origins: [180, 219]
+confirmation_origins: [220, 266]
+locked_origins: [268, 315]
+
+evaluation_windows:
+  tuning: [120, 179]
+  validation: [180, 219]
+  confirmation: [220, 266]
+  locked: [268, 315]
+
+data_path: data/monthly_indicators.xlsx
+maximum_workbook_position: 267
+
+seed: 20260727
+
+cache_directory: research/chronos_zero_shot/cache
+cache_version: chronos_zero_shot_cache_v1
+
+bootstrap_blocks: 6
+bootstrap_block_size: 6
+bootstrap_replicates: 500
+
+promotion:
+  research_only: true
+  allow_promotion: false
+  require_locked_evaluation_for_promotion: true
+
+locked_evaluation_read_allowed: false
