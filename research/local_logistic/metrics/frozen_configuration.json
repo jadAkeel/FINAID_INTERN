@@ -1,0 +1,51 @@
+{
+  "baseline": {
+    "accuracy": 0.6433333333333333,
+    "calls": 900,
+    "down_calls": 0,
+    "hits": 579,
+    "monthly_mean": 0.6433333333333332,
+    "monthly_median": 0.6666666666666666,
+    "monthly_std": 0.29119534153265597,
+    "months": 60,
+    "up_calls": 900
+  },
+  "fixed_shrinkage": {
+    "feature_set": "core8",
+    "local_weight": 0.4,
+    "logistic_c": 0.25,
+    "minimum_local_rows": 60,
+    "tuning_accuracy": 0.6422222222222222
+  },
+  "interaction": {
+    "features": [
+      "momentum_3",
+      "momentum_6",
+      "direction_lag_1",
+      "rolling_std_12",
+      "distance_mean_12",
+      "cross_section_rank"
+    ],
+    "logistic_c": 0.01,
+    "tuning_accuracy": 0.6333333333333333
+  },
+  "pure_local": {
+    "feature_set": "core8",
+    "local_weight": 1.0,
+    "logistic_c": 0.01,
+    "minimum_local_rows": 60,
+    "tuning_accuracy": 0.6411111111111111
+  },
+  "sample_aware_shrinkage": {
+    "feature_set": "core8",
+    "logistic_c": 0.25,
+    "maximum_local_weight": 0.1,
+    "minimum_local_rows": 60,
+    "reference_rows": 180,
+    "tuning_accuracy": 0.6377777777777778
+  },
+  "tuning_window": [
+    120,
+    179
+  ]
+}

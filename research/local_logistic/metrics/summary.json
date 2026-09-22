@@ -1,0 +1,736 @@
+{
+  "experiment_id": "local_logistic_selector",
+  "fallback": {
+    "by_period": {
+      "confirmation": 0.08711433756805807,
+      "tuning": 0.20542797494780793,
+      "validation": 0.112
+    },
+    "hybrid_rate": 0.138604504646401,
+    "max_local_training_rows": 240,
+    "mean_local_training_rows": 131.08221767207434,
+    "mean_sample_aware_weight": 0.05694676326980627,
+    "min_local_training_rows": 0,
+    "pure_local_rate": 0.138604504646401
+  },
+  "frozen_configuration": {
+    "baseline": {
+      "accuracy": 0.6433333333333333,
+      "calls": 900,
+      "down_calls": 0,
+      "hits": 579,
+      "monthly_mean": 0.6433333333333332,
+      "monthly_median": 0.6666666666666666,
+      "monthly_std": 0.29119534153265597,
+      "months": 60,
+      "up_calls": 900
+    },
+    "fixed_shrinkage": {
+      "feature_set": "core8",
+      "local_weight": 0.4,
+      "logistic_c": 0.25,
+      "minimum_local_rows": 60,
+      "tuning_accuracy": 0.6422222222222222
+    },
+    "interaction": {
+      "features": [
+        "momentum_3",
+        "momentum_6",
+        "direction_lag_1",
+        "rolling_std_12",
+        "distance_mean_12",
+        "cross_section_rank"
+      ],
+      "logistic_c": 0.01,
+      "tuning_accuracy": 0.6333333333333333
+    },
+    "pure_local": {
+      "feature_set": "core8",
+      "local_weight": 1.0,
+      "logistic_c": 0.01,
+      "minimum_local_rows": 60,
+      "tuning_accuracy": 0.6411111111111111
+    },
+    "sample_aware_shrinkage": {
+      "feature_set": "core8",
+      "logistic_c": 0.25,
+      "maximum_local_weight": 0.1,
+      "minimum_local_rows": 60,
+      "reference_rows": 180,
+      "tuning_accuracy": 0.6377777777777778
+    },
+    "tuning_window": [
+      120,
+      179
+    ]
+  },
+  "locked_origins": [
+    268,
+    315
+  ],
+  "locked_origins_read": false,
+  "maximum_origin_evaluated": 266,
+  "maximum_readable_position": 267,
+  "periods": {
+    "confirmation": {
+      "candidates": {
+        "A_global": {
+          "raw": {
+            "accuracy": 0.5517241379310345,
+            "auc": 0.5197961553999462,
+            "base_rate": 0.573502722323049,
+            "brier": 0.2496291246352565,
+            "log_loss": 0.6932911333912908,
+            "mean_probability": 0.5762490483234223,
+            "monthly_mean": 0.5514895644897417,
+            "monthly_std": 0.18859951191983645,
+            "rows": 2204
+          },
+          "selector": {
+            "accuracy": 0.6184397163120567,
+            "calls": 705,
+            "down_calls": 0,
+            "hits": 436,
+            "monthly_mean": 0.6184397163120566,
+            "monthly_median": 0.8,
+            "monthly_std": 0.3429629711029222,
+            "months": 47,
+            "up_calls": 705
+          }
+        },
+        "B_pure_local": {
+          "overlap_vs_global": {
+            "added_accuracy": 0.6238532110091743,
+            "added_calls": 109,
+            "added_correct": 68,
+            "mean_overlap_count": 12.680851063829786,
+            "mean_overlap_pct": 0.8453900709219858,
+            "months": 47,
+            "net_hit_change": 0,
+            "removed_accuracy": 0.6238532110091743,
+            "removed_calls": 109,
+            "removed_correct": 68
+          },
+          "paired_vs_global": {
+            "block_bootstrap_p05": -0.014184397163120569,
+            "block_bootstrap_p95": 0.014184397163120567,
+            "interval_excludes_zero": false,
+            "mean_monthly_difference": 0.0,
+            "median_monthly_difference": 0.0,
+            "months": 47,
+            "months_better": 11,
+            "months_equal": 29,
+            "months_worse": 7
+          },
+          "raw": {
+            "accuracy": 0.5476406533575318,
+            "auc": 0.5308384392674388,
+            "base_rate": 0.573502722323049,
+            "brier": 0.24695974887534472,
+            "log_loss": 0.6869805191242268,
+            "mean_probability": 0.5290993240062188,
+            "monthly_mean": 0.5477657203642303,
+            "monthly_std": 0.14548932612691468,
+            "rows": 2204
+          },
+          "selector": {
+            "accuracy": 0.6184397163120567,
+            "calls": 705,
+            "down_calls": 0,
+            "hits": 436,
+            "monthly_mean": 0.6184397163120566,
+            "monthly_median": 0.8,
+            "monthly_std": 0.33613378049271325,
+            "months": 47,
+            "up_calls": 705
+          }
+        },
+        "C_fixed_shrinkage": {
+          "overlap_vs_global": {
+            "added_accuracy": 0.5689655172413793,
+            "added_calls": 58,
+            "added_correct": 33,
+            "mean_overlap_count": 13.76595744680851,
+            "mean_overlap_pct": 0.9177304964539006,
+            "months": 47,
+            "net_hit_change": -1,
+            "removed_accuracy": 0.5862068965517241,
+            "removed_calls": 58,
+            "removed_correct": 34
+          },
+          "paired_vs_global": {
+            "block_bootstrap_p05": -0.012765957446808505,
+            "block_bootstrap_p95": 0.008510638297872339,
+            "interval_excludes_zero": false,
+            "mean_monthly_difference": -0.0014184397163120549,
+            "median_monthly_difference": 0.0,
+            "months": 47,
+            "months_better": 7,
+            "months_equal": 33,
+            "months_worse": 7
+          },
+          "raw": {
+            "accuracy": 0.5517241379310345,
+            "auc": 0.516073592782117,
+            "base_rate": 0.573502722323049,
+            "brier": 0.2498663354852323,
+            "log_loss": 0.6934406000591781,
+            "mean_probability": 0.571695303789526,
+            "monthly_mean": 0.5517704725527959,
+            "monthly_std": 0.17730364574648944,
+            "rows": 2204
+          },
+          "selector": {
+            "accuracy": 0.6170212765957447,
+            "calls": 705,
+            "down_calls": 0,
+            "hits": 435,
+            "monthly_mean": 0.6170212765957447,
+            "monthly_median": 0.8,
+            "monthly_std": 0.33807299474967123,
+            "months": 47,
+            "up_calls": 705
+          }
+        },
+        "D_sample_aware_shrinkage": {
+          "overlap_vs_global": {
+            "added_accuracy": 0.6153846153846154,
+            "added_calls": 13,
+            "added_correct": 8,
+            "mean_overlap_count": 14.72340425531915,
+            "mean_overlap_pct": 0.9815602836879429,
+            "months": 47,
+            "net_hit_change": -1,
+            "removed_accuracy": 0.6923076923076923,
+            "removed_calls": 13,
+            "removed_correct": 9
+          },
+          "paired_vs_global": {
+            "block_bootstrap_p05": -0.005673758865248226,
+            "block_bootstrap_p95": 0.002836879432624113,
+            "interval_excludes_zero": false,
+            "mean_monthly_difference": -0.0014184397163120564,
+            "median_monthly_difference": 0.0,
+            "months": 47,
+            "months_better": 1,
+            "months_equal": 44,
+            "months_worse": 2
+          },
+          "raw": {
+            "accuracy": 0.5526315789473685,
+            "auc": 0.5198567532992189,
+            "base_rate": 0.573502722323049,
+            "brier": 0.2492940047852933,
+            "log_loss": 0.6924607228519694,
+            "mean_probability": 0.5751481160851079,
+            "monthly_mean": 0.5524742027315493,
+            "monthly_std": 0.1929877496458371,
+            "rows": 2204
+          },
+          "selector": {
+            "accuracy": 0.6170212765957447,
+            "calls": 705,
+            "down_calls": 0,
+            "hits": 435,
+            "monthly_mean": 0.6170212765957446,
+            "monthly_median": 0.8,
+            "monthly_std": 0.3403516468284207,
+            "months": 47,
+            "up_calls": 705
+          }
+        },
+        "E_interaction": {
+          "overlap_vs_global": {
+            "added_accuracy": 0.5974025974025974,
+            "added_calls": 77,
+            "added_correct": 46,
+            "mean_overlap_count": 13.361702127659575,
+            "mean_overlap_pct": 0.8907801418439717,
+            "months": 47,
+            "net_hit_change": 2,
+            "removed_accuracy": 0.5714285714285714,
+            "removed_calls": 77,
+            "removed_correct": 44
+          },
+          "paired_vs_global": {
+            "block_bootstrap_p05": -0.0028368794326241132,
+            "block_bootstrap_p95": 0.008510638297872342,
+            "interval_excludes_zero": false,
+            "mean_monthly_difference": 0.0028368794326241154,
+            "median_monthly_difference": 0.0,
+            "months": 47,
+            "months_better": 7,
+            "months_equal": 36,
+            "months_worse": 4
+          },
+          "raw": {
+            "accuracy": 0.5598911070780399,
+            "auc": 0.5153447347158633,
+            "base_rate": 0.573502722323049,
+            "brier": 0.2473201227048228,
+            "log_loss": 0.6881536869047825,
+            "mean_probability": 0.5803160878871795,
+            "monthly_mean": 0.5596325433761712,
+            "monthly_std": 0.22523373607205233,
+            "rows": 2204
+          },
+          "selector": {
+            "accuracy": 0.6212765957446809,
+            "calls": 705,
+            "down_calls": 0,
+            "hits": 438,
+            "monthly_mean": 0.6212765957446809,
+            "monthly_median": 0.8,
+            "monthly_std": 0.3444820751396318,
+            "months": 47,
+            "up_calls": 705
+          }
+        }
+      },
+      "window": [
+        220,
+        266
+      ]
+    },
+    "tuning": {
+      "candidates": {
+        "A_global": {
+          "raw": {
+            "accuracy": 0.5787056367432151,
+            "auc": 0.5538241650979572,
+            "base_rate": 0.5703549060542797,
+            "brier": 0.25565939164093304,
+            "log_loss": 0.7140333804566809,
+            "mean_probability": 0.6710188964550889,
+            "monthly_mean": 0.5795307671596592,
+            "monthly_std": 0.24367088713253532,
+            "rows": 2395
+          },
+          "selector": {
+            "accuracy": 0.6433333333333333,
+            "calls": 900,
+            "down_calls": 0,
+            "hits": 579,
+            "monthly_mean": 0.6433333333333332,
+            "monthly_median": 0.6666666666666666,
+            "monthly_std": 0.29119534153265597,
+            "months": 60,
+            "up_calls": 900
+          }
+        },
+        "B_pure_local": {
+          "overlap_vs_global": {
+            "added_accuracy": 0.5737704918032787,
+            "added_calls": 183,
+            "added_correct": 105,
+            "mean_overlap_count": 11.95,
+            "mean_overlap_pct": 0.7966666666666667,
+            "months": 60,
+            "net_hit_change": -2,
+            "removed_accuracy": 0.5846994535519126,
+            "removed_calls": 183,
+            "removed_correct": 107
+          },
+          "paired_vs_global": {
+            "block_bootstrap_p05": -0.022222222222222223,
+            "block_bootstrap_p95": 0.015555555555555552,
+            "interval_excludes_zero": false,
+            "mean_monthly_difference": -0.0022222222222222244,
+            "median_monthly_difference": 0.0,
+            "months": 60,
+            "months_better": 18,
+            "months_equal": 19,
+            "months_worse": 23
+          },
+          "raw": {
+            "accuracy": 0.5720250521920668,
+            "auc": 0.5264155024067774,
+            "base_rate": 0.5703549060542797,
+            "brier": 0.24881162047108807,
+            "log_loss": 0.6941929108928897,
+            "mean_probability": 0.5489387933989038,
+            "monthly_mean": 0.5717228550500933,
+            "monthly_std": 0.2043849038093665,
+            "rows": 2395
+          },
+          "selector": {
+            "accuracy": 0.6411111111111111,
+            "calls": 900,
+            "down_calls": 0,
+            "hits": 577,
+            "monthly_mean": 0.6411111111111112,
+            "monthly_median": 0.7,
+            "monthly_std": 0.28126474293506853,
+            "months": 60,
+            "up_calls": 900
+          }
+        },
+        "C_fixed_shrinkage": {
+          "overlap_vs_global": {
+            "added_accuracy": 0.5733333333333334,
+            "added_calls": 75,
+            "added_correct": 43,
+            "mean_overlap_count": 13.75,
+            "mean_overlap_pct": 0.9166666666666666,
+            "months": 60,
+            "net_hit_change": -1,
+            "removed_accuracy": 0.5866666666666667,
+            "removed_calls": 75,
+            "removed_correct": 44
+          },
+          "paired_vs_global": {
+            "block_bootstrap_p05": -0.009999999999999998,
+            "block_bootstrap_p95": 0.008888888888888887,
+            "interval_excludes_zero": false,
+            "mean_monthly_difference": -0.0011111111111111094,
+            "median_monthly_difference": 0.0,
+            "months": 60,
+            "months_better": 11,
+            "months_equal": 34,
+            "months_worse": 15
+          },
+          "raw": {
+            "accuracy": 0.5782881002087683,
+            "auc": 0.5531234037225014,
+            "base_rate": 0.5703549060542797,
+            "brier": 0.2503047331879706,
+            "log_loss": 0.6986027282388557,
+            "mean_probability": 0.6411565018445426,
+            "monthly_mean": 0.578936771362175,
+            "monthly_std": 0.24158518333271944,
+            "rows": 2395
+          },
+          "selector": {
+            "accuracy": 0.6422222222222222,
+            "calls": 900,
+            "down_calls": 0,
+            "hits": 578,
+            "monthly_mean": 0.6422222222222221,
+            "monthly_median": 0.7333333333333333,
+            "monthly_std": 0.285220809605937,
+            "months": 60,
+            "up_calls": 900
+          }
+        },
+        "D_sample_aware_shrinkage": {
+          "overlap_vs_global": {
+            "added_accuracy": 0.4,
+            "added_calls": 10,
+            "added_correct": 4,
+            "mean_overlap_count": 14.833333333333334,
+            "mean_overlap_pct": 0.9888888888888889,
+            "months": 60,
+            "net_hit_change": -5,
+            "removed_accuracy": 0.9,
+            "removed_calls": 10,
+            "removed_correct": 9
+          },
+          "paired_vs_global": {
+            "block_bootstrap_p05": -0.007777777777777782,
+            "block_bootstrap_p95": -0.002222222222222224,
+            "interval_excludes_zero": true,
+            "mean_monthly_difference": -0.005555555555555556,
+            "median_monthly_difference": 0.0,
+            "months": 60,
+            "months_better": 0,
+            "months_equal": 55,
+            "months_worse": 5
+          },
+          "raw": {
+            "accuracy": 0.5791231732776618,
+            "auc": 0.5528900537416388,
+            "base_rate": 0.5703549060542797,
+            "brier": 0.25509302281270846,
+            "log_loss": 0.7117386896660377,
+            "mean_probability": 0.6682223558745659,
+            "monthly_mean": 0.579918364058884,
+            "monthly_std": 0.24271241986876876,
+            "rows": 2395
+          },
+          "selector": {
+            "accuracy": 0.6377777777777778,
+            "calls": 900,
+            "down_calls": 0,
+            "hits": 574,
+            "monthly_mean": 0.6377777777777778,
+            "monthly_median": 0.6666666666666666,
+            "monthly_std": 0.29262540838011597,
+            "months": 60,
+            "up_calls": 900
+          }
+        },
+        "E_interaction": {
+          "overlap_vs_global": {
+            "added_accuracy": 0.52,
+            "added_calls": 75,
+            "added_correct": 39,
+            "mean_overlap_count": 13.75,
+            "mean_overlap_pct": 0.9166666666666665,
+            "months": 60,
+            "net_hit_change": -9,
+            "removed_accuracy": 0.64,
+            "removed_calls": 75,
+            "removed_correct": 48
+          },
+          "paired_vs_global": {
+            "block_bootstrap_p05": -0.01888888888888889,
+            "block_bootstrap_p95": -0.002222222222222222,
+            "interval_excludes_zero": true,
+            "mean_monthly_difference": -0.010000000000000002,
+            "median_monthly_difference": 0.0,
+            "months": 60,
+            "months_better": 8,
+            "months_equal": 35,
+            "months_worse": 17
+          },
+          "raw": {
+            "accuracy": 0.5728601252609603,
+            "auc": 0.5149699704186214,
+            "base_rate": 0.5703549060542797,
+            "brier": 0.25590123134357257,
+            "log_loss": 0.7088418742057512,
+            "mean_probability": 0.664093359504718,
+            "monthly_mean": 0.5736808617106105,
+            "monthly_std": 0.2521524920667376,
+            "rows": 2395
+          },
+          "selector": {
+            "accuracy": 0.6333333333333333,
+            "calls": 900,
+            "down_calls": 0,
+            "hits": 570,
+            "monthly_mean": 0.6333333333333333,
+            "monthly_median": 0.7,
+            "monthly_std": 0.2890337171372651,
+            "months": 60,
+            "up_calls": 900
+          }
+        }
+      },
+      "window": [
+        120,
+        179
+      ]
+    },
+    "validation": {
+      "candidates": {
+        "A_global": {
+          "raw": {
+            "accuracy": 0.5102857142857142,
+            "auc": 0.4963409780248506,
+            "base_rate": 0.5377142857142857,
+            "brier": 0.2590748857763912,
+            "log_loss": 0.7133660931660207,
+            "mean_probability": 0.5304586258112716,
+            "monthly_mean": 0.5099894291754757,
+            "monthly_std": 0.12666102607170363,
+            "rows": 1750
+          },
+          "selector": {
+            "accuracy": 0.5783333333333334,
+            "calls": 600,
+            "down_calls": 0,
+            "hits": 347,
+            "monthly_mean": 0.5783333333333334,
+            "monthly_median": 0.6333333333333333,
+            "monthly_std": 0.28340119850882656,
+            "months": 40,
+            "up_calls": 600
+          }
+        },
+        "B_pure_local": {
+          "overlap_vs_global": {
+            "added_accuracy": 0.5849056603773585,
+            "added_calls": 53,
+            "added_correct": 31,
+            "mean_overlap_count": 13.675,
+            "mean_overlap_pct": 0.9116666666666667,
+            "months": 40,
+            "net_hit_change": 7,
+            "removed_accuracy": 0.4528301886792453,
+            "removed_calls": 53,
+            "removed_correct": 24
+          },
+          "paired_vs_global": {
+            "block_bootstrap_p05": 6.210310043996972e-18,
+            "block_bootstrap_p95": 0.023333333333333338,
+            "interval_excludes_zero": true,
+            "mean_monthly_difference": 0.01166666666666667,
+            "median_monthly_difference": 0.0,
+            "months": 40,
+            "months_better": 9,
+            "months_equal": 27,
+            "months_worse": 4
+          },
+          "raw": {
+            "accuracy": 0.5371428571428571,
+            "auc": 0.5292307975236086,
+            "base_rate": 0.5377142857142857,
+            "brier": 0.24923878447758274,
+            "log_loss": 0.6918226338948753,
+            "mean_probability": 0.5187886837111915,
+            "monthly_mean": 0.5368261099365751,
+            "monthly_std": 0.13883479117311837,
+            "rows": 1750
+          },
+          "selector": {
+            "accuracy": 0.59,
+            "calls": 600,
+            "down_calls": 0,
+            "hits": 354,
+            "monthly_mean": 0.5900000000000001,
+            "monthly_median": 0.6333333333333333,
+            "monthly_std": 0.30214805525345895,
+            "months": 40,
+            "up_calls": 600
+          }
+        },
+        "C_fixed_shrinkage": {
+          "overlap_vs_global": {
+            "added_accuracy": 0.6666666666666666,
+            "added_calls": 30,
+            "added_correct": 20,
+            "mean_overlap_count": 14.25,
+            "mean_overlap_pct": 0.95,
+            "months": 40,
+            "net_hit_change": 8,
+            "removed_accuracy": 0.4,
+            "removed_calls": 30,
+            "removed_correct": 12
+          },
+          "paired_vs_global": {
+            "block_bootstrap_p05": 0.0050000000000000044,
+            "block_bootstrap_p95": 0.02166666666666667,
+            "interval_excludes_zero": true,
+            "mean_monthly_difference": 0.01333333333333334,
+            "median_monthly_difference": 0.0,
+            "months": 40,
+            "months_better": 10,
+            "months_equal": 27,
+            "months_worse": 3
+          },
+          "raw": {
+            "accuracy": 0.5194285714285715,
+            "auc": 0.5117415788637131,
+            "base_rate": 0.5377142857142857,
+            "brier": 0.25521449651925776,
+            "log_loss": 0.704350956411189,
+            "mean_probability": 0.53877303253663,
+            "monthly_mean": 0.5190803382663848,
+            "monthly_std": 0.13017276231602615,
+            "rows": 1750
+          },
+          "selector": {
+            "accuracy": 0.5916666666666667,
+            "calls": 600,
+            "down_calls": 0,
+            "hits": 355,
+            "monthly_mean": 0.5916666666666667,
+            "monthly_median": 0.6666666666666666,
+            "monthly_std": 0.29125428722863433,
+            "months": 40,
+            "up_calls": 600
+          }
+        },
+        "D_sample_aware_shrinkage": {
+          "overlap_vs_global": {
+            "added_accuracy": 0.8571428571428571,
+            "added_calls": 7,
+            "added_correct": 6,
+            "mean_overlap_count": 14.825,
+            "mean_overlap_pct": 0.9883333333333333,
+            "months": 40,
+            "net_hit_change": 3,
+            "removed_accuracy": 0.42857142857142855,
+            "removed_calls": 7,
+            "removed_correct": 3
+          },
+          "paired_vs_global": {
+            "block_bootstrap_p05": 0.0,
+            "block_bootstrap_p95": 0.010000000000000005,
+            "interval_excludes_zero": false,
+            "mean_monthly_difference": 0.005000000000000002,
+            "median_monthly_difference": 0.0,
+            "months": 40,
+            "months_better": 3,
+            "months_equal": 37,
+            "months_worse": 0
+          },
+          "raw": {
+            "accuracy": 0.512,
+            "auc": 0.4997917950159536,
+            "base_rate": 0.5377142857142857,
+            "brier": 0.25816287249232844,
+            "log_loss": 0.7109829856525297,
+            "mean_probability": 0.5321412999556892,
+            "monthly_mean": 0.5116807610993657,
+            "monthly_std": 0.1336574012740629,
+            "rows": 1750
+          },
+          "selector": {
+            "accuracy": 0.5833333333333334,
+            "calls": 600,
+            "down_calls": 0,
+            "hits": 350,
+            "monthly_mean": 0.5833333333333334,
+            "monthly_median": 0.6666666666666666,
+            "monthly_std": 0.28634647194317236,
+            "months": 40,
+            "up_calls": 600
+          }
+        },
+        "E_interaction": {
+          "overlap_vs_global": {
+            "added_accuracy": 0.6222222222222222,
+            "added_calls": 45,
+            "added_correct": 28,
+            "mean_overlap_count": 13.875,
+            "mean_overlap_pct": 0.925,
+            "months": 40,
+            "net_hit_change": 4,
+            "removed_accuracy": 0.5333333333333333,
+            "removed_calls": 45,
+            "removed_correct": 24
+          },
+          "paired_vs_global": {
+            "block_bootstrap_p05": -0.003333333333333334,
+            "block_bootstrap_p95": 0.016666666666666677,
+            "interval_excludes_zero": false,
+            "mean_monthly_difference": 0.0066666666666666706,
+            "median_monthly_difference": 0.0,
+            "months": 40,
+            "months_better": 7,
+            "months_equal": 29,
+            "months_worse": 4
+          },
+          "raw": {
+            "accuracy": 0.5182857142857142,
+            "auc": 0.48914772570536824,
+            "base_rate": 0.5377142857142857,
+            "brier": 0.25402284525174357,
+            "log_loss": 0.702484283050607,
+            "mean_probability": 0.5576594665024404,
+            "monthly_mean": 0.5178250528541226,
+            "monthly_std": 0.19138646194236184,
+            "rows": 1750
+          },
+          "selector": {
+            "accuracy": 0.585,
+            "calls": 600,
+            "down_calls": 0,
+            "hits": 351,
+            "monthly_mean": 0.585,
+            "monthly_median": 0.6666666666666666,
+            "monthly_std": 0.2998527653894173,
+            "months": 40,
+            "up_calls": 600
+          }
+        }
+      },
+      "window": [
+        180,
+        219
+      ]
+    }
+  }
+}

@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- added the Local / Indicator-Specific Logistic Regression research branch
+  (`local_logistic_selector`): per-indicator local logistic models,
+  Global/Local fixed and sample-size-aware shrinkage, and an
+  `indicator_id x feature` interaction model, each scored through the
+  unchanged graph, 48-month prior and top-15 selector; rejected, with the
+  Global Logistic baseline retained and no production change;
 - promoted the Regime Adaptive Bidirectional Selector as the explicit active
   product model while preserving the Uptrend Selector as the reproducible
   baseline;
