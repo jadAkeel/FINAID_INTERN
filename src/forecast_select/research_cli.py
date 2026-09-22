@@ -29,6 +29,8 @@ RESEARCH_COMMANDS = {
     "show-selection-score-v2",
     "build-directional-ranker-v1",
     "show-directional-ranker-v1",
+    "build-chronos-zero-shot",
+    "show-chronos-zero-shot",
 }
 
 
@@ -123,6 +125,14 @@ def register_research_subparsers(
     subparsers.add_parser(
         "show-directional-ranker-v1",
         help=f"{help_prefix}Show the directional ranker v1 audit result",
+    )
+    subparsers.add_parser(
+        "build-chronos-zero-shot",
+        help=f"{help_prefix}Build the Chronos-2 zero-shot directional evaluation",
+    )
+    subparsers.add_parser(
+        "show-chronos-zero-shot",
+        help=f"{help_prefix}Show the Chronos-2 zero-shot evaluation result",
     )
 
 
@@ -250,6 +260,24 @@ def execute_research_command(
         print(
             json.dumps(
                 mod.directional_ranker_v1_status(target_root),
+                indent=2,
+                sort_keys=True,
+            )
+        )
+    elif command == "build-chronos-zero-shot":
+        mod = importlib.import_module("forecast_select.chronos_pipeline")
+        print(
+            json.dumps(
+                mod.build_chronos_zero_shot(target_root),
+                indent=2,
+                sort_keys=True,
+            )
+        )
+    elif command == "show-chronos-zero-shot":
+        mod = importlib.import_module("forecast_select.chronos_pipeline")
+        print(
+            json.dumps(
+                mod.chronos_zero_shot_status(target_root),
                 indent=2,
                 sort_keys=True,
             )

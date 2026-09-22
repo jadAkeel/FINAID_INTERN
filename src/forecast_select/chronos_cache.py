@@ -296,6 +296,7 @@ def generate_chronos_origin_forecasts(
     inputs_rows: list[dict[str, Any]] = []
     outcomes_rows: list[dict[str, Any]] = []
 
+    prepared_contexts: dict[str, tuple[np.ndarray, int, bool]] = {}
     for ind in indicators:
         series = frame[ind].to_numpy(dtype=float)
         try:
@@ -310,6 +311,35 @@ def generate_chronos_origin_forecasts(
             diff_context = np.array([])
             context_len = 0
             data_quality_ok = False
+        prepared_contexts[ind] = (diff_context, context_len, data_quality_ok)
+
+    batch_results: dict[str, ChronosForecastResult] = {}
+    batch_error: str | None = None
+    batch_predict = getattr(provider, "predict_batch", None)
+    batch_indicators = [
+        ind
+        for ind in indicators
+        if prepared_contexts[ind][2] and prepared_contexts[ind][1] >= 2
+    ]
+    if callable(batch_predict) and batch_indicators:
+        try:
+            results = batch_predict(
+                [prepared_contexts[ind][0] for ind in batch_indicators],
+                prediction_length=prediction_length,
+                quantile_levels=levels,
+                seed=seed,
+            )
+            if len(results) != len(batch_indicators):
+                raise ValueError(
+                    f"Batch provider returned {len(results)} results for "
+                    f"{len(batch_indicators)} contexts"
+                )
+            batch_results = dict(zip(batch_indicators, results, strict=True))
+        except Exception as exc:
+            batch_error = f"Batch provider failure: {exc}"
+
+    for ind in indicators:
+        diff_context, context_len, data_quality_ok = prepared_contexts[ind]
 
         if not data_quality_ok or context_len < 2:
             forecast_res = ChronosForecastResult(
@@ -317,6 +347,18 @@ def generate_chronos_origin_forecasts(
                 quantile_levels=levels,
                 error_flag=True,
                 error_message="Insufficient or invalid causal context",
+                model_id=model_id,
+                model_revision=model_revision,
+                seed=seed,
+            )
+        elif ind in batch_results:
+            forecast_res = batch_results[ind]
+        elif batch_error is not None:
+            forecast_res = ChronosForecastResult(
+                quantiles=np.full((prediction_length, len(levels)), np.nan),
+                quantile_levels=levels,
+                error_flag=True,
+                error_message=batch_error,
                 model_id=model_id,
                 model_revision=model_revision,
                 seed=seed,

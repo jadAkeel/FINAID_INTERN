@@ -19,7 +19,11 @@ from forecast_select.chronos_cache import (
     validate_origin,
     write_chronos_cache,
 )
-from forecast_select.chronos_protocol import DeterministicChronosProvider
+from forecast_select.chronos_protocol import (
+    DEFAULT_QUANTILES,
+    ChronosForecastResult,
+    DeterministicChronosProvider,
+)
 from forecast_select.io import sha256_file
 
 
@@ -249,3 +253,42 @@ def test_provider_exception_and_leading_missing_history_fail_safely():
     assert x1["failure_flag"] is True
     assert x1["eligible"] is False
     assert x1["p_up"] == 0.5
+
+
+def test_generate_forecasts_batches_valid_contexts_once():
+    frame = _dummy_workbook(267)
+
+    class BatchProvider:
+        def __init__(self):
+            self.calls = 0
+            self.context_count = 0
+
+        def predict_batch(self, contexts, **kwargs):
+            self.calls += 1
+            self.context_count = len(contexts)
+            return [
+                ChronosForecastResult(
+                    quantiles=np.tile(np.linspace(-1.0, 1.0, 9), (2, 1)),
+                    quantile_levels=DEFAULT_QUANTILES,
+                    mean=np.zeros(2),
+                )
+                for _ in contexts
+            ]
+
+        def predict(self, context, **kwargs):
+            raise AssertionError("Per-series path must not run with batch support")
+
+    provider = BatchProvider()
+    inputs, outcomes = generate_chronos_origin_forecasts(
+        frame,
+        origin_position=120,
+        provider=provider,
+        data_hash="data",
+        config_hash="config",
+    )
+    eligible_contexts = sum(
+        row["data_quality_ok"] and row["context_length"] >= 2 for row in inputs
+    )
+    assert provider.calls == 1
+    assert provider.context_count == eligible_contexts
+    assert len(inputs) == len(outcomes)

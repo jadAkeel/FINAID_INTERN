@@ -21,6 +21,9 @@ dev = [
   "pytest>=8,<9",
   "ruff>=0.15,<0.16",
 ]
+pretrained = [
+  "chronos-forecasting==2.3.2",
+]
 
 [project.scripts]
 forecast-select = "forecast_select.cli:main"

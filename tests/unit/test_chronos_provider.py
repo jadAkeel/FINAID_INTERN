@@ -150,3 +150,39 @@ def test_real_provider_defensive_shape_parser():
     # 6. Invalid shapes raise ValueError
     with pytest.raises(ValueError, match="Unexpected quantiles shape"):
         ChronosRealProvider._defensive_shape_parse(np.ones((4, 4)), prediction_length=2, num_quantiles=9)
+
+
+def test_real_provider_uses_official_sequence_input_and_list_output(monkeypatch):
+    torch = pytest.importorskip("torch")
+
+    class FakePipeline:
+        def predict_quantiles(self, inputs, **kwargs):
+            assert isinstance(inputs, list)
+            assert len(inputs) == 2
+            assert all(item.ndim == 1 for item in inputs)
+            assert kwargs["prediction_length"] == 2
+            quantiles = [torch.arange(18, dtype=torch.float32).reshape(1, 2, 9) for _ in inputs]
+            means = [torch.tensor([[1.0, 2.0]], dtype=torch.float32) for _ in inputs]
+            return quantiles, means
+
+    provider = ChronosRealProvider()
+    monkeypatch.setattr(provider, "_load_pipeline", lambda: FakePipeline())
+    results = provider.predict_batch(
+        [np.array([1.0, 2.0]), np.array([3.0, 4.0, 5.0])], seed=20260727
+    )
+    assert len(results) == 2
+    assert all(result.quantiles.shape == (2, 9) for result in results)
+    assert all(result.mean.shape == (2,) for result in results)
+
+
+def test_real_provider_rejects_wrong_batch_output_count(monkeypatch):
+    torch = pytest.importorskip("torch")
+
+    class BadPipeline:
+        def predict_quantiles(self, inputs, **kwargs):
+            return [torch.zeros((1, 2, 9))], [torch.zeros((1, 2))]
+
+    provider = ChronosRealProvider()
+    monkeypatch.setattr(provider, "_load_pipeline", lambda: BadPipeline())
+    with pytest.raises(ValueError, match="Expected 2 Chronos-2 quantile outputs"):
+        provider.predict_batch([np.array([1.0, 2.0]), np.array([3.0, 4.0])])

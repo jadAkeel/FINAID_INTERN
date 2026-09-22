@@ -220,6 +220,26 @@ class ChronosRealProvider:
         seed: int | None = None,
         **kwargs: Any,
     ) -> ChronosForecastResult:
+        return self.predict_batch(
+            [context],
+            prediction_length=prediction_length,
+            quantile_levels=quantile_levels,
+            seed=seed,
+            **kwargs,
+        )[0]
+
+    def predict_batch(
+        self,
+        contexts: Sequence[np.ndarray | Sequence[float]],
+        *,
+        prediction_length: int = 2,
+        quantile_levels: Sequence[float] = DEFAULT_QUANTILES,
+        seed: int | None = None,
+        **kwargs: Any,
+    ) -> list[ChronosForecastResult]:
+        """Forecast a batch of independent univariate contexts with the official API."""
+        if not contexts:
+            return []
         start_time = time.perf_counter()
         pipeline = self._load_pipeline()
 
@@ -236,8 +256,10 @@ class ChronosRealProvider:
 
         import torch
 
-        ctx = np.asarray(context, dtype=float)
-        tensor_context = torch.tensor(ctx, dtype=torch.float32)
+        tensor_contexts = [
+            torch.tensor(np.asarray(context, dtype=float), dtype=torch.float32)
+            for context in contexts
+        ]
 
         levels = [float(q) for q in quantile_levels]
         predict_kwargs: dict[str, Any] = {
@@ -248,28 +270,56 @@ class ChronosRealProvider:
             predict_kwargs["seed"] = seed
 
         try:
-            raw_output = pipeline.predict_quantiles(tensor_context, **predict_kwargs)
+            raw_output = pipeline.predict_quantiles(tensor_contexts, **predict_kwargs)
         except TypeError:
             predict_kwargs.pop("seed", None)
-            raw_output = pipeline.predict_quantiles(tensor_context, **predict_kwargs)
+            raw_output = pipeline.predict_quantiles(tensor_contexts, **predict_kwargs)
 
-        quantiles_arr, mean_arr = self._defensive_shape_parse(
-            raw_output,
-            prediction_length=prediction_length,
-            num_quantiles=len(levels),
-        )
+        raw_quantiles, raw_means = self._split_batch_output(raw_output, len(contexts))
+        elapsed_per_series = (time.perf_counter() - start_time) / len(contexts)
+        results: list[ChronosForecastResult] = []
+        for index in range(len(contexts)):
+            raw_item = (
+                raw_quantiles[index],
+                None if raw_means is None else raw_means[index],
+            )
+            quantiles_arr, mean_arr = self._defensive_shape_parse(
+                raw_item,
+                prediction_length=prediction_length,
+                num_quantiles=len(levels),
+            )
+            results.append(
+                ChronosForecastResult(
+                    quantiles=quantiles_arr,
+                    quantile_levels=tuple(levels),
+                    mean=mean_arr,
+                    runtime_seconds=elapsed_per_series,
+                    error_flag=False,
+                    error_message=None,
+                    model_id=self.model_id,
+                    model_revision=self.model_revision,
+                    seed=seed,
+                )
+            )
+        return results
 
-        return ChronosForecastResult(
-            quantiles=quantiles_arr,
-            quantile_levels=tuple(levels),
-            mean=mean_arr,
-            runtime_seconds=time.perf_counter() - start_time,
-            error_flag=False,
-            error_message=None,
-            model_id=self.model_id,
-            model_revision=self.model_revision,
-            seed=seed,
-        )
+    @staticmethod
+    def _split_batch_output(raw: Any, expected_items: int) -> tuple[list[Any], list[Any] | None]:
+        """Validate the official tuple-of-lists Chronos-2 batch result."""
+        if not isinstance(raw, (tuple, list)) or len(raw) < 1:
+            raise ValueError("Chronos-2 predict_quantiles must return quantiles and optional means")
+        quantiles = raw[0]
+        means = raw[1] if len(raw) > 1 else None
+        if not isinstance(quantiles, (tuple, list)) or len(quantiles) != expected_items:
+            raise ValueError(
+                f"Expected {expected_items} Chronos-2 quantile outputs, got "
+                f"{len(quantiles) if isinstance(quantiles, (tuple, list)) else 'non-list'}"
+            )
+        if means is not None and (
+            not isinstance(means, (tuple, list)) or len(means) != expected_items
+        ):
+            raise ValueError("Chronos-2 mean output count does not match input count")
+        return list(quantiles), None if means is None else list(means)
 
     @staticmethod
     def _defensive_shape_parse(

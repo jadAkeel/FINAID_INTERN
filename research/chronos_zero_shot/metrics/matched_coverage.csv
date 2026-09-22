@@ -1,0 +1,4 @@
+window,origin_count,total_calls,candidate_hits,active_hits,total_hit_delta,mean_monthly_hit_delta,bootstrap_p10,bootstrap_p50,bootstrap_p90
+tuning,60,1071,671,686,-15.0,-0.25,-23.0,-15.0,-5.0
+validation,40,675,379,395,-16.0,-0.4,-28.0,-16.0,-5.0
+confirmation,47,799,496,508,-12.0,-0.2553191489361702,-23.0,-13.0,-5.0
