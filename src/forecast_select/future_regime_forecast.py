@@ -15,6 +15,7 @@ from .directional_downside import (
 from .directional_downside_pipeline import (
     _configuration_hash as _directional_configuration_hash,
 )
+from .delivery_reliability import historical_reliability
 from .future_forecast import (
     _forecast_month,
     build_direct_horizon_targets,
@@ -555,6 +556,7 @@ def write_regime_adaptive_next_three_forecast(root: Path = ROOT) -> Path:
         "historical_regime_reference_through_origin": int(
             history["origin_position"].max()
         ),
+        "one_month_historical_reliability": historical_reliability(history),
         "notes": [
             "Horizon one applies the frozen regime-adaptive research policy.",
             "Horizons two and three are experimental direct-horizon extensions.",

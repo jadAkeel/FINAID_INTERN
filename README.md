@@ -46,6 +46,21 @@ The generated forecast is written to
 `reports/regime_adaptive_next_three_forecast.json`. Each selected row includes
 the indicator, direction, directional scores, group, and rank.
 
+The bundled workbook currently ends in May 2026, so this command produces
+forecasts for June, July, and August 2026. To forecast later months, append the
+missing monthly observations to `data/monthly_indicators.xlsx` and rerun the
+command. Check `generated_from_data_through` and `forecast_month` in the JSON
+before using an output. The one-month forecast uses the frozen active policy;
+the second and third months use experimental extensions. Directional scores
+are model scores, not a verified probability of a correct call.
+
+The forecast JSON also includes `one_month_historical_reliability`: the active
+selector's observed Validation hit rate and a six-month block-bootstrap range
+for its selected calls. This is cohort-level historical evidence for the
+one-month policy, not an individual confidence score or a guarantee for future
+months. The forecast keeps 15–20 calls even when individual correctness cannot
+be verified.
+
 ## Project layout
 
 ```text

@@ -473,6 +473,23 @@
     "No future indicator values or hidden outcomes were synthesized or read.",
     "The research artifacts and locked evaluation were not modified."
   ],
+  "one_month_historical_reliability": {
+    "bootstrap_block_months": 6,
+    "bootstrap_replicates": 5000,
+    "calls": 675,
+    "hits": 395,
+    "individual_correctness_probability": null,
+    "interpretation": "Descriptive replay on previously viewed months; neither the observed rate nor its bootstrap range guarantees future or individual accuracy.",
+    "monthly_block_bootstrap_p05_accuracy": 0.5182899028838313,
+    "monthly_block_bootstrap_p95_accuracy": 0.6711093265279348,
+    "months": 40,
+    "observed_accuracy": 0.5851851851851851,
+    "origins": [
+      180,
+      219
+    ],
+    "scope": "historical_selected_call_cohort_not_individual_confidence"
+  },
   "selected_parameters": {
     "allow_down_predictions": true,
     "down_margin": 0.0,

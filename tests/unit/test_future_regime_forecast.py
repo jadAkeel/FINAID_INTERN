@@ -35,6 +35,26 @@ def _forecasts() -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+def _history() -> pd.DataFrame:
+    rows = [
+        {
+            "origin_position": origin,
+            "accepted": True,
+            "predicted_direction": "Up",
+            "y_true": int(rank % 2 == 0),
+        }
+        for origin in range(180, 220)
+        for rank in range(15)
+    ]
+    rows.append({
+        "origin_position": 266,
+        "accepted": False,
+        "predicted_direction": "Up",
+        "y_true": 1,
+    })
+    return pd.DataFrame(rows)
+
+
 def test_regime_adaptive_writer_serializes_three_direct_horizons(
     tmp_path,
     monkeypatch,
@@ -73,7 +93,7 @@ def test_regime_adaptive_writer_serializes_three_direct_horizons(
     monkeypatch.setattr(
         future_regime_forecast.pd,
         "read_parquet",
-        lambda _: pd.DataFrame({"origin_position": [120, 266]}),
+        lambda _: _history(),
     )
 
     output = future_regime_forecast.write_regime_adaptive_next_three_forecast(
@@ -91,6 +111,9 @@ def test_regime_adaptive_writer_serializes_three_direct_horizons(
     assert [row["horizon_months"] for row in payload["forecasts"]] == [1, 2, 3]
     assert all(len(row["selections"]) == 15 for row in payload["forecasts"])
     assert payload["generalized_correlation_overlay"]["enabled"] is True
+    reliability = payload["one_month_historical_reliability"]
+    assert reliability["calls"] == 600
+    assert reliability["individual_correctness_probability"] is None
     assert all(
         row["generalized_graph_fit_through_origin"] == 315
         for row in payload["forecasts"]

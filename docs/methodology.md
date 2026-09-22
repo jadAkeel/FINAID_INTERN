@@ -157,3 +157,11 @@ calls. Labels stop at `origin - 2`, at least 12 prior selection months are
 required, and `cohort_correctness_lcb` is a one-sided 95% Wilson lower bound.
 These cohort fields are not individualized and cannot justify threshold-based
 abstention.
+
+The three-month forecast JSON includes separate historical reliability
+evidence for the frozen one-month policy. It reports selected-call accuracy on
+Validation origins 180–219 and the 5th and 95th percentiles of a deterministic
+six-month moving-block bootstrap over months. These are descriptive cohort
+statistics on a previously viewed window. They do not calibrate individual
+calls, justify dropping below the required 15–20 calls, or validate the
+experimental second and third horizons.
