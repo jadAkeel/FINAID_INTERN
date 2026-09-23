@@ -98,3 +98,81 @@ python research/seasonal_prior/seasonal_prior.py
 
 Outputs go to `metrics/`: `existence_tests.json`, `window_results.csv`,
 `monthly_records.csv`, `seasonal_strength.csv`, and `summary.json`.
+
+---
+
+## Run log
+
+1. First run: aborted by the date guard before any computation. The guard assumed 27–32 days
+   between month-ends, but the dates are last business days (gaps of 28–33 days). The guard now
+   checks consecutive calendar months.
+2. Second run: aborted by the target-alignment assertion. The script had indexed rows from 0,
+   but the project numbers positions from 1 (`io.py`). The script now reads through
+   `forecast_select.io.load_workbook(maximum_position=267)`, and every one of the 5,921 universe
+   targets equals the production artifact's `y_true`. The same error had affected an earlier
+   diagnostic; see the erratum in `research/prior_only_selector/README.md`.
+3. Third run: completed. **The protocol above was not changed.** Both fixes corrected data
+   handling, and neither run produced a result.
+
+## Results
+
+### Existence tests (Tuning-era labels, 37 indicators, 2,000 joint permutations)
+
+| Test | Observed | Null median | Null p95 | p-value |
+|---|---:|---:|---:|---:|
+| Pooled heterogeneity | 429.5 | 404.2 | 500.6 | **0.314** |
+| Split-half reliability (even vs odd years) | **r = 0.006** | −0.003 | 0.150 | 0.467 |
+| Breadth seasonality | 5.86 | 10.45 | 19.17 | 0.887 |
+
+**No calendar seasonality is detectable.** The split-half result is the clearest: an indicator's
+deviation in a given calendar month during even years has essentially zero correlation with the
+same deviation during odd years.
+
+### Candidates at production's call count (hits / calls; Δ = paired hits vs production)
+
+| Candidate | Tuning | Validation | Confirmation |
+|---|---:|---:|---:|
+| Production | 686/1071 64.05% | 395/675 58.52% | 508/799 63.58% |
+| **`H1_overlay` (primary)** | 677 **Δ −9** [p10 −12, p90 −2] | 391 **Δ −4** [−6, −1] | 506 **Δ −2** [−6, +2] |
+| `H1_raw_overlay` (unshrunk) | 659 Δ −27 | 396 Δ +1 | 493 Δ −15 |
+| `H1_prior` | 668 Δ −18 | 396 Δ +1 | 500 Δ −8 |
+| `prior_only` (control) | 673 **Δ −13** [−19, −4] | 396 Δ +1 [−5, +7] | 495 **Δ −13** [−20, −6] |
+| `eb_base` | 671 Δ −15 | 395 Δ 0 | 496 Δ −12 |
+| `window_ensemble` | 666 Δ −20 | 406 Δ +11 [+5, +17] | 502 Δ −6 |
+
+Fixed 15 calls, all Up: `H1_prior` vs `prior_only` is Δ −2 on Tuning, −5 on Validation, and 0 on
+Confirmation.
+
+### Gate (primary)
+
+| Criterion | Result |
+|---|---|
+| Tuning Δ ≥ 0 | **fail** (−9) |
+| Validation Δ > 0 | **fail** (−4) |
+| Validation bootstrap p10 ≥ 0 | **fail** (−6) |
+| Confirmation Δ ≥ 0 | **fail** (−2) |
+| No locked reads | pass |
+
+**Rejected.** Production is unchanged.
+
+## What was learned
+
+1. **Seasonality is absent, not merely weak.** The estimated seasonal SD (method of moments) was
+   3–5 points of Up-rate across origins. Split-half reliability shows that variation does not
+   recur. It comes from common monthly shocks: one bad October moves every indicator's October
+   cell at once, and binomial sampling variance does not account for that. Shrinkage limited
+   the damage (−9 on Tuning, against −27 unshrunk) but could not create signal.
+2. **Production's model stack is real.** The control arm ranks production's universe by
+   production's own prior (equal to a trailing-48 Up-rate, verified to 0.0 difference). It
+   loses 13 hits on Tuning and 13 on Confirmation, and both p10–p90 intervals lie below zero.
+   The logistic, graph, and group overlay add roughly 1.2–1.6 points in two of three windows.
+   Validation is flat.
+3. **`window_ensemble` is the window-picking trap made visible.** It gains 11 on Validation with
+   p10 = +5, the strongest single-window result in this run, but loses 20 on Tuning and 6 on
+   Confirmation. The pre-registration forbids promoting a secondary arm, and the other two
+   windows show why.
+4. **The two-month misalignment of `direction_lag_12` does not matter in practice.** With no
+   seasonality to capture, aligning it correctly would not help. Recorded so no one re-runs this.
+
+Outputs: `metrics/existence_tests.json`, `window_results.csv`, `monthly_records.csv`,
+`seasonal_strength.csv`, `summary.json`.

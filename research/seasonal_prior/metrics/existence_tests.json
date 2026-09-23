@@ -1,0 +1,25 @@
+{
+  "labels_through_position": 177,
+  "indicators_tested": 37,
+  "permutations": 2000,
+  "null": "calendar-month labels permuted jointly across indicators, which keeps same-month cross-sectional dependence",
+  "heterogeneity": {
+    "observed": 429.4813762101229,
+    "null_median": 404.1828799329289,
+    "null_p95": 500.64783001290175,
+    "p_value": 0.31384307846076964
+  },
+  "split_half_r": {
+    "observed": 0.006170023961839975,
+    "null_median": -0.0032152734722934507,
+    "null_p95": 0.14986860572299532,
+    "p_value": 0.46676661669165415
+  },
+  "breadth_seasonality": {
+    "observed": 5.858105599799644,
+    "null_median": 10.448594806058452,
+    "null_p95": 19.168698813557068,
+    "p_value": 0.887056471764118
+  },
+  "seasonality_detected_on_tuning": false
+}

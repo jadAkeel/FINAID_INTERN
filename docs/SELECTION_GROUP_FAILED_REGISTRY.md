@@ -130,6 +130,29 @@ correctness AUC fell from 0.5392 on screen to 0.4123 on Validation. The weights
 are rejected as a confidence measure. See
 `research/weighted_directional_mix/README.md`.
 
+## Chronos-2 zero-shot trial (2026-09-22)
+
+A pre-trained time-series foundation model (Chronos-2) forecast each indicator's
+differenced series two steps ahead. Its calibrated Up-probability was blended with
+the active model at a Tuning-selected weight of 0.75. At matched monthly coverage it
+lost 15 hits on Tuning, 16 on Validation, and 12 on Confirmation, failing three of
+five gate criteria. Better probability calibration on Validation (ECE 0.031 versus
+0.059) did not produce better selected calls. It was not promoted. See
+`docs/experiments/chronos2_zero_shot.md` and registry section 2.9.
+
+## Calendar-seasonal prior trial (2026-09-23)
+
+A pre-registered test of whether an indicator's Up-frequency in the target's calendar
+month adds information beyond its trailing Up-rate. The existing `direction_lag_12`
+feature is two months off season, so this had never been tested. Existence tests on
+Tuning-era labels found nothing: split-half reliability between even and odd years was
+r = 0.006. The primary overlay lost 9, 4, and 2 hits on Tuning, Validation, and
+Confirmation at production's call count. Its control arm showed that production's
+model stack beats its own prior by 13 hits on both Tuning and Confirmation, so the
+stack carries real signal. A window-ensemble arm gained 11 on Validation but lost 20
+on Tuning and 6 on Confirmation. See `research/seasonal_prior/README.md` and registry
+section 2.10.
+
 ## Rules for future experiments
 
 1. Test one bounded hypothesis per cycle, preferably with no more than three tunable parameters.

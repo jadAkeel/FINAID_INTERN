@@ -8,21 +8,25 @@ the latest *known* change (t-2 -> t-1), so `direction_lag_12` is the t-14 -> t-1
 move. The target is the t -> t+1 move, whose same-calendar-month counterpart one
 year earlier is t-12 -> t-11. The model's annual lags sit two months off season.
 
-Causal contract at origin t (0-based workbook position):
+Causal contract at origin t (the project's 1-based `position`, as set by
+forecast_select.io.load_workbook):
   * direction label d_s = 1[X_{s+1} > X_s], usable only for s <= t-2;
   * the scored target is d_t, cross-checked against the production artifact;
-  * no level position above 267 is read (267 is the target level of origin 266),
-    so the locked evaluation 268-315 is untouched.
+  * the workbook is read with maximum_position=267 (267 is the target level of
+    origin 266), so the locked evaluation 268-315 is untouched.
 """
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "src"))
+from forecast_select.io import load_workbook  # noqa: E402
 DATA = ROOT / "data/monthly_indicators.xlsx"
 ARTIFACT = ROOT / "artifacts/active/regime_adaptive_predictions.parquet"
 OUT = ROOT / "research/seasonal_prior/metrics"
@@ -51,22 +55,22 @@ CANDIDATES = (
 )
 
 
-def load_directions() -> tuple[pd.DataFrame, np.ndarray, np.ndarray]:
-    frame = pd.read_excel(DATA).iloc[: MAX_LEVEL_POSITION + 1].reset_index(drop=True)
-    if len(frame) != MAX_LEVEL_POSITION + 1:
+def load_directions() -> tuple[pd.DataFrame, pd.Series, pd.Series]:
+    """Direction labels, target calendar month and year, all indexed by 1-based position."""
+    frame = load_workbook(DATA, maximum_position=MAX_LEVEL_POSITION)
+    if int(frame["position"].max()) != MAX_LEVEL_POSITION:
         raise ValueError("Workbook is shorter than the non-locked range")
-    dates = pd.to_datetime(frame["Dates"])
-    if not dates.diff().dt.days.dropna().between(27, 32).all():
-        raise ValueError("Dates are not consecutive month-ends")
-    levels = frame[[c for c in frame.columns if c.startswith("X")]]
+    frame = frame.set_index("position")
+    levels = frame[[c for c in frame.columns if str(c).startswith("X")]]
     following = levels.shift(-1)
     directions = (following > levels).astype(float).where(
         following.notna() & levels.notna()
     )
-    # The change s -> s+1 lands in the calendar month of position s+1.
-    month = dates.dt.month.to_numpy()
+    # The change s -> s+1 lands in the calendar month of position s+1, computed from
+    # position s so the date of position 268 is never needed.
+    month = frame["Dates"].dt.month
     change_month = month % 12 + 1
-    change_year = dates.dt.year.to_numpy() + (month == 12)
+    change_year = frame["Dates"].dt.year + (month == 12).astype(int)
     return directions, change_month, change_year
 
 
@@ -153,12 +157,12 @@ def _breadth_seasonality(labels: np.ndarray, months: np.ndarray) -> float:
 
 
 def existence_tests(
-    directions: pd.DataFrame, change_month: np.ndarray, change_year: np.ndarray
+    directions: pd.DataFrame, change_month: pd.Series, change_year: pd.Series
 ) -> dict:
     """Tuning-era labels only (s <= 177); months are permuted jointly across indicators."""
-    rows = slice(0, TUNING_LAST_LABEL + 1)
-    labels = directions.iloc[rows].to_numpy(dtype=float)
-    months, years = change_month[rows], change_year[rows]
+    labels = directions.loc[:TUNING_LAST_LABEL].to_numpy(dtype=float)
+    months = change_month.loc[:TUNING_LAST_LABEL].to_numpy()
+    years = change_year.loc[:TUNING_LAST_LABEL].to_numpy()
     keep = np.isfinite(labels).sum(0) >= 60
     labels = labels[:, keep]
     observed = {
@@ -194,24 +198,29 @@ def existence_tests(
     return result
 
 
+def label_history(directions: pd.DataFrame, origin: int, window: int = 0) -> pd.DataFrame:
+    """Labels usable at `origin`: positions <= origin-2, optionally the newest `window`."""
+    newest = origin - 2
+    oldest = max(1, newest - window + 1) if window else 1
+    return directions.loc[oldest:newest]
+
+
 def trailing_rate(directions: pd.DataFrame, origin: int, window: int) -> pd.Series:
-    stop = origin - 1  # rows 0 .. origin-2
-    start = max(0, stop - window) if window else 0
-    history = directions.iloc[start:stop]
+    history = label_history(directions, origin, window)
     return history.mean().where(history.count() >= PRIOR_MIN_LABELS)
 
 
 def seasonal_deviation(
-    directions: pd.DataFrame, change_month: np.ndarray, origin: int
+    directions: pd.DataFrame, change_month: pd.Series, origin: int
 ) -> tuple[pd.Series, pd.Series, float]:
     """Empirical-Bayes shrunk deviation of the target month's Up-rate from the all-history rate.
 
     The seasonal variance tau^2 is a method-of-moments estimate pooled over every
     indicator and calendar month with labels <= origin-2, so nothing is tuned.
     """
-    history = directions.iloc[: origin - 1]
+    history = label_history(directions, origin)
     labels = history.to_numpy(dtype=float)
-    n, k = _cell_counts(labels, change_month[: origin - 1])
+    n, k = _cell_counts(labels, change_month.loc[history.index].to_numpy())
     base, count = _base_rate(labels)
     pq = base * (1 - base)
     with np.errstate(invalid="ignore", divide="ignore"):
@@ -224,7 +233,7 @@ def seasonal_deviation(
         & (sampling > 0)
     )
     tau2 = max(0.0, float(np.mean((deviation**2 - sampling)[valid]))) if valid.any() else 0.0
-    cell = change_month[origin] - 1  # calendar month of the target change origin -> origin+1
+    cell = int(change_month.loc[origin]) - 1  # calendar month of the change origin -> origin+1
     ok = valid[cell]
     if tau2 > 0:
         weight = np.where(ok, tau2 / (tau2 + np.where(ok, sampling[cell], 1.0)), 0.0)
@@ -267,7 +276,7 @@ def _hits(picks: pd.DataFrame) -> int:
 
 
 def evaluate(
-    directions: pd.DataFrame, change_month: np.ndarray, universe: pd.DataFrame
+    directions: pd.DataFrame, change_month: pd.Series, universe: pd.DataFrame
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     records, strength = [], []
     for origin, current in universe.groupby("origin_position", sort=True):
@@ -279,11 +288,7 @@ def evaluate(
         delta = delta.reindex(by_id.index).fillna(0.0)
         raw = raw.reindex(by_id.index).fillna(0.0)
         prior48 = trailing_rate(directions, origin, PRIOR_WINDOW).reindex(by_id.index)
-        count48 = (
-            directions.iloc[max(0, origin - 1 - PRIOR_WINDOW) : origin - 1]
-            .count()
-            .reindex(by_id.index)
-        )
+        count48 = label_history(directions, origin, PRIOR_WINDOW).count().reindex(by_id.index)
         ranks = pd.concat(
             [
                 trailing_rate(directions, origin, window).reindex(by_id.index).rank(pct=True)

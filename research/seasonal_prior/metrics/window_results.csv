@@ -1,0 +1,31 @@
+candidate,window,hits,calls,accuracy,delta_vs_production,overlap_with_production,bootstrap_p10,bootstrap_p50,bootstrap_p90
+production,tuning,686.0,1071.0,0.6405228758169934,0.0,,,,
+H1_overlay,tuning,677.0,1071.0,0.6321195144724556,-9.0,1017.0,-12.0,-7.0,-2.0
+H1_raw_overlay,tuning,659.0,1071.0,0.61531279178338,-27.0,796.0,-35.0,-24.0,-13.0
+H1_prior,tuning,668.0,1071.0,0.6237161531279178,-18.0,943.0,-23.0,-16.0,-9.0
+prior_only,tuning,673.0,1071.0,0.6283846872082166,-13.0,954.0,-19.0,-12.0,-4.0
+eb_base,tuning,671.0,1071.0,0.6265172735760971,-15.0,940.0,-20.0,-13.0,-5.0
+window_ensemble,tuning,666.0,1071.0,0.6218487394957983,-20.0,943.0,-29.0,-20.0,-10.0
+H1_prior_fixed15,tuning,571.0,900.0,0.6344444444444445,,,,,
+prior_only_fixed15,tuning,573.0,900.0,0.6366666666666667,,,,,
+seasonal_gain_fixed15 (H1_prior minus prior_only),tuning,,,,-2.0,,-6.0,-2.0,2.0
+production,validation,395.0,675.0,0.5851851851851851,0.0,,,,
+H1_overlay,validation,391.0,675.0,0.5792592592592593,-4.0,647.0,-6.0,-4.0,-1.0
+H1_raw_overlay,validation,396.0,675.0,0.5866666666666667,1.0,517.0,-4.0,1.0,7.0
+H1_prior,validation,396.0,675.0,0.5866666666666667,1.0,587.0,-5.0,1.0,7.0
+prior_only,validation,396.0,675.0,0.5866666666666667,1.0,596.0,-5.0,1.0,7.0
+eb_base,validation,395.0,675.0,0.5851851851851851,0.0,596.0,-6.0,0.0,7.0
+window_ensemble,validation,406.0,675.0,0.6014814814814815,11.0,609.0,5.0,11.0,17.0
+H1_prior_fixed15,validation,348.0,600.0,0.58,,,,,
+prior_only_fixed15,validation,353.0,600.0,0.5883333333333334,,,,,
+seasonal_gain_fixed15 (H1_prior minus prior_only),validation,,,,-5.0,,-9.0,-5.0,-1.0
+production,confirmation,508.0,799.0,0.6357947434292867,0.0,,,,
+H1_overlay,confirmation,506.0,799.0,0.6332916145181476,-2.0,758.0,-6.0,-2.0,2.0
+H1_raw_overlay,confirmation,493.0,799.0,0.6170212765957447,-15.0,587.0,-25.0,-15.0,-5.0
+H1_prior,confirmation,500.0,799.0,0.6257822277847309,-8.0,706.0,-17.0,-10.0,-4.0
+prior_only,confirmation,495.0,799.0,0.6195244055068836,-13.0,713.0,-20.0,-13.0,-6.0
+eb_base,confirmation,496.0,799.0,0.6207759699624531,-12.0,712.0,-20.0,-13.0,-6.0
+window_ensemble,confirmation,502.0,799.0,0.6282853566958698,-6.0,738.0,-12.0,-7.0,-2.0
+H1_prior_fixed15,confirmation,437.0,705.0,0.6198581560283688,,,,,
+prior_only_fixed15,confirmation,437.0,705.0,0.6198581560283688,,,,,
+seasonal_gain_fixed15 (H1_prior minus prior_only),confirmation,,,,0.0,,-10.0,-2.0,6.0

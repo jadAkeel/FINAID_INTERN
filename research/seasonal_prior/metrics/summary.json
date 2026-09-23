@@ -1,0 +1,19 @@
+{
+  "experiment_id": "seasonal_prior",
+  "pre_registered": "2026-09-23",
+  "primary_candidate": "H1_overlay",
+  "primary_definition": "production selection_score + 0.5 x EB-shrunk same-calendar-month Up-rate deviation, at production's per-origin call count",
+  "existence_detected_on_tuning": false,
+  "gate": {
+    "tuning_delta_nonnegative": false,
+    "validation_delta_positive": false,
+    "validation_bootstrap_p10_nonnegative": false,
+    "confirmation_delta_nonnegative": false,
+    "no_locked_reads": true
+  },
+  "nonlocked_gate_passed": false,
+  "max_origin_read": 266,
+  "max_level_position_read": 267,
+  "locked_evaluation_read": false,
+  "production_changed": false
+}

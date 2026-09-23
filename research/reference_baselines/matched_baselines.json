@@ -18,10 +18,11 @@
     ]
   },
   "causal_contract": {
-    "origin_t_levels_usable_through_position": "t-1",
-    "labels_usable_for_s_leq": "t-2",
-    "target": "d_t = 1[X_{t+1} > X_t]",
-    "max_level_position_read_for_scoring_only": 267,
+    "positions": "1-based, as set by forecast_select.io.load_workbook",
+    "label": "d_s = 1[X_{s+1} > X_s]",
+    "labels_usable_at_origin_t": "s <= t-2",
+    "target_at_origin_t": "d_t",
+    "max_level_position_read": 267,
     "max_origin": 266
   },
   "production_regime_adaptive_15_to_20": {
@@ -54,11 +55,11 @@
   },
   "prior_only_uprate_k15_N48_all_up": {
     "tuning": {
-      "hits": 570,
+      "hits": 572,
       "calls": 900
     },
     "validation": {
-      "hits": 346,
+      "hits": 352,
       "calls": 600
     },
     "confirmation": {
@@ -66,5 +67,5 @@
       "calls": 705
     }
   },
-  "production_selected_calls_by_window_are_in": "production_cap_schedule.csv (per-origin calls = the cap to match)"
+  "cap_schedule_file": "production_cap_schedule.csv (per-origin production call count = the cap a matched candidate uses)"
 }

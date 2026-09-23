@@ -29,9 +29,10 @@ Classification: **inconclusive for any stable > 65% claim.**
 
 ## Where the accuracy comes from
 
-Accuracy tracks the realized Up-prevalence of the selected set almost exactly, year by year:
+Accuracy tracks the realized Up-prevalence of the selected set almost exactly, year by year.
+Years are the calendar year of the **target** month (the month the predicted change completes):
 
-| Year | Accuracy | Up-prevalence of selected |
+| Target year | Accuracy | Up-prevalence of selected |
 |---|---:|---:|
 | 2013 | 69.2% | 69.2% |
 | 2015 | 46.7% | 46.7% |
@@ -65,7 +66,11 @@ not be evidence.
 
 ## What this does not say
 
-It does not say the model is useless: production beats the best zero-feature base-rate rule
-by about one point on Tuning and Confirmation (see `research/prior_only_selector/`). It says
-that one point sits inside a noise band five points wide, and that every bounded challenger
-in the ledger moved Validation by −5 to +2 hits out of 675 — the same band.
+It does not say the model is useless. Paired at production's own call count and universe,
+ranking by production's prior alone loses 13 hits on Tuning and 13 on Confirmation, with
+p10–p90 block-bootstrap intervals entirely below zero, and gains 1 on Validation
+(`research/seasonal_prior/`, control arm `prior_only`). The model stack is worth roughly
+1.2–1.6 points in two of three windows. What the audit does say is that month-level breadth
+moves accuracy by tens of points, so unpaired comparisons across windows or rules are
+dominated by breadth. Every bounded challenger in the ledger moved Validation by −5 to +2
+hits out of 675.
