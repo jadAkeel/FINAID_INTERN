@@ -1,0 +1,4 @@
+window,timing_auc_low_mean_p_vs_flip_target,reliability_auc_on_production_up_calls,chronos_agrees_share,swap_p<0.3_count,swap_p<0.3_hit_gain,swap_p<0.4_count,swap_p<0.4_hit_gain,swap_p<0.5_count,swap_p<0.5_hit_gain
+tuning,0.4021164021164021,0.4943505412792206,0.9896907216494846,10,-1,38,-1,60,-3
+validation,0.4972527472527472,0.4837341772151899,0.9896296296296296,24,-1,37,-3,40,-2
+confirmation,0.4583333333333333,0.4873183047046441,0.9924242424242424,3,1,24,-9,47,-11
