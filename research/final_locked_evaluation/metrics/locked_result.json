@@ -1,0 +1,75 @@
+{
+  "evaluation": "final_locked_evaluation",
+  "origins": [
+    268,
+    315
+  ],
+  "active_model": {
+    "months": 48,
+    "hits": 492,
+    "calls": 807,
+    "accuracy": 0.6096654275092936,
+    "down_calls": 1,
+    "down_hits": 0,
+    "cap_distribution": {
+      "15": 14,
+      "16": 9,
+      "17": 12,
+      "18": 4,
+      "19": 3,
+      "20": 6
+    },
+    "monthly_accuracy_min": 0.0,
+    "monthly_accuracy_max": 1.0,
+    "block_bootstrap_accuracy": {
+      "p5": 0.5615900104150118,
+      "p10": 0.5746972700930303,
+      "p50": 0.625,
+      "p90": 0.6763998128211326,
+      "p95": 0.6922110552763819
+    }
+  },
+  "uptrend_baseline_top15": {
+    "months": 48,
+    "hits": 445,
+    "calls": 720,
+    "accuracy": 0.6180555555555556,
+    "down_calls": 0,
+    "down_hits": 0,
+    "cap_distribution": {
+      "15": 48
+    },
+    "monthly_accuracy_min": 0.0,
+    "monthly_accuracy_max": 1.0,
+    "block_bootstrap_accuracy": {
+      "p5": 0.5666666666666667,
+      "p10": 0.5805555555555556,
+      "p50": 0.6305555555555555,
+      "p90": 0.6833333333333333,
+      "p95": 0.6986111111111111
+    }
+  },
+  "prior_only_top15_n48": {
+    "months": 48,
+    "hits": 436,
+    "calls": 720,
+    "accuracy": 0.6055555555555555,
+    "down_calls": 0,
+    "down_hits": 0,
+    "cap_distribution": {
+      "15": 48
+    },
+    "monthly_accuracy_min": 0.06666666666666667,
+    "monthly_accuracy_max": 0.9333333333333333,
+    "block_bootstrap_accuracy": {
+      "p5": 0.5527777777777778,
+      "p10": 0.5680555555555555,
+      "p50": 0.6166666666666667,
+      "p90": 0.6694444444444444,
+      "p95": 0.6847222222222222
+    }
+  },
+  "development_reference_accuracy_120_266": 0.6243614931237721,
+  "locked_evaluation_read": true,
+  "locked_window_consumed": true
+}

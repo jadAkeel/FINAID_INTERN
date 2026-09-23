@@ -16,6 +16,9 @@ the reproducible baseline.
 | Tuning (120–179) | 64.05% | 1,071 | 0.5413 | 0.5795 |
 | Validation (180–219) | 58.52% | 675 | 0.4015 | 0.5094 |
 | Confirmation (220–266) | 63.58% | 799 | 0.4411 | 0.5380 |
+| **Locked, read once (268–315)** | **60.97%** | 807 | — | — |
+
+The locked window was scored once, on 2026-09-23, after the research program ended ([protocol and result](research/final_locked_evaluation/PROTOCOL.md)). On data the model had never seen, it scored 492/807 = 60.97%, against 61.81% for the Uptrend baseline and 60.56% for a zero-feature prior rule.
 
 The active model was chosen to support both Up and Down calls. It did **not**
 pass the formal research promotion gate, so the repository does not claim 65%

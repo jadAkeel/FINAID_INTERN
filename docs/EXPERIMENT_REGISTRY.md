@@ -402,3 +402,16 @@ rebuild from overwriting the public active-model report.
 - **Rejection / Decision Reason**: Terminal holdout was inspected and is now consumed; cannot be reused for parameter or model selection.
 - **Leakage & Holdout Warning**: **Consumed Holdout**. March–May 2026 data must not be used for threshold tuning.
 - **Reproduction Command**: Historical script names are recorded in `research/february_holdout_experiment/README.md`, but those scripts are absent from the current working tree; no currently runnable full reproduction command is claimed.
+
+### 4.3 Final Locked Evaluation (`final_locked_evaluation`) — locked window CONSUMED
+- **Hypothesis**: The active Regime Adaptive Bidirectional Selector, unchanged, keeps its development accuracy on the never-read locked window, origins 268–315 (target months June 2022 to May 2026).
+- **Status**: `completed` / **locked window consumed** (pre-registered in commit `ef8a8ab`)
+- **Code Paths**: `research/final_locked_evaluation/score_locked.py`
+- **Report Paths**: `research/final_locked_evaluation/PROTOCOL.md`, `metrics/locked_result.json`, `metrics/locked_predictions.parquet`
+- **Observed Metrics**:
+  - Integrity check: origins 120–266 rebuilt identically on all 6,349 rows.
+  - Active model: 492/807 = **60.97%** (bootstrap p5–p95 56.2–69.2%). Down calls 1, correct 0.
+  - Uptrend baseline top 15: 61.81%. Zero-feature prior rule: 60.56%.
+  - Accuracy by year: 46.4% / 62.0% / 61.8% / 74.6%, tracking market breadth. The perfect-timing oracle would reach 83.5%.
+- **Decision**: No model change. The result is 1.5 points below development, which is consistent with a small, honest out-of-sample shrinkage. The active model has no measurable advantage over the baseline or the prior rule.
+- **Leakage & Holdout Warning**: The window is consumed. All future work is developed with these outcomes known. The sealed `artifacts/audit/locked_evaluation.parquet` was not read.
