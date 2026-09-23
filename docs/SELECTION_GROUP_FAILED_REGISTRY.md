@@ -153,6 +153,14 @@ stack carries real signal. A window-ensemble arm gained 11 on Validation but los
 on Tuning and 6 on Confirmation. See `research/seasonal_prior/README.md` and registry
 section 2.10.
 
+A pre-registered market-timing study (`research/breadth_timing/`) tested whether trend,
+momentum, shock, volatility-regime, or cross-asset signals predict the months when
+production's picks mostly fall. The 12-month momentum breadth signal, selected on Tuning,
+had AUC 0.62 there, but only 0.46 on Validation and 0.60 on Confirmation. Its flip rule lost
+26 hits on Confirmation. A combined logistic also failed, losing 25 hits. The shock signals
+looked good out of sample only in hindsight. Their largest months are rebounds, in which
+production scores 74–86%, so flipping them loses. See registry section 2.11.
+
 ## Rules for future experiments
 
 1. Test one bounded hypothesis per cycle, preferably with no more than three tunable parameters.

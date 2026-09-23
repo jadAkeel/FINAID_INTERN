@@ -259,6 +259,27 @@ rebuild from overwriting the public active-model report.
 
 ---
 
+### 2.11 Breadth / Market-Timing Signals (`breadth_timing`)
+- **Hypothesis**: A causal market-level signal predicts the months when production's accepted calls mostly fall. Flipping those months to Down would recover part of the 14.7-point timing headroom measured in 3.7.
+- **Status**: `rejected` (pre-registered; commit `1444139` precedes the run)
+- **Code Paths**: `research/breadth_timing/breadth_timing.py`, `post_hoc_tail_check.py` (exploratory)
+- **Config Paths**: N/A. All settings are constants fixed in the pre-registration.
+- **Artifact Paths**: `research/breadth_timing/metrics/monthly_scores.csv`
+- **Report Paths**: `research/breadth_timing/README.md`, `metrics/summary.json`, `signal_auc.csv`, `single_signal_flip_diagnostic.csv`, `post_hoc_shock_tail.csv`
+- **Observed Metrics**:
+  - Signals tested: 10-month-MA breadth, 12-month momentum breadth, shock magnitude, shock dispersion, equity-minus-bond risk-on spread, 12-month realized breadth, volatility regime, and a walk-forward combined logistic.
+  - Tuning-selected `mom12_breadth` flip-target AUC: 0.62 on Tuning, then 0.46 on Validation and 0.60 on Confirmation (0.53 pooled, permutation p = 0.50). Flip-rule gain: +23 / 0 / −26 hits.
+  - Combined logistic: 0.46 / 0.64 / 0.54 (0.59 pooled, p = 0.07). Flip-rule gain: 0 / 0 / −25.
+  - Out-of-sample flip precision was 0/3 and 0/2.
+- **Rejection / Decision Reason**:
+  - Every G1 and G2 condition fails for both finalists.
+  - Post hoc, the shock signals reach V+C AUC 0.66, but only ≈0.50 on Tuning.
+  - Their most extreme months are rebound months: production is 74–86% accurate in the top 10%. Flipping loses hits at every quantile in every window.
+  - The one exception is +6 at one Validation cell.
+  - Market direction is not forecastable from this data.
+- **Leakage & Holdout Warning**: The workbook is read with `maximum_position=267`, and signals use levels through `t-1`. Locked origins 268–315 were not read.
+- **Reproduction Command**: `python research/breadth_timing/breadth_timing.py`
+
 ## 3. Active Research Studies & Diagnostic Tools
 
 ### 3.1 Regime Adaptive Robustness Study (`regime_adaptive_robustness`)

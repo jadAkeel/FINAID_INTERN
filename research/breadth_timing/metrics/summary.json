@@ -1,0 +1,146 @@
+{
+  "study": "breadth_timing",
+  "preregistered": true,
+  "max_level_position_read": 267,
+  "locked_evaluation_read": false,
+  "flip_target_base_rate": {
+    "tuning": 0.3,
+    "validation": 0.35,
+    "confirmation": 0.3191489361702128
+  },
+  "selected_single_signal": "mom12_breadth",
+  "selected_sign": 1.0,
+  "finalists": [
+    {
+      "finalist": "S*=mom12_breadth (sign +1)",
+      "tuning_gain_by_q": {
+        "0.1": 0,
+        "0.2": 23,
+        "0.3": 3
+      },
+      "chosen_q": 0.2,
+      "windows": {
+        "tuning": {
+          "months": 60,
+          "flip_target_auc": 0.6243386243386243,
+          "universe_breadth_auc": 0.5494505494505495,
+          "flipped_months": 4,
+          "flip_precision": 0.75,
+          "hit_gain": 23,
+          "production_hits": 686,
+          "calls": 1071
+        },
+        "validation": {
+          "months": 40,
+          "flip_target_auc": 0.4642857142857143,
+          "universe_breadth_auc": 0.41796875,
+          "flipped_months": 0,
+          "flip_precision": null,
+          "hit_gain": 0,
+          "production_hits": 395,
+          "calls": 675
+        },
+        "confirmation": {
+          "months": 47,
+          "flip_target_auc": 0.596875,
+          "universe_breadth_auc": 0.6558823529411765,
+          "flipped_months": 3,
+          "flip_precision": 0.0,
+          "hit_gain": -26,
+          "production_hits": 508,
+          "calls": 799
+        },
+        "validation_confirmation": {
+          "months": 87,
+          "flip_target_auc": 0.5288347205707491,
+          "universe_breadth_auc": 0.5370370370370371,
+          "flipped_months": 3,
+          "flip_precision": 0.0,
+          "hit_gain": -26,
+          "production_hits": 903,
+          "calls": 1474
+        }
+      },
+      "permutation_p_pooled_vc": 0.495752123938031,
+      "bootstrap_pooled_vc_gain": {
+        "p05": -71.0,
+        "p50": -26.0,
+        "p95": 0.0
+      },
+      "gate": {
+        "G1_auc_pooled_ge_0.60": false,
+        "G1_auc_each_ge_0.55": false,
+        "G1_permutation_p_lt_0.05": false,
+        "G2_gain_both_windows": false,
+        "G2_bootstrap_p05_gt_0": false
+      },
+      "passed": false
+    },
+    {
+      "finalist": "C1=combined_logit",
+      "tuning_gain_by_q": {
+        "0.1": 0,
+        "0.2": -11,
+        "0.3": -28
+      },
+      "chosen_q": 0.1,
+      "windows": {
+        "tuning": {
+          "months": 60,
+          "flip_target_auc": 0.46296296296296297,
+          "universe_breadth_auc": 0.5384615384615384,
+          "flipped_months": 0,
+          "flip_precision": null,
+          "hit_gain": 0,
+          "production_hits": 686,
+          "calls": 1071
+        },
+        "validation": {
+          "months": 40,
+          "flip_target_auc": 0.6346153846153846,
+          "universe_breadth_auc": 0.4661458333333333,
+          "flipped_months": 0,
+          "flip_precision": null,
+          "hit_gain": 0,
+          "production_hits": 395,
+          "calls": 675
+        },
+        "confirmation": {
+          "months": 47,
+          "flip_target_auc": 0.5437500000000001,
+          "universe_breadth_auc": 0.49607843137254903,
+          "flipped_months": 2,
+          "flip_precision": 0.0,
+          "hit_gain": -25,
+          "production_hits": 508,
+          "calls": 799
+        },
+        "validation_confirmation": {
+          "months": 87,
+          "flip_target_auc": 0.5885850178359096,
+          "universe_breadth_auc": 0.48653198653198654,
+          "flipped_months": 2,
+          "flip_precision": 0.0,
+          "hit_gain": -25,
+          "production_hits": 903,
+          "calls": 1474
+        }
+      },
+      "permutation_p_pooled_vc": 0.07146426786606697,
+      "bootstrap_pooled_vc_gain": {
+        "p05": -52.0,
+        "p50": -25.0,
+        "p95": 0.0
+      },
+      "gate": {
+        "G1_auc_pooled_ge_0.60": false,
+        "G1_auc_each_ge_0.55": false,
+        "G1_permutation_p_lt_0.05": false,
+        "G2_gain_both_windows": false,
+        "G2_bootstrap_p05_gt_0": false
+      },
+      "passed": false
+    }
+  ],
+  "any_passed": false
+}

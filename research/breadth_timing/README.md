@@ -70,3 +70,61 @@ then proceeds on production unchanged. If one passes, it becomes the single pre-
 candidate for that locked evaluation, alongside production.
 
 All signals' AUCs are reported for every window and both targets, including those not selected.
+
+---
+
+## Results (added after the single pre-registered run)
+
+**Rejected. Neither finalist passes any gate condition.**
+
+Reproduce: `python research/breadth_timing/breadth_timing.py`. Outputs are in `metrics/`:
+`summary.json`, `signal_auc.csv`, `single_signal_flip_diagnostic.csv`, and `monthly_scores.csv`.
+The flip target's base rate is 30% on Tuning, 35% on Validation, and 32% on Confirmation.
+
+| Finalist | Tuning AUC | Val AUC | Conf AUC | V+C AUC | perm. p | Hit gain T / V / C | Gate |
+|---|---:|---:|---:|---:|---:|---:|---|
+| S\* = `mom12_breadth` (chosen on Tuning, q = 0.20) | 0.624 | 0.464 | 0.597 | 0.529 | 0.50 | +23 / 0 / **−26** | fail |
+| C1 = `combined_logit` (q = 0.10) | 0.463 | 0.635 | 0.544 | 0.589 | 0.07 | 0 / 0 / **−25** | fail |
+
+The flip rule fired in only 3 out-of-sample months for S\*, and 2 for C1. None of those months
+was a flip-target month (precision 0/3 and 0/2), so each firing cost about 8–13 hits.
+
+Flip-target AUC for every signal, with each signal's raw sign:
+
+| Signal | Tuning | Validation | Confirmation | V+C |
+|---|---:|---:|---:|---:|
+| ma10_breadth | 0.538 | 0.468 | 0.547 | 0.505 |
+| mom12_breadth | 0.624 | 0.464 | 0.597 | 0.529 |
+| shock_magnitude | 0.504 | 0.723 | 0.604 | 0.663 |
+| shock_dispersion | 0.534 | 0.734 | 0.608 | 0.661 |
+| risk_on_spread | 0.493 | 0.497 | 0.469 | 0.489 |
+| breadth_12 | 0.550 | 0.431 | 0.598 | 0.502 |
+| vol_regime | 0.431 | 0.703 | 0.435 | 0.560 |
+| combined_logit | 0.463 | 0.635 | 0.544 | 0.589 |
+
+The Tuning winner, 12-month momentum breadth, does not hold up out of sample. Trend-following
+and cross-asset (risk-on/risk-off) signals carry no information about next month's direction.
+
+### Post-hoc observation: shock signals
+
+**This section is exploratory and cannot support a claim.** The two shock signals (the size and
+spread of last month's standardized moves) reach AUC 0.66 on Validation+Confirmation, but only
+0.50–0.53 on Tuning, so the pre-registered selection did not pick them. Seven signals were
+examined across three windows, so one of them looking good in two windows is not surprising. More
+important, the signal has no *tail* value. `post_hoc_shock_tail.csv` is produced by
+`post_hoc_tail_check.py`, with quantiles computed in hindsight within each window. It shows that
+in the months with the **largest** shocks, production's picks are among its *best*: 74–86%
+accuracy in the top 10%, because these are rebound months. Flipping them to Down loses hits in
+every window and at every quantile tested. The only exception is +6 on Validation at the top
+20% of `shock_dispersion`. The AUC comes from middle-ranked months, where no rule can act
+profitably. The correlation between shock magnitude and production's monthly accuracy is
++0.05, −0.18, and +0.06 by window.
+
+### Conclusion
+
+Three independent attempts have found no forecastable market-direction timing in this data:
+production's own breadth forecast (AUC 0.52), the calendar-seasonal prior, and this study. The
+study tested trend, momentum, shock, volatility-regime, cross-asset, and combined signals. The
+15-point timing headroom seen by the hindsight oracle cannot be reached with causal information
+from these 50 series. Production is kept unchanged as the single candidate for the final locked
+evaluation.
