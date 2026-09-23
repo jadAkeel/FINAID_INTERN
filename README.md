@@ -22,6 +22,26 @@ pass the formal research promotion gate, so the repository does not claim 65%
 validated accuracy. Rejected and negative experiments are retained in
 [`docs/EXPERIMENT_REGISTRY.md`](docs/EXPERIMENT_REGISTRY.md).
 
+## What limits accuracy
+
+A monthly hit rate has two sources: choosing indicators that tend to rise, and
+knowing when the whole market will fall. A hindsight analysis at the model's own
+call count ([`research/oracle_headroom/`](research/oracle_headroom/README.md))
+separates the two:
+
+| All 147 non-locked months | Accuracy |
+|---|---:|
+| Production | 62.44% |
+| Oracle that knows every indicator's true long-run Up-rate | 62.71% |
+| Production's picks with perfect market-direction timing | 77.13% |
+
+The model already chooses indicators almost as well as hindsight allows. The
+remaining headroom is market timing, and next month's market direction shows no
+forecastable signal in this data: the breadth-forecast AUC is 0.52, and breadth
+autocorrelation is −0.04. A 65% claim would need that missing timing skill. The
+same fact explains why the model rarely calls Down: 11 calls in 147 months, 7 of
+them correct.
+
 ## Install and run
 
 Python 3.11 or newer is required.

@@ -46,7 +46,12 @@ Validation, 17 of 47 in Confirmation — **54 of 147 overall**.
    **0.52** pooled (0.47 / 0.62 / 0.51 by window). Last month's breadth, 3-month breadth, and
    regime stress score AUC 0.48, 0.48, and 0.50. Realized breadth has autocorrelation −0.04 at
    lag 1 and −0.01 at lag 2: whether the market rises next month is unrelated to this month.
-5. **The coverage contract caps an Up-only selector at 87%** even with perfect foresight,
+5. **A Down-timing signal must be right 61% of the time it fires just to break even.**
+   Flipping production's picks to Down gains 6.89 hits on average in a broad-down month, but
+   loses 10.75 in a broad-up month, because up months are more one-sided. Broad-down months are
+   only 36.7% of the sample. A signal would therefore need about 1.66× lift over the base rate
+   at its operating point, far beyond anything with AUC near 0.52.
+6. **The coverage contract caps an Up-only selector at 87%** even with perfect foresight,
    because broad-down months do not contain 15–20 rising indicators.
 
 ## Conclusion

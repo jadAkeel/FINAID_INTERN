@@ -1,6 +1,42 @@
-# Down V2/V3 research outcomes
+# Research outcomes
 
-## Delivery decision
+## Accuracy ceiling (2026-09-23)
+
+This is the finding that frames every other result. At the active model's own call count
+and universe, over all 147 non-locked months
+([`research/oracle_headroom/`](../research/oracle_headroom/README.md)):
+
+| | Accuracy |
+|---|---:|
+| Active model | **62.44%** |
+| Hindsight oracle that knows every indicator's true long-run Up-rate | 62.71% |
+| Hindsight oracle that also knows how drift shifted in each window | 64.36% |
+| Active model's picks with perfect market-direction timing | 77.13% |
+
+- **Indicator choice is solved.** The model is within 0.27 points of the long-run drift
+  oracle. Better base-rate estimators cannot add more than about 0.3 points. The registry's
+  window, shrinkage, ensemble, and seasonal variants all land within noise, which is
+  consistent with this.
+- **The model stack is real, not a base-rate rule.** Paired at the model's own call count,
+  ranking by its prior alone loses 13 hits on Tuning and 13 on Confirmation, with block-bootstrap
+  intervals below zero, and gains 1 on Validation
+  ([`research/seasonal_prior/`](../research/seasonal_prior/README.md), control arm).
+- **The remaining headroom is market timing, and it is not forecastable here.** 54 of 147 months
+  are broad-down months. The model's breadth forecast scores AUC 0.52 for them, and realized
+  breadth autocorrelation is −0.04. A month-level Down signal would need 61% precision to break
+  even against a 36.7% base rate. That is why Down calls are rare (11 in 147 months, 7 correct)
+  and why every Down-replacement design below lost hits.
+- **There is no calendar seasonality.** The existing `direction_lag_12` feature sits two months
+  off the target's season, so this was tested directly in a pre-registered experiment. Split-half
+  reliability between even and odd years was r = 0.006, and the overlay lost hits in all three
+  windows.
+
+On anonymous price histories alone, about 62–64% is the ceiling. A future claim of a large gain
+should first show breadth-forecasting skill above AUC 0.5.
+
+## Down V2/V3
+
+### Delivery decision
 
 Keep the owner-promoted Regime Adaptive selector with its current Up-first
 ranking and `maximum_replacements: 0`. Down V2 and V3 remain research outputs;
@@ -24,7 +60,7 @@ hits. It also corrected the earlier report's claim that production had no Down
 calls. The row-level reconciliation suite covers all 147 origins and reports
 zero residual for the production-to-E replacement decomposition.
 
-## What the research delivered
+### What the research delivered
 
 - **Calibration:** Raw Down scores were overconfident (predicted 0.90 in the
   highest bucket, observed Down rate 0.52). V2 Platt calibration reduced
@@ -49,7 +85,7 @@ zero residual for the production-to-E replacement decomposition.
   reconciliation tests turn the production comparison into a traceable result
   and prevent the earlier Up-label scoring error from silently returning.
 
-## Failed promotion gates and limits
+### Failed promotion gates and limits
 
 V3's Validation replacement delta was **−4 at 34 Down calls**, with
 Confirmation **−5**. The promotion gate requires a positive Validation delta,
@@ -65,7 +101,7 @@ experiment registry was inspected by prior research and is consumed; it cannot
 be reused as a fresh promotion gate. No new locked-period result is claimed in
 these reports.
 
-## Reproduce and verify
+### Reproduce and verify
 
 From the repository root, the focused audit can be reproduced from the saved
 artifacts with:
