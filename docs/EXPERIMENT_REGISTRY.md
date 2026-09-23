@@ -334,6 +334,18 @@ rebuild from overwriting the public active-model report.
 - **Leakage & Holdout Warning**: Labels used only through `t-2`; the workbook is read with `maximum_position=267`, and the loader asserts no later position is present.
 - **Reproduction Command**: `python research/prior_only_selector/prior_only_diagnostic.py`.
 
+### 3.7 Headroom Analysis — Hindsight Oracles and Breadth-Forecast Skill (`oracle_headroom`)
+- **Hypothesis**: Bound how much accuracy any improvement could deliver by comparing production with hindsight oracles at its own call count and universe, and measure whether market direction, the only lever with large headroom, is forecastable.
+- **Status**: `active_research` (diagnostic; hindsight, not a candidate)
+- **Code Paths**: `research/oracle_headroom/oracle_headroom.py`
+- **Config Paths**: N/A
+- **Artifact Paths**: `research/oracle_headroom/metrics/monthly_oracles.csv`, `breadth_forecast_skill_monthly.csv`
+- **Report Paths**: `research/oracle_headroom/README.md`, `metrics/headroom.csv`, `summary.json`, `breadth_forecast_skill.json`
+- **Observed Metrics** (all 147 non-locked months): production 62.44%; long-run drift oracle (knows every indicator's true Up-rate) 62.71%; window drift oracle 64.36%; production's picks with perfect breadth timing **77.13%**; perfect Up selection at 15–20 calls 87.03%. 54 of 147 months are broad-down. Production's breadth forecast: correlation with realized breadth 0.035, broad-down AUC **0.52** (0.47 / 0.62 / 0.51 by window). Last-month breadth, 3-month breadth, and regime stress: AUC 0.48 / 0.48 / 0.50. Realized breadth autocorrelation −0.04 at lag 1, −0.01 at lag 2.
+- **Rejection / Decision Reason**: Not a promotion decision. Indicator choice is solved: production is within 0.27 points of the long-run drift oracle and equals it on Confirmation. Almost all remaining headroom (~14.7 points) is market-direction timing, which has no detectable signal. About 62–64% is the ceiling on this information set. Production's rare Down calls (11 in 147 months, 7 correct) are the right response to unforecastable breadth.
+- **Leakage & Holdout Warning**: Hindsight by design; the oracles use realized outcomes and cannot be deployed. The workbook is read with `maximum_position=267`; locked origins 268–315 were not read.
+- **Reproduction Command**: `python research/oracle_headroom/oracle_headroom.py`.
+
 ---
 
 ## 4. Quarantined Trials & Consumed Holdouts

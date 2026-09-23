@@ -1,0 +1,42 @@
+{
+  "tuning": {
+    "months": 60,
+    "broad_down_months": 21,
+    "corr_forecast_vs_realized": -0.027489336761488205,
+    "auc_forecast": 0.4725274725274725,
+    "auc_last_breadth": 0.5445665445665446,
+    "auc_breadth_3": 0.4438339438339438,
+    "auc_regime_stress": 0.5799755799755799
+  },
+  "validation": {
+    "months": 40,
+    "broad_down_months": 16,
+    "corr_forecast_vs_realized": 0.0901989771700926,
+    "auc_forecast": 0.6223958333333334,
+    "auc_last_breadth": 0.44661458333333337,
+    "auc_breadth_3": 0.53125,
+    "auc_regime_stress": 0.4479166666666667
+  },
+  "confirmation": {
+    "months": 47,
+    "broad_down_months": 17,
+    "corr_forecast_vs_realized": 0.020692586060006336,
+    "auc_forecast": 0.5058823529411764,
+    "auc_last_breadth": 0.4303921568627451,
+    "auc_breadth_3": 0.442156862745098,
+    "auc_regime_stress": 0.43529411764705883
+  },
+  "all_nonlocked": {
+    "months": 147,
+    "broad_down_months": 54,
+    "corr_forecast_vs_realized": 0.03495540369988978,
+    "auc_forecast": 0.5211071286340102,
+    "auc_last_breadth": 0.478494623655914,
+    "auc_breadth_3": 0.47660294703305456,
+    "auc_regime_stress": 0.5007964954201513
+  },
+  "realized_breadth_autocorr": {
+    "lag_1": -0.04109086857514486,
+    "lag_2": -0.009867262144785659
+  }
+}
