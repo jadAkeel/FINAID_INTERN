@@ -274,7 +274,7 @@ rebuild from overwriting the public active-model report.
 - **Rejection / Decision Reason**:
   - Every G1 and G2 condition fails for both finalists.
   - Post hoc, the shock signals reach V+C AUC 0.66, but only ≈0.50 on Tuning.
-  - Their most extreme months are rebound months: production is 74–86% accurate in the top 10%. Flipping loses hits at every quantile in every window.
+  - Their most extreme months are mostly rebound months: production is 74–82% accurate in the top 10% by shock magnitude. Flipping loses hits at every quantile in every window.
   - The one exception is +6 at one Validation cell.
   - Market direction is not forecastable from this data.
 - **Leakage & Holdout Warning**: The workbook is read with `maximum_position=267`, and signals use levels through `t-1`. Locked origins 268–315 were not read.

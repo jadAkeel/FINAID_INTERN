@@ -113,8 +113,9 @@ spread of last month's standardized moves) reach AUC 0.66 on Validation+Confirma
 examined across three windows, so one of them looking good in two windows is not surprising. More
 important, the signal has no *tail* value. `post_hoc_shock_tail.csv` is produced by
 `post_hoc_tail_check.py`, with quantiles computed in hindsight within each window. It shows that
-in the months with the **largest** shocks, production's picks are among its *best*: 74–86%
-accuracy in the top 10%, because these are rebound months. Flipping them to Down loses hits in
+in the months with the **largest** shock magnitude, production's picks are among its *best*:
+74–82% accuracy in the top 10% (shock dispersion: 50–86%), because these are mostly rebound
+months. Flipping them to Down loses hits in
 every window and at every quantile tested. The only exception is +6 on Validation at the top
 20% of `shock_dispersion`. The AUC comes from middle-ranked months, where no rule can act
 profitably. The correlation between shock magnitude and production's monthly accuracy is

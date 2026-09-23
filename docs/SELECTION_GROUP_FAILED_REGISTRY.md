@@ -158,8 +158,8 @@ momentum, shock, volatility-regime, or cross-asset signals predict the months wh
 production's picks mostly fall. The 12-month momentum breadth signal, selected on Tuning,
 had AUC 0.62 there, but only 0.46 on Validation and 0.60 on Confirmation. Its flip rule lost
 26 hits on Confirmation. A combined logistic also failed, losing 25 hits. The shock signals
-looked good out of sample only in hindsight. Their largest months are rebounds, in which
-production scores 74–86%, so flipping them loses. See registry section 2.11.
+looked good out of sample only in hindsight. Their largest-magnitude months are mostly
+rebounds, in which production scores 74–82%, so flipping them loses. See registry section 2.11.
 
 ## Rules for future experiments
 
