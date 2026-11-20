@@ -1,0 +1,58 @@
+{
+  "00_START_HERE_AR.md": {
+    "bytes": 2251,
+    "sha256": "7e52c27f90995521c9299c4aee82c24b6682105382f7487a8a1754ebce415004"
+  },
+  "01_MASTER_PROMPT_EN.txt": {
+    "bytes": 13745,
+    "sha256": "60ef8851d691defe6100eb04cd225bc73b8cdbcf289425080eb9e9cb83630bad"
+  },
+  "ACCEPTANCE_CHECKLIST_EN.md": {
+    "bytes": 3086,
+    "sha256": "013826d6a4f8c20c45569412b184f9200c4bfc8058ac31a3cc906a9e72c570dc"
+  },
+  "assets/Forecast_Select_CURRENT_Editable.pptx": {
+    "bytes": 61488,
+    "sha256": "41710495c1df186963bce904bec9cd10aaa2f913f55fd5e399fc53a34b2f6a22"
+  },
+  "assets/Forecast_Select_CURRENT_Preview.png": {
+    "bytes": 355164,
+    "sha256": "8837cfe22c240c1b397cd30d8c6f4582ee9323b66fc8d866fd180e9ee7f180e7"
+  },
+  "assets/Forecast_Select_CURRENT_Print.pdf": {
+    "bytes": 50910,
+    "sha256": "14f22fbea638b8b96e45d0f18d1c3d852127f49452966cc72d5bcac3c9801ee5"
+  },
+  "brand/fonts/OFL.txt": {
+    "bytes": 4385,
+    "sha256": "6be04893d770899a015649c7aa3b582f871b272f8747a92b78b17c3e5c8b2573"
+  },
+  "brand/fonts/Poppins-Bold.ttf": {
+    "bytes": 155996,
+    "sha256": "983676516167748b74de6f4771fb384c664fd913acb8b471122ecacf5da5ea6c"
+  },
+  "brand/fonts/Poppins-Regular.ttf": {
+    "bytes": 160316,
+    "sha256": "7e65201e9b79159e2300267cc885e16c8dcef2424cdfa09a29bfb0980a94a7ba"
+  },
+  "brand/fonts/Poppins-SemiBold.ttf": {
+    "bytes": 157312,
+    "sha256": "d3bf1bdaf0550e83da9ac0b1d1d9fe6db086835a83aa28578e609a394b9a0286"
+  },
+  "brand/Khwarizme_Original_White_Logo.png": {
+    "bytes": 21418,
+    "sha256": "e91f197ba684b4cb5816e3dcb73564845e2c51fc28a98a9eb43d07bb3acb9a5c"
+  },
+  "brand/Khwarizme_Presentation_Template_ORIGINAL.pptx": {
+    "bytes": 145873,
+    "sha256": "1a10945065d3a4f12714757d6dc81d80e5914f977eae9eb1ee9ef8b8c69a18cd"
+  },
+  "POSTER_CONTENT_EN.txt": {
+    "bytes": 3091,
+    "sha256": "cc82edee6c2725b78808df139f370ef0189a3e4796733284403b7e7fa0da3887"
+  },
+  "REFERENCE_SOURCES_EN.md": {
+    "bytes": 3922,
+    "sha256": "cf65a7c213345c6213f27da7607b09d47759e7904686e178deaa011ccffad983"
+  }
+}

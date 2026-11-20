@@ -1,170 +1,170 @@
-# التقرير الدقيق لتجربة تحسين Regime Adaptive
+# Detailed report: Regime Adaptive improvement experiment
 
-تاريخ التقرير: 29 آب 2026  
-حالة القرار: **لم يُعثر على تحسين قابل للتعميم ضمن المرشحين الذين جرى اختبارهم.** بقي `Regime Adaptive Bidirectional Selector` هو النموذج الفعّال، ولم يُرقَّ أي Challenger.
+Report date: 29 August 2026
+Decision: **No generalizable improvement was found among the tested candidates.** The `Regime Adaptive Bidirectional Selector` remains active; no challenger was promoted.
 
-هذه النتيجة لا تعني أن تحسين المشروع مستحيل. معناها المحدد هو أن الطرق المختبرة هنا لم تثبت تحسناً خارج بيانات الضبط، ولا يوجد في هذه التجربة دليل موثوق على زيادة 3 نقاط مئوية أو أكثر.
+This does not establish that improvement is impossible. The tested methods did not demonstrate an improvement outside tuning, and this experiment supplies no reliable evidence of a gain of 3 percentage points or more.
 
-## 1. بروتوكول التقييم
+## 1. Evaluation protocol
 
-- Tuning: الأصول 120–179؛ استُخدمت لاختيار إعدادات المرشحين.
-- Validation: الأصول 180–219؛ استُخدمت للتحقق من قابلية التعميم.
-- Development: الأصول 120–219؛ تلخيص للنافذتين السابقتين، وليست اختباراً مستقلاً جديداً.
-- Confirmation: الأصول 220–266؛ نافذة وصفية إضافية.
-- Terminal holdout: آذار ونيسان وأيار 2026، من أصل التنبؤ المجمد لشباط عند الموضع 313.
+- Tuning: origins 120–179, used to select candidate settings.
+- Validation: origins 180–219, used to assess generalization.
+- Development: origins 120–219, a summary of the preceding windows rather than another independent test.
+- Confirmation: origins 220–266, an additional descriptive window.
+- Terminal holdout: March, April, and May 2026, forecast together from the frozen February origin at position 313.
 
-في الاختبار النهائي، أُنتجت الآفاق الثلاثة دفعة واحدة: H1 لآذار، H2 لنيسان، وH3 لأيار. لم تدخل نتيجة آذار الفعلية في توقع نيسان، ولم تدخل نتيجتا آذار ونيسان في توقع أيار. استخدم الـgroup prior بيانات متاحة حتى `origin - 2 - (horizon - 1)`، أي حتى المواضع 311 و310 و309 على الترتيب.
+The final test generated all horizons together: H1 for March, H2 for April, and H3 for May. Actual March outcomes did not enter April forecasts, and actual March/April outcomes did not enter May forecasts. The group prior used available data through `origin - 2 - (horizon - 1)`, namely positions 311, 310, and 309 respectively.
 
-بعد فتح نتائج آذار–أيار، أصبح هذا الـholdout مستهلكاً ولا يجوز الرجوع إليه لاختيار thresholds أو تعديل features ثم الادعاء بأنه اختبار نهائي مستقل.
+After inspecting March–May outcomes, this holdout is consumed. It must not be reused to select thresholds or features and then described as an independent final test.
 
-## 2. تشخيص النموذج الحالي
+## 2. Active-model diagnosis
 
-| النافذة | النداءات | الإصابات | Accuracy | Directional AUC | Selection AUC | Up calls | Down calls |
+| Window | Calls | Hits | Accuracy | Directional AUC | Selection AUC | Up calls | Down calls |
 |---|---:|---:|---:|---:|---:|---:|---:|
 | Tuning 120–179 | 1,071 | 686 | 64.05% | 0.5795 | 0.5413 | 1,067 | 4 |
 | Validation 180–219 | 675 | 395 | 58.52% | 0.5094 | 0.4015 | 675 | 0 |
 | Development 120–219 | 1,746 | 1,081 | 61.91% | 0.5533 | 0.5092 | 1,742 | 4 |
 | Confirmation 220–266 | 799 | 508 | 63.58% | 0.5380 | 0.4411 | 792 | 7 |
 
-الاستنتاج من هذه الأرقام:
+Interpretation:
 
-1. الـDirectional AUC هبط من 0.5795 في Tuning إلى 0.5094 في Validation؛ أي أن قدرة ترتيب المؤشرات الصاعدة فوق الهابطة أصبحت قريبة جداً من العشوائي خارج نافذة الضبط.
-2. الـSelection AUC هبط من 0.5413 إلى 0.4015. هذا يعني أن `selection_score` لم يستطع ترتيب الاختيارات الصحيحة فوق الخاطئة في Validation، بل كان الترتيب معكوساً جزئياً.
-3. ارتفاع Accuracy إلى قرابة 60% لا يناقض ضعف AUC، لأن معظم النداءات كانت Up. يستطيع نموذج يميل دائماً إلى الاتجاه الأكثر شيوعاً تحقيق Accuracy مقبولة من دون أن يميّز جيداً بين المؤشرات.
-4. عينة Down غير كافية إطلاقاً: 11 نداء فقط عبر 120–266، وصفر في Validation. لذلك لا يوجد دليل إحصائي معتبر على جودة توقعات Down.
+1. Directional AUC fell from 0.5795 on Tuning to 0.5094 on Validation: ranking rising indicators above falling ones became nearly random outside tuning.
+2. Selection AUC fell from 0.5413 to 0.4015. The `selection_score` failed to rank correct selections above mistakes on Validation and was partly reversed.
+3. Accuracy near 60% is consistent with weak AUC because most calls were Up. A model favoring the common direction can obtain acceptable accuracy without strongly discriminating indicators.
+4. The Down sample is inadequate: 11 calls across 120–266, with none on Validation. It does not establish statistically persuasive Down forecasting quality.
 
-## 3. جودة المراتب والـcap بين 15 و20
+## 3. Rank quality and the 15–20 cap
 
-على Development 120–219:
+On Development 120–219:
 
-| المرتبة | Accuracy | عدد الحالات |
+| Rank | Accuracy | Cases |
 |---|---:|---:|
 | 1–5 | 64.00% | 500 |
 | 6–10 | 62.40% | 500 |
 | 11–15 | 60.60% | 500 |
 | 16–20 | 59.35% | 246 |
 
-الجودة تنخفض تدريجياً عند توسيع الاختيار، وخصوصاً مقارنة أول خمس مراتب بالمراتب 16–20. لكن الفرق ليس ثابتاً في كل نافذة؛ ففي Validation كانت الرتب شبه متساوية. لذلك لا يمكن القول إن حذف المراتب 16–20 وحده يحل المشكلة، كما أن شرط المشروع يفرض أصلاً اختيار 15–20 مؤشراً.
+Quality decreases as coverage expands, particularly comparing the first five ranks with 16–20. The difference is not stable across windows; Validation ranks were nearly equal. Dropping ranks 16–20 alone therefore does not solve the problem, and the project requires 15–20 indicators.
 
-توزيع النداءات على Development كان: 330 نداء عند cap=15، و192 عند 16، و221 عند 17، و342 عند 18، و361 عند 19، و300 عند 20. هذا يؤكد أن عقد 15–20 مطبق فعلياً.
+Development call counts were: 330 at cap=15, 192 at 16, 221 at 17, 342 at 18, 361 at 19, and 300 at 20. The 15–20 contract is enforced.
 
-## 4. هل أضاف الـasset group قيمة؟
+## 4. Did asset groups add value?
 
-| النافذة | Raw `p_up` | بعد Graph | بعد Group الحالي | إضافة Group فوق Graph |
+| Window | Raw `p_up` | After graph | After current group overlay | Group lift over graph |
 |---|---:|---:|---:|---:|
 | Tuning | 0.5684 | 0.5699 | 0.5795 | +0.0096 |
 | Validation | 0.5127 | 0.5081 | 0.5094 | +0.0013 |
 | Development | 0.5481 | 0.5476 | 0.5533 | +0.0057 |
 | Confirmation | 0.5371 | 0.5394 | 0.5380 | -0.0014 |
 
-الـgroup overlay بدا مفيداً داخل Tuning، لكن فائدته تقلصت إلى 0.0013 فقط في Validation وانعكست سلباً في Confirmation. هذا لا يكفي لإثبات قيمة معممة.
+The group overlay helped within Tuning, but its lift shrank to 0.0013 on Validation and reversed on Confirmation. This does not establish generalizable value.
 
-المشكلة البنيوية هي أن التنفيذ الحالي يستخدم prior خاماً متحركاً لـ12 شهراً ووزناً ثابتاً 0.25 لكل المجموعات. حجم المجموعات مختلف، لكن المجموعة الصغيرة والكبيرة تحصلان على الوزن نفسه. كما أن قوة المجموعات تتغير مع الزمن؛ مثلاً تراوح أثر commodity تقريباً بين -1.07 و+0.56، وthematic بين -0.47 و+0.32. كذلك يوجد تكرار كبير بين الإشارات: الارتباط بين `p_up` ونسخته بعد group هو 0.946، وبين `p_up_selection` و`risk_adjusted` هو 0.924.
+The implementation uses a raw rolling 12-month prior with fixed weight 0.25 across groups, regardless of their size. Group strength also drifts: commodity effects ranged approximately from -1.07 to +0.56, and thematic effects from -0.47 to +0.32. Signals overlap substantially: `p_up` correlates 0.946 with its group-adjusted version, and `p_up_selection` correlates 0.924 with `risk_adjusted`.
 
-## 5. المرشحون المختبرون
+## 5. Tested candidates
 
 ### A. Hierarchical Empirical Bayes group overlay
 
-استُبدل prior المجموعة الخام بصيغة shrinkage نحو السوق:
+Replace the raw group prior with shrinkage toward the market:
 
 `p_shrunk = (N × p_group + tau × p_market) / (N + tau)`
 
-أفضل إعداد اختير على Tuning فقط: `tau=10` و`weight=0.75` من دون stability penalty.
+The best Tuning-only setting was `tau=10`, `weight=0.75`, without a stability penalty.
 
-| المقياس | Current | Challenger A | الفرق |
+| Metric | Current | Challenger A | Difference |
 |---|---:|---:|---:|
 | Tuning AUC | 0.5795 | 0.5829 | +0.0034 |
 | Validation AUC | 0.5094 | 0.5127 | +0.0033 |
-| Tuning selected accuracy | 64.05% | 63.68% | -0.37 نقطة |
-| Development selected accuracy | 61.91% | 61.80% | -0.11 نقطة |
+| Tuning selected accuracy | 64.05% | 63.68% | -0.37 points |
+| Development selected accuracy | 61.91% | 61.80% | -0.11 points |
 
-القرار: مرفوض. تحسن AUC صغير، بينما لم تتحسن Accuracy على Development وانخفضت على Tuning. كما أن إزالة graph أعطت Validation AUC أعلى قليلاً، 0.5157، ما يضعف حجة أن تركيب graph مع group يضيف قيمة مستقلة ثابتة.
+Decision: rejected. AUC improvement was small; Development accuracy did not improve and Tuning accuracy declined. Removing the graph also produced a slightly higher Validation AUC of 0.5157, weakening the case for stable independent value from combining graph and group.
 
 ### B. Cross-sectional regularized ranker
 
-استُخدم Logistic Regression منتظم على 19 إشارة موجودة في Regime Adaptive.
+A regularized Logistic Regression model used 19 existing Regime Adaptive signals.
 
-- Tuning AUC: 0.6061 مقابل 0.5795 للـbaseline.
-- Validation AUC: 0.4882 مقابل 0.5094.
-- Validation accuracy: قرابة 48.4% مقابل 58.5%.
+- Tuning AUC: 0.6061 versus baseline 0.5795.
+- Validation AUC: 0.4882 versus 0.5094.
+- Validation accuracy: approximately 48.4% versus 58.5%.
 
-القرار: مرفوض بسبب overfitting واضح؛ التحسن داخل Tuning تحول إلى تراجع خارجها.
+Decision: rejected for clear overfitting; the Tuning gain became an out-of-tuning loss.
 
 ### C. Selection-quality correction
 
-دُرّب نموذج لتوقع صحة الاختيار وتعديل `selection_score`.
+A model was trained to predict selection correctness and adjust `selection_score`.
 
-- Selection AUC الأساسي: 0.5413 في Tuning و0.4015 في Validation.
-- نموذج التصحيح: 0.5783 في التدريب و0.4392 في Validation.
-- بعد دمج التصحيح في score، انخفض Validation AUC إلى 0.3947.
+- Baseline Selection AUC: 0.5413 on Tuning and 0.4015 on Validation.
+- Correction model: 0.5783 in training and 0.4392 on Validation.
+- Incorporating the correction into the score reduced Validation AUC to 0.3947.
 
-القرار: مرفوض. رفع 0.4015 إلى 0.4392 لا يكفي لأن النتيجة ما زالت دون 0.5، والـscore النهائي أصبح أسوأ.
+Decision: rejected. Moving from 0.4015 to 0.4392 still leaves the result below 0.5, and the final score became worse.
 
 ### D. Causal reliability-gated group score
 
-أُبقي Regime Adaptive نفسه، واستُبدل وزن group الثابت تجريبياً بوزن سببي متحرك يقيس، قبل كل origin، هل أضافت إشارة المجموعة فوق `p_up` في الأشهر المتاحة سابقاً. جرى البحث في نوافذ 12/24/48/72 شهراً مع ridge وحدود وزن مختلفة، واختيار الإعداد على Tuning فقط.
+Regime Adaptive was retained while the fixed group weight was experimentally replaced with a causal rolling estimate of whether the group signal had added value beyond `p_up` in previously available months. Windows of 12/24/48/72 months, ridge settings, and weight bounds were searched on Tuning only.
 
-أفضل إعداد لم يجتز البوابات. في Validation ارتفع Selection AUC ارتفاعاً هامشياً من 0.4015 إلى 0.4026، لكن Directional AUC انخفض من 0.5094 إلى 0.5084، وانخفضت Accuracy من 58.52% (395/675) إلى 57.63% (389/675). لذلك بقي معزولاً ولم يُدمج في الموديل الفعّال. التفاصيل الرقمية محفوظة في [`candidate_d_report.json`](candidate_d_report.json).
+The best setting failed the gates. Validation Selection AUC moved marginally from 0.4015 to 0.4026, while Directional AUC fell from 0.5094 to 0.5084 and accuracy from 58.52% (395/675) to 57.63% (389/675). It remained isolated from production. Details are recorded in [`candidate_d_report.json`](candidate_d_report.json).
 
-## 6. الاختبار النهائي المجمد: آذار–أيار 2026
+## 6. Frozen final test: March–May 2026
 
-كل نموذج اختار 17 مؤشراً في كل شهر، وجميع الاتجاهات كانت Up.
+Each model selected 17 indicators per month, all Up.
 
-| الشهر | Baseline | Challenger A | فرق الإصابات | Brier baseline | Brier challenger |
+| Month | Baseline | Challenger A | Hit difference | Baseline Brier | Challenger Brier |
 |---|---:|---:|---:|---:|---:|
-| آذار 2026 | 1/17 = 5.88% | 1/17 = 5.88% | 0 | 0.3565 | 0.3850 |
-| نيسان 2026 | 15/17 = 88.24% | 16/17 = 94.12% | +1 | 0.1538 | 0.1325 |
-| أيار 2026 | 13/17 = 76.47% | 12/17 = 70.59% | -1 | 0.1839 | 0.1892 |
-| **المجموع** | **29/51 = 56.86%** | **29/51 = 56.86%** | **0** | — | — |
+| March 2026 | 1/17 = 5.88% | 1/17 = 5.88% | 0 | 0.3565 | 0.3850 |
+| April 2026 | 15/17 = 88.24% | 16/17 = 94.12% | +1 | 0.1538 | 0.1325 |
+| May 2026 | 13/17 = 76.47% | 12/17 = 70.59% | -1 | 0.1839 | 0.1892 |
+| **Total** | **29/51 = 56.86%** | **29/51 = 56.86%** | **0** | — | — |
 
-الـchallenger حسّن نيسان بإصابة واحدة، ثم خسر إصابة في أيار، وتعادل إجمالاً. في آذار كان 5 مؤشرات فقط من أصل 50 صاعدة، لكن النموذج قدّر `forecast_market_breadth` بنحو 0.57 وصنّف الحالة calm مع `regime_stress` يقارب 0.30؛ لذلك لم يفعّل أي Down واختار 17 Up، فأصاب واحداً فقط.
+The challenger gained one April hit and lost one in May, tying overall. In March, only 5 of 50 indicators rose, while `forecast_market_breadth` was about 0.57 and the regime was classified calm with `regime_stress` near 0.30. No Down call fired: the model selected 17 Up calls and hit only one.
 
-قراءات AUC الشهرية داخل 17 اختياراً يجب التعامل معها بحذر شديد. عندما تكون كل التوقعات Up ويكون عدد الأخطاء أو الإصابات صغيراً جداً، يمكن أن يظهر AUC مرتفعاً أو متقلباً من دون أن يعني قدرة اتجاهية عملية. الأدلة الأوثق هنا هي تعادل الإصابات، غياب Down، وفشل توقع انقلاب آذار.
+Monthly AUC within 17 selections is highly fragile. With all predictions Up and very few hits or mistakes, AUC can look high or unstable without useful directional ability. The firmer evidence is the tied hit count, absence of Down calls, and failure to anticipate the March reversal.
 
-## 7. قرار الترقية
+## 7. Promotion decision
 
-| بوابة القبول | النتيجة |
+| Acceptance gate | Result |
 |---|---|
-| احترام 15–20 | ناجحة؛ 17 اختياراً كل شهر |
-| عدم استخدام نتائج holdout في التدريب | ناجحة وفق عقد التنفيذ والتقرير |
-| تحسن Directional AUC معمّم | فاشلة |
-| تحسن Selection AUC فوق 0.5 وبثبات | فاشلة |
-| عدم انخفاض Accuracy | تعادل نهائي، مع انخفاض طفيف على Development |
-| إثبات قيمة مستقلة للـgroup | فاشلة |
-| عينة Down ذات معنى | فاشلة؛ صفر Down في الاختبار النهائي |
+| Respect 15–20 selections | Passed; 17 each month |
+| No holdout outcomes in training | Passed according to the implementation contract and report |
+| Generalizable Directional AUC improvement | Failed |
+| Stable Selection AUC above 0.5 | Failed |
+| No accuracy deterioration | Final tie, with a slight Development loss |
+| Independent group value established | Failed |
+| Meaningful Down sample | Failed; no Down calls in the final test |
 
-القرار الصحيح هو رفض المرشحين والإبقاء على Regime Adaptive دون تغيير. ملف النموذج الفعّال نفسه يذكر `research_gate_passed: false` وأن تفعيله كان بقرار المالك لتلبية شرط bidirectional، لذلك يجب عدم عرضه على أنه نموذج أثبت تفوقاً بحثياً.
+Reject the candidates and retain Regime Adaptive unchanged. The active configuration records `research_gate_passed: false` and owner-directed activation for bidirectionality; it must not be presented as demonstrated research superiority.
 
-## 8. ماذا تثبت التجربة وماذا لا تثبت؟
+## 8. What this experiment establishes
 
-تثبت التجربة الآتي:
+The experiment supports:
 
-- الطرق A وB وC لم تحقق تحسناً معمماً.
-- لا يوجد دليل من هذه النتائج على مكسب ثابت قدره 3–4 نقاط مئوية.
-- المشكلة الأكبر ليست صيغة group وحدها، بل اكتشاف الانعكاس الحاد وتوليد Down موثوق.
-- إعادة tuning على آذار–أيار بعد رؤيتهما ستكون leakage على مستوى اختيار النموذج، حتى لو لم تدخل القيم مباشرة في training rows.
+- Methods A, B, and C did not produce generalizable improvement.
+- No evidence here supports a stable 3–4-percentage-point gain.
+- The main issue extends beyond the group formula to detecting sharp reversals and issuing reliable Down calls.
+- Retuning on inspected March–May outcomes creates model-selection leakage even if those values do not enter training rows directly.
 
-ولا تثبت الآتي:
+It does not establish:
 
-- لا تثبت استحالة أي تحسين مستقبلي.
-- لا تثبت أن 56.86% هو الأداء المتوقع الحقيقي؛ العينة النهائية ثلاثة أشهر و51 نداء فقط ومتقلبة جداً.
-- لا تسمح بتقييم جودة Down لأن النموذج لم يُصدر أي Down في الـholdout.
+- That future improvement is impossible.
+- That 56.86% is the true expected performance; the terminal sample is only three months and 51 volatile calls.
+- Down-call quality, because no Down call was issued on the holdout.
 
-## 9. الخطوة التالية المسموح بها منهجياً
+## 9. Methodologically permitted next study
 
-أقوى فرضية محدودة تالية هي نموذج causal صغير لخطر الانعكاس أو انهيار breadth، بدلاً من ranker عام جديد. الهدف يكون توقع حالة مثل `future breadth < 0.35` باستخدام معلومات متاحة حتى `t-2` فقط، ثم استعماله كـguarded Down/abstention gate.
+A bounded next hypothesis is a small causal model of reversal or breadth-collapse risk, rather than another general ranker. A target such as `future breadth < 0.35` could use information through `t-2` only and serve as a guarded Down/abstention gate.
 
-يجب اختيار كل features والthresholds على 120–219 فقط، مع walk-forward وblock bootstrap وقياس paired hit delta. يجب تجميد التصميم قبل فتح holdout زمني جديد. لا يجوز استخدام آذار–أيار مرة أخرى كاختبار قبول، ولا عرض زيادة cap على أنها تحسن إذا كانت جودة الرتب الإضافية غير مثبتة.
+Choose all features and thresholds on 120–219 only, with walk-forward evaluation, block bootstrap, and paired hit deltas. Freeze the design before opening a new temporal holdout. Do not reuse March–May as an acceptance test or treat cap expansion as improvement without establishing marginal-rank quality.
 
-## 10. مصادر التقرير وإعادة التحقق
+## 10. Sources and verification
 
-- التشخيص: [`development_diagnosis.json`](development_diagnosis.json)
-- تقرير التطوير والمرشحين: [`development_report.json`](development_report.json)
-- سجل التجربة والقرار: [`run_manifest.json`](run_manifest.json)
-- نتائج holdout التفصيلية: [`march_may_holdout_report.json`](march_may_holdout_report.json)
-- مقارنة الإصابات: [`model_comparison.csv`](model_comparison.csv)
-- Ablation المجموعة: [`group_ablation_candidateA.csv`](group_ablation_candidateA.csv)
-- إعدادات النموذج الفعّال: [`../../configs/active_model.yaml`](../../configs/active_model.yaml)
-- إعدادات Regime Adaptive: [`../../configs/regime_adaptive_selector.yaml`](../../configs/regime_adaptive_selector.yaml)
+- Diagnosis: [`development_diagnosis.json`](development_diagnosis.json)
+- Development and candidate report: [`development_report.json`](development_report.json)
+- Experiment and decision manifest: [`run_manifest.json`](run_manifest.json)
+- Detailed holdout results: [`march_may_holdout_report.json`](march_may_holdout_report.json)
+- Hit comparison: [`model_comparison.csv`](model_comparison.csv)
+- Group ablation: [`group_ablation_candidateA.csv`](group_ablation_candidateA.csv)
+- Active settings: [`../../configs/active_model.yaml`](../../configs/active_model.yaml)
+- Regime Adaptive settings: [`../../configs/regime_adaptive_selector.yaml`](../../configs/regime_adaptive_selector.yaml)
 
-أعيد تشغيل الاختبارات ذات الصلة في 29 آب 2026: `19 passed`. كما نجح `ruff check` على `src/forecast_select` دون أخطاء. ظهر تحذير إعداد مستقبلي من `pytest-asyncio`، لكنه لم يؤثر في نتيجة الاختبارات.
+Related tests were rerun on 29 August 2026: `19 passed`. `ruff check` on `src/forecast_select` also passed. A future-configuration warning from `pytest-asyncio` did not affect the test result.

@@ -6,6 +6,11 @@ Quarantine Record: [`archive/research/agent_selection_group_trials_2026-08-29/QU
 
 This document is the comprehensive inventory of all active models, baselines, research candidates, diagnostic audits, and quarantined trials in the `forecast_select` repository.
 
+Future proposals documented on 2026-11-20 are kept separately in the
+[future research roadmap](FUTURE_RESEARCH_ROADMAP.md), including
+multivariate forecasting and news-derived features. They are not completed
+experiments or new performance evidence.
+
 ---
 
 ## Schema & Status Definitions

@@ -1,20 +1,22 @@
-# تقرير Regime Adaptive Selection Group v2 (عربي)
+> Historical quarantine notice: this English translation preserves the original report's claims and figures, including claims later invalidated by future-label leakage. It is not current performance or promotion evidence. Consult ../../QUARANTINE_NOTICE.md and the project's negative-results registry. The legacy filename is retained for historical references.
 
-## 1) ما الذي فحصته
+# Regime Adaptive Selection Group v2 report (English translation)
 
-- `research/regime_adaptive_selector/artifacts/predictions.parquet` (الـartifact المجمّد الذي يستهلكه Regime Adaptive).
-- `src/forecast_select/regime_adaptive.py` (المنطق الحالي للـselection / cap / fallback).
-- `src/forecast_select/regime_adaptive_pipeline.py` (بناء الـinputs، الـoverlay القديم، ومرشّح regime).
-- `src/forecast_select/group_score_challenger.py` و scripts/candidate_*.py لفهم التجارب السابقة.
-- `configs/regime_adaptive_selector.yaml`، `configs/active_model.yaml`، `configs/downside_risk_gate.yaml`.
-- 102 unit test + 9 leakage test للتحقق من عدم كسر الكود الحالي.
-- اختبارات integration الحالية (الـ4 الخاصة بـregime_adaptive_selector نجحت بعد التحديث).
+## 1) Material inspected
 
-## 2) سبب ضعف Selection/Group الحالي (تشخيص قائم على الأرقام)
+- `research/regime_adaptive_selector/artifacts/predictions.parquet`, the frozen artifact consumed by Regime Adaptive.
+- `src/forecast_select/regime_adaptive.py`, the selection/cap/fallback logic.
+- `src/forecast_select/regime_adaptive_pipeline.py`, input construction, the previous overlay, and regime candidate.
+- `src/forecast_select/group_score_challenger.py` and scripts/candidate_*.py to understand earlier experiments.
+- `configs/regime_adaptive_selector.yaml`, `configs/active_model.yaml`, and `configs/downside_risk_gate.yaml`.
+- 102 unit tests + 9 leakage tests to check existing behavior.
+- Existing integration tests; the 4 regime_adaptive_selector tests passed after the update.
 
-ملاحظات مأخوذة من الـartifact (وليس من نص المهمة):
+## 2) Selection/group weakness: numerical diagnosis
 
-| المقياس | Tuning 120-179 | Validation 180-219 | Confirmation 220-266 |
+Observations from the artifact rather than the task wording:
+
+| Metric | Tuning 120-179 | Validation 180-219 | Confirmation 220-266 |
 |---|---|---|---|
 | Selected Accuracy | 64.05% (686/1071) | 58.52% (395/675) | 63.58% (508/799) |
 | Directional AUC (p_up_selection_score) | 0.5795 | 0.5094 | 0.5380 |
@@ -23,30 +25,30 @@
 | Balanced Accuracy | 0.5000 | 0.5000 | 0.5076 |
 | MCC | 0.0000 | 0.0000 | 0.1560 |
 
-تشخيص أعمق من `diagnostic_selection_auc.py`:
+Further diagnosis from `diagnostic_selection_auc.py`:
 
-- Per-month Selection AUC في Validation: mean = 0.498, std = 0.207, min = 0.028, max = 0.947.
-- **Selection AUC العالمي يأتي من تجميع 40 شهر من الضوضاء**.
-- `p_up_selection_score` corr مع `selection_score` = 1.0 (الـoverhead adjustment لا يضيف ranking جديد).
-- `p_up` corr مع `p_up_selection_score` = 0.946 (التغيير طفيف).
-- الاختيار Up-heavy والـmargin = p_up - p_down يحمل **إشارة عكسية** في Validation: المؤشرات ذات margin الأعلى أداؤها ≈45%، والمؤشرات ذات margin الأدنى أداؤها ≈68%.
+- Per-month Validation Selection AUC: mean = 0.498, std = 0.207, min = 0.028, max = 0.947.
+- **Global Selection AUC aggregates 40 months of noise.**
+- `p_up_selection_score` correlation with `selection_score` = 1.0; overhead adjustment adds no new ranking.
+- `p_up` correlation with `p_up_selection_score` = 0.946; the change is small.
+- Selection is Up-heavy, and margin = p_up - p_down carries an **inverse signal** on Validation: higher-margin indicators score ≈45%, lower-margin indicators ≈68%.
 
-الاستنتاج: المشكلة ليست في منطق Direction/Group بحد ذاته، بل في أن **الـranking الحالي لا يحمل معلومة صحيحة شهرياً**. أي overlay يستبدل 5-7% من الاختيارات بمؤشرات أكثر استقراراً تاريخياً سيحسّن Selection AUC و Accuracy في نفس الوقت دون الإخلال بسياسة الاتجاه أو cap.
+The original report concluded that the problem was not Direction/Group logic itself but **ranking without useful monthly information**, and claimed that an overlay replacing 5-7% of selections with historically steadier indicators would improve Selection AUC and accuracy without changing direction or cap policies.
 
-## 3) الفرضيات المختَبرة
+## 3) Tested hypotheses
 
-| Family | الفكرة | النتيجة |
+| Family | Idea | Result claimed in the original report |
 |---|---|---|
-| A | Reversal-aware penalty (3 features) | مرفوض — Selection AUC +0.012 فقط |
-| B | Group residual learning (Ridge) | مرفوض — لا تحسّن ملموس |
-| C | Cross-sectional pairwise ranker | مرفوض — Validation AUC هبط |
-| D | p_down-aware monotonic re-rank | مرفوض — Sel AUC +0.01 لكن Accuracy يهبط |
-| E | Recent-miss + group-stability (ثابت) | قوي (Sel AUC +0.09 Val, Acc +0.012) |
-| **F** | **Dynamic miss threshold + history-aware shrinkage** | **مقبول** ✅ |
+| A | Reversal-aware penalty (3 features) | Rejected; Selection AUC only +0.012 |
+| B | Group residual learning (Ridge) | Rejected; no meaningful improvement |
+| C | Cross-sectional pairwise ranker | Rejected; Validation AUC fell |
+| D | p_down-aware monotonic reranking | Rejected; Sel AUC +0.01 but accuracy fell |
+| E | Recent-miss + group-stability (fixed) | Strong (Val Sel AUC +0.09, Acc +0.012) |
+| **F** | **Dynamic miss threshold + history-aware shrinkage** | **Accepted in the original report** ✅ |
 
-## 4) نتائج temporal folds
+## 4) Temporal-fold results
 
-`family_f_full_eval.py` ينفّذ walk-forward cross-fitting داخل 120-219:
+`family_f_full_eval.py` performs walk-forward cross-fitting within 120-219:
 
 | Fold | Train ≤ | Eval | Accuracy | Selection AUC | Directional AUC |
 |---|---|---|---|---|---|
@@ -54,9 +56,9 @@
 | F2_val_180_199 | 179 | 180-199 | 0.5491 | 0.5652 | 0.5697 |
 | F3_val_200_219 | 199 | 200-219 | 0.6504 | 0.5113 | 0.5588 |
 
-(Walk-forward strict — لا يطابق strict train ≤ t لأن الـrolling window يحتاج ≥ 4 أشهر history، فالـF1 يبدأ من 150-179. مع ذلك، Family F لا يطّلع على بيانات ما بعد `fit_through_origin = origin - 2`.)
+(Strict walk-forward: the original report states this is not identical to strict train ≤ t because rolling history requires ≥ 4 months, so F1 starts at 150-179. It also claims Family F uses nothing after `fit_through_origin = origin - 2`.)
 
-## 5) Baseline vs Challenger (cap-matched، نفس عدد الاختيارات شهرياً)
+## 5) Baseline versus challenger (matched monthly call counts)
 
 | Window | Sel AUC (B→C) | Dir AUC (B→C) | Acc (B→C) | Brier (B→C) | Down calls (B→C) |
 |---|---|---|---|---|---|
@@ -66,7 +68,7 @@
 | Confirmation 220-266 | 0.4411 → **0.4715** | 0.5275 → **0.5619** | 0.6358 → **0.6408** | 0.2458 → 0.2411 | 7 → 7 |
 | All nonlocked 120-266 | 0.4885 → **0.5262** | 0.5414 → **0.5821** | 0.6244 → **0.6330** | 0.2468 → 0.2406 | 11 → 11 |
 
-نتائج pipeline الكامل بعد إدماج overlay (regime_adaptive_selector_full run) تعطي delta إضافي من الـgroup overlay إلى overlay الكامل:
+Full-pipeline results after integrating the overlay (regime_adaptive_selector_full run) show an additional delta from the group overlay to the complete overlay:
 
 | Window | Sel AUC (old→new) | Dir AUC | Acc | Down calls |
 |---|---|---|---|---|
@@ -112,7 +114,7 @@
 | Development | -0.0071 | +0.003 | +0.0 |
 | Confirmation | -0.0047 | -0.005 | -0.045 |
 
-## 10) Up/Down calls ودقتها
+## 10) Up/Down call counts and correctness
 
 | Window | Up calls (B→C) | Down calls (B→C) | Up precision Δ | Down precision (C) |
 |---|---|---|---|---|
@@ -143,33 +145,33 @@
 | Confirmation | +0.0034 | -0.0025/+0.0012/+0.0038 | **0.783** | +0.0045 | 0.761 |
 | All nonlocked | +0.0086 | +0.0040/+0.0066/+0.0090 | **1.000** | +0.0004 | 0.554 |
 
-## 13) هل التحسن معمّم أم overfitting؟
+## 13) Generalization versus overfitting
 
-التحسن **معمّم** ومُوزَّع:
-- 4/4 groups في validation (us_sector, global_equity, fixed_income تحسنت، thematic_equity تراجعت قليلاً).
-- 13-15/27 indicator تحسنت و 8-9 تراجعت.
-- 10-37 شهر من 40-100 تحسن في الـAccuracy.
-- في Validation: 15/40 شهر تحسن، 5/40 تراجع، 20/40 ثابت.
-- في Tuning: 22/60 شهر تحسن، 6/60 تراجع، 32/60 ثابت.
+The original report claims **generalized, distributed** improvement:
+- 4/4 Validation groups: us_sector, global_equity, and fixed_income improved; thematic_equity declined slightly.
+- 13-15/27 indicators improved; 8-9 declined.
+- Accuracy improved in 10-37 months out of 40-100.
+- Validation: 15/40 months improved, 5/40 declined, 20/40 unchanged.
+- Tuning: 22/60 months improved, 6/60 declined, 32/60 unchanged.
 
-التحسن ليس في شهر واحد أو group واحد. في الـfold الأكثر صرامة (walk-forward strict، F2 = train≤179, eval 180-199) الـAccuracy = 0.5491، أقل من baseline 0.5852 — وهذا fold صعب لأن rolling window يحتاج 4 أشهر history على أقل تقدير.
+The report attributes gains to multiple months and groups. On the stricter fold (walk-forward F2 = train≤179, eval 180-199), accuracy = 0.5491, below baseline 0.5852; it describes this fold as difficult because rolling statistics need at least 4 months of history.
 
-## 14) هل عُدّل الموديل الفعّال؟
+## 14) Was the active model modified?
 
-نعم. التغييرات المطبقة في `src/forecast_select/` و `configs/`:
+Yes, according to the original report. Applied changes under `src/forecast_select/` and `configs/`:
 
-1. **`src/forecast_select/selection_overlay.py` (جديد)**: module الإنتاج لـrecent-miss + group-stability overlay.
-2. **`src/forecast_select/regime_adaptive_pipeline.py`**: استدعاء `apply_selection_overlay` بعد بناء `p_up_selection_score`، يحفظ `p_up_selection_score_baseline` كـfallback.
-3. **`configs/regime_adaptive_selector.yaml`**: إضافة block `selection_overlay` مع الإعدادات المختارة.
-4. **`configs/active_model.yaml`**: تحديث `model_release` و `activation_basis` ليعكس الـoverlay.
-5. **`tests/unit/test_selection_overlay.py` (جديد)**: 8 unit tests تتحقق من الـcausality والـmonotonicity والـboundaries.
-6. **`research/regime_adaptive_selector/artifacts/predictions.parquet`**: تم إعادة بنائه على 120-266.
-7. **`artifacts/active/regime_adaptive_predictions.parquet`**: تم إعادة بنائه ليعكس التغيير.
-8. **`reports/regime_adaptive_next_three_forecast.json`**: تم تحديثه.
+1. **`src/forecast_select/selection_overlay.py` (new):** production module for recent-miss and group-stability adjustment.
+2. **`src/forecast_select/regime_adaptive_pipeline.py`:** invoke `apply_selection_overlay` after `p_up_selection_score`, preserving `p_up_selection_score_baseline` as fallback.
+3. **`configs/regime_adaptive_selector.yaml`:** add the selected `selection_overlay` settings.
+4. **`configs/active_model.yaml`:** update `model_release` and `activation_basis` for the overlay.
+5. **`tests/unit/test_selection_overlay.py` (new):** 8 unit tests for causality, monotonicity, and boundaries.
+6. **`research/regime_adaptive_selector/artifacts/predictions.parquet`:** rebuilt on 120-266.
+7. **`artifacts/active/regime_adaptive_predictions.parquet`:** rebuilt to include the change.
+8. **`reports/regime_adaptive_next_three_forecast.json`:** updated.
 
-`p_up_selection_score_baseline` يحفظ الـscore الأصلي، فيمكن الرجوع إلى السلوك القديم بضبط `selection_overlay.enabled = false` في الـconfig.
+`p_up_selection_score_baseline` retains the original score; setting `selection_overlay.enabled = false` restores the prior behavior.
 
-## 15) الأوامر والاختبارات التي شُغّلت
+## 15) Recorded commands and tests
 
 - `python -m pytest tests/unit/` → 102 passed
 - `python -m pytest tests/leakage/` → 9 passed
@@ -180,21 +182,21 @@
 
 ## 16) Forecasts: June-August 2026
 
-`reports/regime_adaptive_next_three_forecast.json` يحوي:
+`reports/regime_adaptive_next_three_forecast.json` contains:
 
-- 2026-06 (horizon=1, cap=15, regime=mixed, stress=0.487): 15 Up-selected indicators من fixed_income, us_sector, thematic_equity.
+- 2026-06 (horizon=1, cap=15, regime=mixed, stress=0.487): 15 Up-selected indicators from fixed_income, us_sector, and thematic_equity.
 - 2026-07 (horizon=2, cap=15, regime=mixed, stress=0.487): 15 Up-selected.
 - 2026-08 (horizon=3, cap=15, regime=mixed, stress=0.493): 15 Up-selected.
 
-Top ranks ثابتة عبر الأشهر الثلاثة: X41 (fixed_income) في المرتبة 1، X39 و X40 (fixed_income) في 2-3.
+Top ranks are stable across the three months: X41 (fixed_income) at rank 1, X39 and X40 (fixed_income) at ranks 2-3.
 
-## 17) ما لم يتحقق
+## 17) Targets not reached
 
-- **هدف +3pp accuracy**: التحقق الفعلي هو +0.5% (Validation) إلى +1.3% (Tuning). +3pp هدف صعب التحقيق ضمن cap-matched و بدون leakage.
-- **Selection AUC > 0.50 في Validation على artifact العائلة F المنفصل**: 0.4799. لكن داخل pipeline الكامل بعد إدماج overlay (والذي يضيف أيضاً bonus من stability): 0.5894.
+- **+3pp accuracy target:** measured claims range from +0.5% (Validation) to +1.3% (Tuning). +3pp is described as difficult under matched coverage without leakage.
+- **Validation Selection AUC > 0.50 on the separate Family F artifact:** 0.4799. The full integrated pipeline, also adding a stability bonus, reports 0.5894.
 
-## 18) ملاحظات تحذيرية
+## 18) Caveats recorded at the time
 
-- **Confirmation window (220-266)**: تم فتحه سابقاً كما هو موثّق في المهمة. هو ليس holdout نظيف، وقد يكون الـoverlay استفاد من بعض الإشارات فيه. مع ذلك، لا يوجد تعديل بعد قراءة نتائج Confirmation.
-- **Locked origins 268-315 (آذار-آب 2026)**: لم تُقرأ. الـactive model artifact يحوي فقط origins 120-266.
-- **Walk-forward strict (F2 = 180-199)**: تحسّن ضعيف 0.5491 vs baseline 0.5852. هذا fold صعب. يمكن تحسينه بمزيد من الـhistory، لكن يتطلب بيانات من 120-179 فقط، وهي الـTuning window.
+- **Confirmation (220-266):** previously inspected, as stated in the task. It was not a clean holdout and may have influenced the overlay indirectly. The report says no modification followed Confirmation inspection.
+- **Locked origins 268-315 (March-August 2026, as labeled in the original report):** claimed unread; active artifacts contain only origins 120-266. The historical month labeling is preserved, not validated.
+- **Strict walk-forward (F2 = 180-199):** weak accuracy 0.5491 versus baseline 0.5852. The report suggests more history might help but restricts it to 120-179, the Tuning window.

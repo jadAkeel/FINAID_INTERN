@@ -25,6 +25,14 @@ pass the formal research promotion gate, so the repository does not claim 65%
 validated accuracy. Rejected and negative experiments are retained in
 [`docs/EXPERIMENT_REGISTRY.md`](docs/EXPERIMENT_REGISTRY.md).
 
+Proposed experiments, including multivariate Chronos, Timestral, TimesFM,
+TabPFN, and news-derived features, are documented in the
+[future research roadmap](docs/FUTURE_RESEARCH_ROADMAP.md).
+These are research ideas, with no new accuracy result or automatic promotion.
+
+Maintain all project documentation, research reports, and authored text in
+English. Historical filenames may retain their original identifiers.
+
 ## What limits accuracy
 
 A monthly hit rate has two sources: choosing indicators that tend to rise, and
